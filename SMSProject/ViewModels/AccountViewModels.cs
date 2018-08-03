@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SMSProject.Models
+namespace SMSProject.ViewModels
 {
     public class ExternalLoginConfirmationViewModel
     {
