@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
+  <Class Name="SMSProject.Models.Application">
+    <Position X="12.25" Y="0.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAwAAAIEAAAAAgQAAQABQQAAAQAAAAABCAAIAQAAAgA=</HashCode>
+      <FileName>Models\Application.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.AdditionalFund">
+    <Position X="12.25" Y="5.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAgQAAAAAAQSAAAAEgAAAAAAIAAAAAgA=</HashCode>
+      <FileName>Models\AdditionalFund.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Attendance">
+    <Position X="25.5" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAACgQAAAgAAQgAAAAAAAABAAAIAQAAAgA=</HashCode>
+      <FileName>Models\Attandance.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Class">
+    <Position X="38.5" Y="8.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABgAIAAAgQABGACAQQAAgBEAAAAAgAKAAAAAgA=</HashCode>
+      <FileName>Models\Class.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.DailyDairy">
+    <Position X="31.5" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAASJAAAAgAAIgQAAIAAAQAAAAEAAAABAAAIAQAAAgA=</HashCode>
+      <FileName>Models\DailyDairy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Downloadable">
+    <Position X="12.75" Y="9.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>BgAAAAYAEAAAIgQAAAIAAQQAAAAEAAAAAEAIAABAAgA=</HashCode>
+      <FileName>Models\Downloadable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Examination">
+    <Position X="16" Y="9.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAgQAAAAAAQAAAAUAAAQEAIAMABCAAgA=</HashCode>
+      <FileName>Models\Examination.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.InventoryCategory">
+    <Position X="25.5" Y="0.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAAAAgQAAAAAAQAAACAEAgAAAAAIAAAAAgA=</HashCode>
+      <FileName>Models\InventoryCategory.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.InventoryItem">
+    <Position X="35.25" Y="6" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAAACAQAAAgQAgAAAAQQAAEAEIACAAAAIgAAACgA=</HashCode>
+      <FileName>Models\InventoryItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.NonTeachingStaff">
+    <Position X="0.5" Y="9" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>CAAAAAAAAAAAAAAACAAAAAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\NonTeachingStaff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Notification">
+    <Position X="35" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAggAAIgQAADAAAUAAAAEAAACBAACKJQAAAiA=</HashCode>
+      <FileName>Models\Notification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Parent">
+    <Position X="16" Y="0.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AagCAABAgEIAAqwEEAhACQkgAAABQAAAigAYAACBA0A=</HashCode>
+      <FileName>Models\Parent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.ParentAccount">
+    <Position X="28.75" Y="10.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAgQAEwAAQREAAAAAAAAAAACIAAAAAgA=</HashCode>
+      <FileName>Models\ParentAccount.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.ParentFeeRecord">
+    <Position X="28" Y="4.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAEAIAIAACAAAgQAAAgAQQQAACAEAUAAAQBIAAAGAgA=</HashCode>
+      <FileName>Models\ParentFeeRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Section">
+    <Position X="31.75" Y="5.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIiQAAAIAAQAAAAFEAAAAAAAIAAAQAgA=</HashCode>
+      <FileName>Models\Section.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Staff">
+    <Position X="3" Y="1.75" Width="3" />
+    <TypeIdentifier>
+      <HashCode>EAAAAGAAAAAgQgQAABAAYQUAABMEgABCAAAIAAAAAgA=</HashCode>
+      <FileName>Models\Staff.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.StruckOffStudent">
+    <Position X="38.5" Y="0.75" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>IAQCAAMABAABAgSAAAAQgUQBBAABAAAAAAEIAAAAQoA=</HashCode>
+      <FileName>Models\StruckOffStudent.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Student">
+    <Position X="20.25" Y="1" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAIEAAEAAgeEAEAIwUUSAIAUkAAABRAZEIAyAgA=</HashCode>
+      <FileName>Models\Student.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.StudentMonthlyFee">
+    <Position X="24.5" Y="8.25" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAEgQAAEAgQAAAAAIRAAgAAEQAAABAAIIAAAAgA=</HashCode>
+      <FileName>Models\StudentMonthlyFee.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Subject">
+    <Position X="29.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEAAAIgQAAAIAAQQAAAEEAAAAAAAIAAAAAgA=</HashCode>
+      <FileName>Models\Subject.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Teacher">
+    <Position X="6.75" Y="9" Width="3.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAEAAACAAEAhACAgAQBAAAAEAAQAAAAAAAUA=</HashCode>
+      <FileName>Models\Teacher.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SMSProject.Models.Test">
+    <Position X="32.25" Y="9.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAEAAAgRAAIAEBQEAAAQAAAAIAAAIAAAAAgA=</HashCode>
+      <FileName>Models\Test.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

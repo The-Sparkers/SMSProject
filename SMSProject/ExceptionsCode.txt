@@ -1,0 +1,170 @@
+﻿100: Error in processing create parent constructor in Parent Model Class.
+101: Error in Updating FatherName in Parent Model Class.
+102: Error in SetValues() while processing select query in Parent Model Class.
+103: Error in Updating MotherName in Parent Model Class.
+104: Error in Updating FatherCNIC in Parent Model Class.
+105: Error in Updating HomeAddres in Parent Model Class.
+106: Error in Updating EmergencyContact in Parent Model Class.
+107: Error in Updating EligibiltyThreshold in Parent Model Class.
+108: No row has been updated in the database.
+109: Error in Updating MotherMobile in Parent Model Class.
+110: Error in GetMonthFee method in Parent Model Class.
+111: Error in Get Balance in Parent Model Class.
+112: Error in GetAllStudents() method in Parent Model Class.
+113: Error in GetAllParents() static method in Parent Model Class.
+114: Error in GetBillingHistory() method in Parent Model Class.
+115: Error in GetParentFeeRecord() method in Parent Model Class.
+116: Error in GetAllApplications() method in Parent Model Class.
+117: Error in GetAllReceivedNotifications() method in Parent Model Class.
+118: Error in ReadNotification() (Sending to Web) method in Parent Model Class.
+119: Error in Get Account in Parent Model Class.
+120: Error in processing create ParentFeeRecord constuctor.
+121: Error in Updating Concession in ParentFeeRecord Model Class.
+122: Error in GetTotalCollection() static method in ParentFeeRecord Model Class.
+123: Error in GetTotalDue() static method in ParentFeeRecord Model Class.
+124: Error in GetAllMonthRecord() static method in ParentFeeRecord Model Class.
+125: Error in SendNotification() method in Parent Model Class.
+126: Error in GetAllWebNotifications() method in Parent Model Class.
+127: Error in SetValues() while processing select query in ParentFeeRecord Model Class.
+128: Error in SetValues() while processing select query in Notification Model Class.
+129: Error in Updating Message in Notification Model Class.
+130: Error in processing create Notification constuctor.
+131: Error in Get UnreadNotificationsCount in Parent Model Class.
+132: Error in processing Account constuctor by ParentId in ParentAcount Model Class.
+133: Error in SetValues() while processing on ASPUserDB in ParentAccount Model Class.
+134: Error in SetValues() while processing on ModelDb in ParentAccount Model Class.
+135: Error in processing create Application Constructor in Application Model Class.
+136: Error in Updating Status in Application Model Class.
+137: Error in SetValues() in Application Model Class.
+138: Error in GetPendingApplications() static Method in Application Model Class.
+139: Error in GetAllApplications() static Method in Application Model Class.
+140: Error in SetValues() Method in StuckOffStudent Model Class.
+141: Error in GetAllStruckedStudents() Static Method in StruckoffStudent Model Class.
+142: Error in SetValues() while processing select query in Student Model Class.
+143: Data confilicts with the unique index.
+144: Error in processing create Student Constructor in Student Model Class.
+145: Error in Updating Gender in Student Model Class.
+146: Error in Updating PreviousInstitue in Student Model Class.
+147: Error in Updating DateOfBirth in Student Model Class.
+148: Error in Updating DateOfAdmission in Student Model Class.
+149: Error in Updating MonthlyFee in Student Model Class.
+150: Error in Updating Name in Student Model Class.
+151: Error in Updating BFormNumber in Student Model Class.
+152: Error in GetMonthlyFee() Method in Student Model Class.
+153: Error in GetPurchasedItems() Method in Student Model Class.
+154: Error in GetExamResult() Method in Student Model Class.
+155: Error in GetTestResult() Method in Student Model Class.
+156: Error in GetGivenTests() Method in Student Model Class.
+157: Error in GetDairy() Method in Student Model Class.
+158: Error in SetAttandance() Method in Student Model Class.
+159: Error in GetAbsents() Method in Student Model Class.
+160: Error in GetMonthAttandances() Method in Student Model Class.
+161: Error in Updating Section in Student Model Class.
+162: Error in GetAllStudents() static Method in Student Model Class.
+163: Error in Search() static Method in Student Model Class.
+164: Error in SetValues() while processing select query in Attendance Model Class.
+165: Error in processing create StruckOffStudent Constructor in StruckOffStudent Model Class.
+166: Error in GetParentsWithUnpaidDues() static Method in Parent Model Class.
+167: Error in SetValues() while processing select query in DailyDairy Model Class.
+168: Error in processing create DailyDairy Constructor in DailyDairy Model Class.
+169: Error in Updating Content in DailyDairy Model Class.
+170: Error in GetDairyOfSubjectOnDate() static Method in Parent Model Class.
+171: Error in GetDairiesOfSubject() static Method in Parent Model Class.
+172: Error in Delete() while processing DELETE query in DailyDairy Model Class.
+173: Error in Delete() while processing DELETE query in Notification Model Class.
+174: Error in Updating IsActive in ParentAccount Model Class.
+175: Error in SetValues() while processing select query in Examination Model Class.
+176: Error in processing create Examination Constructor in Examination Model Class.
+177: Error in Updating IsPublished in Examination Model Class.
+178: Error in Updating ExamName in Examination Model Class.
+179: Error in Delete() while processing DELETE query in Examination Model Class.
+180: Error in GetAllExaminations() static Method in Examination Model Class.
+181: Error in SetValues() while processing select query in InventoryItem Model Class.
+182: Error in processing create InventoryItem Constructor in InventoryItem Model Class.
+183: Error in Updating Quantity in InventoryItem Model Class.
+184: Error in Updating Price in InventoryItem Model Class.
+185: Error in SellItem() Method in InventoryItem Model Class.
+186: Error in GetAllItems() static Method in InventoryItem Model Class.
+187: Error in SetValues() while processing select query in InventoryCategory Model Class.
+188: Error in processing create InventoryCategory Constructor in InventoryCategory Model Class.
+189: Error in GetItems() Method in InventoryCategory Model Class.
+190: Error in GetAllCategories() static Method in InventoryCategory Model Class.
+191: Error in Updating Name in InventoryCategory Model Class.
+192: Error in SetValues() while processing select query in StudentMonthlyFee Model Class.
+193: Error in processing create StudentMonthlyFee Constructor in StudentMonthlyFee Model Class.
+194: Error in Updating Fine in StudentMonthlyFee Model Class.
+195: Error in AddAdditionalFunds() Method in StudentMonthlyFee Model Class.
+196: Error in Getting ItemsPurchasedAmount in StudentMonthlyFee Model Class.
+197: Error in GetAdditionalFunds() Method in StudentMonthlyFee Model Class.
+198: Error in SetValues() while processing select query in AdditionalFund Model Class.
+199: Error in processing create AdditionalFund Constructor in AdditionalFund Model Class.
+200: Error in Updating Name in AdditionalFund Model Class.
+201: Error in Updating Amount in AdditionalFund Model Class.
+202: Error in GetAllFunds() static Method in AdditionalFund Model Class.
+203: Error in SetValues() while processing select query in Test Model Class.
+204: Error in processing create Test Constructor in Test Model Class.
+205: Error in Updating TotalMarks in Test Model Class.
+206: Error in AddTestMarks() Method in Test Model Class.
+207: Error in GetAllTests() static Method in Test Model Class.
+208: Error in SetValues() while processing select query in Subject Model Class.
+209: Error in Updating Name in Subject Model Class.
+210: Error in SetValues() while processing select query in Section Model Class.
+211: Error in processing create Section Constructor in Section Model Class.
+212: Error in GetStudents() Method in Section Model Class.
+213: Error in Getting Strength in Section Model Class.
+214: Error in SetValues() while processing select query in Class Model Class.
+215: Error in processing create Class Constructor in Class Model Class.
+216: Error in Updating Incharge in Class Model Class.
+217: Error in Delete() while processing DELETE query in Subject Model Class.
+218: Error in Delete() while processing DELETE query in Section Model Class.
+219: Error in AddSubject() Method in Class Model Class.
+220: Error in AddDownloadable() Method in Class Model Class.
+221: Error in GetDownloadables() Method in Class Model Class.
+222: Error in GetSubjects() Method in Class Model Class.
+223: Error in Getting Strength in Class Model Class.
+224: Error in SetValues() while processing select query in Downloadable Model Class.
+225: Error in SetValues() while processing select query in Staff Model Class.
+226: Error in Updating Name in Staff Model Class.
+227: Error in Updating Address in Staff Model Class.
+228: Error in Updating PhoneNumber in Staff Model Class.
+229: Error in Updating CNIC in Staff Model Class.
+230: Error in Updating Salary in Staff Model Class.
+231: Error in SetSalary() Method in Staff Model Class.
+232: Error in GetAllClasses() static method in Class Model Class.
+233: Error in GetAllStaff() static method in Staff Model Class.
+234: Error in SetAttendance() Method in Staff Model Class.
+235: Error in GetMonthAttendances() Method in Staff Model Class.
+236: Error in GetAbsents() Method in Staff Model Class.
+237: Error in processing create NonTeachingStaff Constructor in NonTeachingStaff Model Class.
+238: Error in Updating JobType in Staff Model Class.
+239: Error in GetAllNonTeachingStaff() static method in NonTeachingStaff Model Class.
+240: Error in processing create Teacher Constructor in Teacher Model Class.
+241: Error in Getting Qualifications in Teacher Model Class.
+242: Error in AddQualification() Method in Teacher Model Class.
+243: Error in RemoveQualification() Method in Teacher Model Class.
+244: Error in Delete() Method in Staff Model Class.
+245: Error in AssignSection() Method in Teacher Model Class.
+246: Error in GetAssignSection() Method in Teacher Model Class.
+247: Error in GetInchargedClasses() Method in Teacher Model Class.
+248: Error in GetAllReceivedNotifications() Method in Teacher Model Class.
+249: Error in GetAllWebNotifications() Method in Teacher Model Class.
+250: Error in ReadNotification() Method in Teacher Model Class.
+251: Error in SendNotification() Method in Teacher Model Class.
+252: Error in Getting UnreadNotificationsCount in Teacher Model Class.
+253: Error in GetMonthSalary() Method in Staff Model Class.
+254: Error in GetAllTeachers() static method in Teacher Model Class.
+255: Error in SetValues() while processing select query in MonthlySalary Model Class.
+256: Error in Updating PerAbsentDeduction in MonthlySalary Model Class.
+257: Error in Getting Absents in MonthlySalary Model Class.
+258: Error in SetValues() while processing on ASPUserDB in TeacherAccount Model Class.
+259: Error in SetValues() while processing on ModelDb in ParentAccount Model Class.
+260: Error in Getting Account in Teacher Model Class.
+261: Error in processing Account constuctor by teacherId in TeacherAccount Model Class.
+262: Error in Updating IsActive in ParentAccount Model Class.
+263: Error in Updating IsActive in TeacherAccount Model Class.
+264: Error in Setting  Parent by CNI in Parent Model Class.
+265: Error in AddMarks() Method in Examination Model Class.
+266: Error in Getting total in IsEligible in Parent Model Class.
+267: Error in GetAllPublishedExaminations() static Method in Examination Model Class.
+268: Error in Delete() Method in Downloadable Model Class.
+269: Error in Get TotalAdditionalFunds in StudentMonthlyFee Model Class.

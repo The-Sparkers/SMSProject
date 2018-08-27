@@ -172,6 +172,33 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\AdditionalFund.cs" />
+    <Compile Include="Models\Application.cs" />
+    <Compile Include="Models\Attandance.cs" />
+    <Compile Include="Models\Class.cs" />
+    <Compile Include="Models\DailyDairy.cs" />
+    <Compile Include="Models\Downloadable.cs" />
+    <Compile Include="Models\Examination.cs" />
+    <Compile Include="Models\HelperModels.cs" />
+    <Compile Include="Models\InventoryCategory.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
+    <Compile Include="Models\ModelEnums.cs" />
+    <Compile Include="Models\MonthlySalary.cs" />
+    <Compile Include="Models\NonTeachingStaff.cs" />
+    <Compile Include="Models\Notification.cs" />
+    <Compile Include="Models\Parent.cs" />
+    <Compile Include="Models\ParentAccount.cs" />
+    <Compile Include="Models\ParentFeeRecord.cs" />
+    <Compile Include="Models\Section.cs" />
+    <Compile Include="Models\Staff.cs" />
+    <Compile Include="Models\StruckOffStudent.cs" />
+    <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\StudentMonthlyFee.cs" />
+    <Compile Include="Models\Subject.cs" />
+    <Compile Include="Models\Teacher.cs" />
+    <Compile Include="Models\TeacherAccount.cs" />
+    <Compile Include="Models\Test.cs" />
+    <Compile Include="ServiceModules\SMSService.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="ViewModels\ManageViewModels.cs" />
@@ -181,12 +208,14 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="ExceptionsCode.txt" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ProjectDiagrams\Models.cd" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
