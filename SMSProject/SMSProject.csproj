@@ -199,6 +199,7 @@
     <Compile Include="Models\Teacher.cs" />
     <Compile Include="Models\TeacherAccount.cs" />
     <Compile Include="Models\Test.cs" />
+    <Compile Include="ServiceModules\Cryptography.cs" />
     <Compile Include="ServiceModules\SMSService.cs" />
     <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -319,8 +320,7 @@
     <Content Include="Scripts\js" />
     <Content Include="Views\Admin\_Layout.cshtml" />
     <Content Include="Views\Admin\_ViewStart.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Dashboard.cshtml" />
     <Content Include="Views\Admin\_navPartial.cshtml" />
     <Content Include="Views\Admin\_adminSettingsPartial.cshtml" />
     <Content Include="Views\Admin\_adminNotificationsPartial.cshtml" />

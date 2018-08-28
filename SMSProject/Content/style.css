@@ -25,6 +25,18 @@ ul{
 p,ul,ol{
 	font-size:14px;
 }
+.view-more-link{
+    text-decoration:none;
+    font-size:.9em;
+    font-weight:bold;
+    color:#ea4335
+}
+.view-more-link:hover{
+    text-decoration:underline;
+    font-size:.98em;
+    color:#007ee5
+}
+
 input[type="submit"],a,.nbs-flexisel-nav-left,.nbs-flexisel-nav-right{
 	transition:.5s ease-in;
 	-webkit-transition:.5s ease-in;

@@ -12,7 +12,9 @@ namespace SMSProject
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                        "~/Scripts/jquery.validate*",
+                        "~/Scripts/valida.*",
+                      "~/Scripts/validator.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
@@ -36,9 +38,7 @@ namespace SMSProject
                        "~/Scripts/gnmenu.js",
                       "~/Scripts/screenfull.js",
                       "~/Scripts/scripts.js",
-                      "~/Scripts/skycons.js",
-                      "~/Scripts/valida.*",
-                      "~/Scripts/validator.min.js"
+                      "~/Scripts/skycons.js"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/amcharts").Include(
