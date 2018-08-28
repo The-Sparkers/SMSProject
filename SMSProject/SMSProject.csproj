@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,27 +207,84 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\basictable.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\circles.css" />
+    <Content Include="Content\component.css" />
+    <Content Include="Content\export.css" />
+    <Content Include="Content\flipclock.css" />
+    <Content Include="Content\font-awesome.css" />
+    <Content Include="Content\jQuery-plugin-progressbar1.css" />
+    <Content Include="Content\monthly.css" />
+    <Content Include="Content\style.css" />
+    <Content Include="Content\style_grid.css" />
+    <Content Include="Content\table-style.css" />
     <Content Include="ExceptionsCode.txt" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
+    <Content Include="images\a1.jpg" />
+    <Content Include="images\a2.jpg" />
+    <Content Include="images\a3.jpg" />
+    <Content Include="images\a4.jpg" />
+    <Content Include="images\admin.jpg" />
+    <Content Include="images\bottom.jpg" />
+    <Content Include="images\overlay.png" />
+    <Content Include="images\pic.jpg" />
+    <Content Include="images\pic1.jpg" />
+    <Content Include="images\profile.jpg" />
+    <Content Include="images\profile_bg.jpg" />
+    <Content Include="images\progress.jpg" />
+    <Content Include="Scripts\amcharts.js" />
+    <Content Include="Scripts\bars.js" />
+    <Content Include="Scripts\bootstrap-3.1.1.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ProjectDiagrams\Models.cd" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\Chart.min.js" />
+    <Content Include="Scripts\circles.js" />
+    <Content Include="Scripts\classie.js" />
+    <Content Include="Scripts\contact_me.js" />
+    <Content Include="Scripts\export.js" />
+    <Content Include="Scripts\flipclock.js" />
+    <Content Include="Scripts\gauge.js" />
+    <Content Include="Scripts\gnmenu.js" />
+    <Content Include="Scripts\jqBootstrapValidation.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jQuery-plugin-progressbar.js" />
+    <Content Include="Scripts\jquery.basictable.min.js" />
+    <Content Include="Scripts\jquery.nicescroll.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\light.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\modernizr.custom.js" />
+    <Content Include="Scripts\monthly.js" />
+    <Content Include="Scripts\pie.js" />
+    <Content Include="Scripts\prettymaps.js" />
+    <Content Include="Scripts\radar.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\screenfull.js" />
+    <Content Include="Scripts\scripts.js" />
+    <Content Include="Scripts\serial.js" />
+    <Content Include="Scripts\skycons.js" />
+    <Content Include="Scripts\valida.2.1.6.min.js" />
+    <Content Include="Scripts\validator.min.js" />
+    <Content Include="Scripts\xy.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -236,7 +294,6 @@
       <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
-    <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -259,10 +316,20 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Scripts\js" />
+    <Content Include="Views\Admin\_Layout.cshtml" />
+    <Content Include="Views\Admin\_ViewStart.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\_navPartial.cshtml" />
+    <Content Include="Views\Admin\_adminSettingsPartial.cshtml" />
+    <Content Include="Views\Admin\_adminNotificationsPartial.cshtml" />
+    <Content Include="Views\Admin\_viewApplicationsPartial.cshtml" />
+    <Content Include="Views\Admin\_searchPartial.cshtml" />
+    <Content Include="Views\Admin\_shorteningItemsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="zxx">
+<head>
+    <title>@ViewBag.Title | School Management System | Admin Panel</title>
+    <!-- custom-theme -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script type="application/x-javascript">
+        addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false);
+               function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- //custom-theme -->
+    @Styles.Render("~/Content/css")
+    <!-- font-awesome-icons -->
+    @Styles.Render("~/Content/fonts")
+    <!-- //font-awesome-icons -->
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800" rel="stylesheet">
+</head>
+<body>
+    <!-- banner -->
+    <div class="wthree_agile_admin_info">
+        <!-- /w3_agileits_top_nav-->
+        <!-- /nav-->
+        <div class="w3_agileits_top_nav">
+            <ul id="gn-menu" class="gn-menu-main">
+                <!-- /nav_agile_w3l -->
+                @Html.Partial("_navPartial")
+                <!-- //nav_agile_w3l -->
+                <!-- /admin settings-->
+                @Html.Partial("_adminSettingsPartial")
+                <!--//admin settings-->
+                <!--/admin notifications-->
+                @Html.Partial("_adminNotificationsPartial")
+                <!--//admin notifications-->
+                <!--/applications section-->
+                @Html.Partial("_viewApplicationsPartial")
+                <!--//applications section-->
+                @*<!--/shortening items section-->
+                @Html.Partial("_shorteningItemsPartial")
+                <!--//shortening items section-->*@
+                <!--/search section-->
+                @Html.Partial("_searchPartial")
+                <!--//search section-->
+                @*<li class="second full-screen">
+                    <section class="full-top">
+                        <button id="toggle"><i class="fa fa-arrows-alt" aria-hidden="true"></i></button>
+                    </section>
+                </li>*@
+
+            </ul>
+            <!-- //nav -->
+
+        </div>
+        <div class="clearfix"></div>
+        <!-- //w3_agileits_top_nav-->
+        <!-- /inner_content-->
+        <div class="inner_content">
+            <!-- /inner_content_w3_agile_info-->
+            <div class="inner_content_w3_agile_info">
+
+                @RenderBody()
+
+            </div>
+            <!-- //inner_content_w3_agile_info-->
+        </div>
+        <!-- //inner_content-->
+    </div>
+    <!-- banner -->
+    <!--copy rights start here-->
+    <div class="copyrights">
+        <p>© @DateTime.Now.Year School Management System. All Rights Reserved by THE SPARKERS | Design &amp; Developed by  <a href="https://sparkers.000webhostapp.com/" target="_blank">THE SPARKERS</a> </p>
+    </div>
+    <!--copy rights end here-->
+    <!-- js -->
+
+    @Scripts.Render("~/bundles/jquery")
+    <!--  Modrenizer  -->
+    @Scripts.Render("~/bundles/modernizr")
+
+    <!-- /amcharts -->
+
+    @Scripts.Render("~/bundles/customScripts")
+    <script>
+        new gnMenu(document.getElementById('gn-menu'));
+    </script>
+    <script>
+        $(function () {
+            $('#supported').text('Supported/allowed: ' + !!screenfull.enabled);
+
+            if (!screenfull.enabled) {
+                return false;
+            }
+
+
+
+            $('#toggle').click(function () {
+                screenfull.toggle($('#container')[0]);
+            });
+        });
+    </script>
+    <!-- script-for-menu -->
+    <!-- /circle-->
+
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>
