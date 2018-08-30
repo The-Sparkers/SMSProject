@@ -65,7 +65,7 @@ namespace SMSProject.Models
             {
                 try
                 {
-                    query = "update PARENT_MONTHLY_FEE set Concession=" + value + " where PFeeId=" + id; 
+                    query = "update PARENT_MONTHLY_FEE set Concession=" + value + " where PFeeId=" + id;
                     con.Open();
                     cmd = new SqlCommand(query, con);
                     if (cmd.ExecuteNonQuery() == 0)
@@ -137,7 +137,7 @@ namespace SMSProject.Models
         public static decimal GetTotalCollection(DateTime month, string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);
-            decimal total=0;
+            decimal total = 0;
             DateTime startDate = new DateTime(month.Year, month.Month, 1);
             DateTime endDate = startDate.AddMonths(1).AddDays(-1);
             try
@@ -145,7 +145,14 @@ namespace SMSProject.Models
                 string query = "Select SUM(AmountPaid) from PARENT_MONTHLY_FEE where DatePaid between '" + startDate + "' and '" + endDate + "'";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
-                total = (decimal)cmd.ExecuteScalar();
+                try
+                {
+                    total = (decimal)cmd.ExecuteScalar();
+                }
+                catch (InvalidCastException)
+                {
+
+                }
                 con.Close();
             }
             catch (SqlException ex)
@@ -169,7 +176,15 @@ namespace SMSProject.Models
                 cmd.Parameters.Add(new SqlParameter("@monthStart", System.Data.SqlDbType.Date)).Value = startDate;
                 cmd.Parameters.Add(new SqlParameter("@monthEnd", System.Data.SqlDbType.Date)).Value = endDate;
                 con.Open();
-                total = (decimal)cmd.ExecuteScalar();
+                try
+                {
+                    total = (decimal)cmd.ExecuteScalar();
+                }
+                catch (InvalidCastException)
+                {
+
+                }
+                
                 con.Close();
             }
             catch (SqlException ex)
