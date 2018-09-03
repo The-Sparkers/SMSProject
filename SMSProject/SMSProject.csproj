@@ -49,6 +49,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PagedList.Mvc, Version=4.5.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -219,6 +227,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\jQuery-plugin-progressbar1.css" />
     <Content Include="Content\monthly.css" />
+    <Content Include="Content\PagedList.css" />
     <Content Include="Content\style.css" />
     <Content Include="Content\style_grid.css" />
     <Content Include="Content\table-style.css" />
@@ -328,6 +337,11 @@
     <Content Include="Views\Admin\_viewApplicationsPartial.cshtml" />
     <Content Include="Views\Admin\_searchPartial.cshtml" />
     <Content Include="Views\Admin\_shorteningItemsPartial.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Admin\AddStudent1.cshtml" />
+    <Content Include="Views\Admin\AddStudent2.cshtml" />
+    <Content Include="Views\Admin\AddStudent3.cshtml" />
+    <Content Include="Views\Admin\StudentDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

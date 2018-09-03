@@ -3,49 +3,92 @@
     <nav class="gn-menu-wrapper">
         <div class="gn-scroller scrollbar1">
             <ul class="gn-menu agile_menu_drop">
-                <li><a href="main-page.html"> <i class="fa fa-tachometer"></i> Dashboard</a></li>
+                <li><a href="@Url.Action("Dashboard","Admin")"> <i class="fa fa-tachometer" title="Dashboard"></i> Dashboard</a></li>
                 <li>
-                    <a href="#"><i class="fa fa-cogs" aria-hidden="true"></i> UI Components <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <a href=""><i class="fa fa-user" aria-hidden="true" title="Students"></i> Students <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                     <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="buttons.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Buttons</a></li>
-                        <li class="mini_list_w3"><a href="grids.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Grids</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("AddStudent1","Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Student</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("StruckOffStudent")"><i class="fa fa-caret-right" aria-hidden="true"></i>Struck Off</a></li>
+                        <li class="mini_list_agile"><a href="buttons.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Struck Off Students</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"> <i class="fa fa-file-text-o" aria-hidden="true"></i>Forms <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <a href="#"> <i class="fa fa-male" aria-hidden="true" title="Parents"></i>Parents <i class="fa fa-angle-down" aria-hidden="true"></i></a>
                     <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Inputs</a></li>
-                        <li class="mini_list_w3"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Validation</a></li>
-                    </ul>
-                </li>
-                <li><a href="table.html"> <i class="fa fa-table" aria-hidden="true"></i> Tables</a></li>
-                <li>
-                    <a href="#"><i class="fa fa-list" aria-hidden="true"></i>Short Codes <i class="fa fa-angle-down" aria-hidden="true"> </i></a>
-                    <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="typo.html"><i class="fa fa-caret-right" aria-hidden="true"></i> Typography</a></li>
-                        <li class="mini_list_w3"><a href="icons.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Icons</a></li>
-
-                    </ul>
-                </li>
-
-                <li><a href="charts.html"> <i class="fa fa-line-chart" aria-hidden="true"></i> Charts</a></li>
-                <li><a href="maps.html"><i class="fa fa-map-o" aria-hidden="true"></i> Maps</a></li>
-                <li class="page">
-                    <a href="#"><i class="fa fa-files-o" aria-hidden="true"></i> Pages <i class="fa fa-angle-down" aria-hidden="true"></i></a>
-                    <ul class="gn-submenu">
-
-                        <li class="mini_list_agile"> <a href="signin.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign In</a></li>
-                        <li class="mini_list_w3"><a href="signup.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Sign Up</a></li>
-                        <li class="mini_list_agile error"><a href="404.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Error 404 </a></li>
-
-                        <li class="mini_list_w3_line"><a href="calendar.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Calendar</a></li>
+                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Parent</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Parents</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Parents With Unpaid Dues</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"> <i class="fa fa-suitcase" aria-hidden="true"></i>More <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <a href="table.html"> <i class="fa fa-briefcase" title="Staff" aria-hidden="true"></i>Staff</a>
                     <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Faq</a></li>
-                        <li class="mini_list_w3"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i> Blank Page</a></li>
+                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Staff Member</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Teachers</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Non Teaching Staff</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Set Salaries</a></li>
+                    </ul>
+                </li>
+
+
+                <li>
+                    <a href="charts.html"> <i class="fa fa-book" title="Classes" aria-hidden="true"></i>Classes</a>
+                    <ul class="gn-submenu">
+                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Class</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Class Details</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add Section(s)</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Promote Students</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="maps.html"><i class="fa  fa-check-square-o" title="Attendance" aria-hidden="true"></i>Attendance</a>
+                    <ul class="gn-submenu">
+                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Student Attendance</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Staff Attendance</a></li>
+                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Edit Attendance</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"> <i class="fa fa-bullhorn" title="Notifications" aria-hidden="true"></i>Notifications<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <ul class="gn-submenu">
+                        <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Send Notification</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>View Notifications</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#"> <i class="fa fa-location-arrow" title="Inventory" aria-hidden="true"></i>Inventory<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <ul class="gn-submenu">
+                        <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Sell Item</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Add Item</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>View Items</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Add Category</a></li>
+                    </ul>
+                </li>
+                <li class="">
+                    <a href="#"><i class="fa fa-bar-chart-o" title="Examinations" aria-hidden="true"></i>Examinations<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <ul class="gn-submenu">
+                        <li class="mini_list_agile"> <a href="signin.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Add New Exam</a></li>
+                        <li class="mini_list_agile"><a href="signup.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>View Exams</a></li>
+                        <li class="mini_list_agile"><a href="404.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Upload Result</a></li>
+                        <li class="mini_list_agile"><a href="404.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Publish Result</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"> <i class="fa fa-money" title="Fees" aria-hidden="true"></i>Fees<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <ul class="gn-submenu">
+                        <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Fee Reception</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Parent Fee Record</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Set Fee</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="#"> <i class="fa fa-laptop" title="Portal Accounts Management" aria-hidden="true"></i>Accounts Management<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <ul class="gn-submenu">
+                        <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Reset Password</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Disable Account</a></li>
+                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Delete Account</a></li>
                     </ul>
                 </li>
             </ul>

@@ -1,9 +1,14 @@
 ﻿using SMSProject.Models;
+using SMSProject.Models.ModelEnums;
+using SMSProject.ServiceModules;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace SMSProject.ViewModels.AdminViewModels
 {
@@ -97,7 +102,7 @@ namespace SMSProject.ViewModels.AdminViewModels
         {
             get
             {
-                return decimal.Round(ParentFeeRecord.GetTotalDue(DateTime.Now, conString));
+                return decimal.Round(decimal.Subtract(ParentFeeRecord.GetTotalDue(DateTime.Now, conString), CollectedDues));
             }
         }
         public int UnpaidParentCount
@@ -255,5 +260,102 @@ namespace SMSProject.ViewModels.AdminViewModels
         public string HeldDate { get; internal set; }
         public int Result { get; internal set; }
         public string Section { get; internal set; }
+    }
+    public class AddStudent1ViewModel
+    {
+        [Display(Name = "Father's Name")]
+        public string SearchName { get; set; }
+        [Display(Name = "Father's CNIC")]
+        [StringLength(15,MinimumLength =15)]
+        [RegularExpression(@"^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "The CNIC number should be in the given format")]
+        public string SearchCNIC { get; set; }
+        public List<AddStudent1SearchResultViewModel> SearchResult { get; set; }
+    }
+    public struct AddStudent1SearchResultViewModel
+    {
+        public int ParentId { get; set; }
+        public string FatherName { get; set; }
+        public string MotherName { get; set; }
+        public string FatherCNIC { get; set; }
+    }
+    public class AddStudent2ViewModel
+    {
+        [Display(Name = "Full Name*")]
+        [RegularExpression(@"^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$", ErrorMessage = "Please Write Name in the given format")]
+        [Required]
+        public string Name { get; set; }
+        [Display(Name ="B-Form Number")]
+        [RegularExpression(@"^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "The B-Form number should be in the given format")]
+        [StringLength(15, MinimumLength = 15)]
+        public string BForm { get; set; }
+        [Required]
+        [Display(Name ="Gender*")]
+        public Genders Gender { get; set; }
+        [Required]
+        [Display(Name ="Admission Number*")]
+        [RegularExpression(@"^(([A-Z]|[0-9])+(([-]*)([A-Z]|[0-9])+)*)*$", ErrorMessage ="Only Uppercase letters, Numbers are acceptable. Use '-' in between the letters")]
+        [StringLength(50)]
+        public string AddmissionNumber { get; set; }
+        [Required]
+        [Display(Name ="Class*")]
+        public int Class { get; set; }
+        [Required]
+        [Display(Name ="Date of Birth*")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime DOB { get; set; }
+        [Required]
+        [Display(Name ="Monthly Fee*")]
+        [DataType(DataType.Currency)]
+        [RegularExpression(@"^[0-9]+([\,\.][0-9]+)?$", ErrorMessage ="Please Enter a Valid Fee")]
+        public decimal MonthlyFee { get; set; }
+        [Display(Name ="Previous Institute")]
+        public string Prevnst { get; set; }
+        public int ParentId { get; set; }
+        
+    }
+    public class AddStudent3ViewModel
+    {
+        public int ParentId { get; set; }
+        public string Name { get; set; }
+        public string BForm { get; set; }
+        public int Class { get; set; }
+        public Genders Gender { get; set; }
+        public string AddmissionNumber { get; set; }
+        public DateTime DOB { get; set; }
+        public decimal MonthlyFee { get; set; }
+        public string Prevnst { get; set; }
+        [Required]
+        [Display(Name ="Section*")]
+        public int Section { get; set; }
+    }
+    public class StudentDetailsViewModel
+    {
+        public int Id { get; set; }
+        [Display(Name ="Student Name")]
+        public string Name { get; set; }
+        [Display(Name = "B-Form Number")]
+        public string BForm { get; set; }
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+        [Display(Name = "Date Of Birth")]
+        public string DOB { get; set; }
+        [Display(Name = "Father Name")]
+        public string FName { get; set; }
+        [Display(Name = "Class")]
+        public string Class { get; set; }
+        [Display(Name = "Section")]
+        public string Section { get; set; }
+        [Display(Name = "Class Roll Number")]
+        public string RollNumber { get; set; }
+        [Display(Name = "Monthly Fee")]
+        public string Fee { get; set; }
+        [Display(Name = "Admission Number")]
+        public string AdmissionNumber { get; set; }
+        [Display(Name = "Date of Addmission")]
+        public string DOA { get; set; }
+        [Display(Name = "Previous Institute")]
+        public string PrevInst { get; set; }
+
     }
 }

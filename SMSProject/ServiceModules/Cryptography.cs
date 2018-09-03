@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SMSProject.ServiceModules
 {
-    class Cryptography
+    public class Cryptography
     {
         public static string Encrypt(string s)
         {
@@ -30,7 +30,7 @@ namespace SMSProject.ServiceModules
             string x = "";
             foreach (var item in s.ToCharArray())
             {
-                if (item == '-') 
+                if (item == '-')
                 {
                     int i = Convert.ToInt32(x);
                     stack.Push(i);

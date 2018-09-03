@@ -1,0 +1,91 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.AddStudent1ViewModel
+
+@{
+    ViewBag.Title = "Add Student";
+}
+<div class="fullHeight">
+    <h2>Add Student</h2>
+    @if (Model == null || (bool)ViewBag.error)
+    {
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: 0%"></div>
+        </div>
+    }
+    else
+    {
+        <div class="progress">
+            <div class="progress-bar progress-bar-success" style="width: 33%"></div>
+        </div>
+    }
+    <br />
+    <h4><span class="badge badge-success">1.</span> Select Parent</h4>
+    <br />
+    @using (Html.BeginForm("AddStudent1", "Admin", FormMethod.Post, new { id = "addstu1" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal agile_info_shadow">
+            <p class="text-info">Search Parent by entering Father's Name or by Father's CNIC Number</p>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.SearchName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SearchName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SearchName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <h3>OR</h3>
+            <div class="form-group">
+                @Html.LabelFor(model => model.SearchCNIC, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SearchCNIC, new { htmlAttributes = new { @class = "form-control" } })
+                    <p class="text-primary">eg: XXXXX-XXXXXXX-X</p>
+                    @Html.ValidationMessageFor(model => model.SearchCNIC, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href="javascript:document.getElementById('addstu1').submit()" class="btn btn-primary">Search</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model != null)
+    {
+        <div class="table table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <th>Father's Name</th>
+                    <th>Mother's Name</th>
+                    <th>Father's CNIC</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in Model.SearchResult)
+                {
+                    <tr>
+                        <td>@item.FatherName</td>
+                        <td>@item.MotherName</td>
+                        <td>@item.FatherCNIC</td>
+                        <td>@Html.ActionLink("Next", "AddStudent2", new { pId = item.ParentId }, new { @class = "btn btn-danger" })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        if ((bool)ViewBag.error)
+        {
+            <p class="text-danger">No record found against your search.</p>
+        }
+    }
+    else
+    {
+        <br />
+        <br />
+        <br />
+        <br />
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

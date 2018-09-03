@@ -182,6 +182,28 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        public List<Section> GetSections()
+        {
+            List<Section> lst = new List<Section>();
+            try
+            {
+                query = "SELECT SectionId FROM SECTIONS WHERE ClassId=" + id;
+                cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lst.Add(new Section((int)reader[0], con.ConnectionString));
+                }
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Error Occured in Database processing. CodeIndex:271", ex);
+                throw e;
+            }
+            return lst;
+        }
         private void SetValues()
         {
             try

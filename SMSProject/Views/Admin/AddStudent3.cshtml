@@ -1,0 +1,97 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.AddStudent3ViewModel
+
+@{
+    ViewBag.Title = "Add Student";
+    List<SelectListItem> sections = new List<SelectListItem>();
+    try
+    {
+        SMSProject.Models.Class cls = new SMSProject.Models.Class(Model.Class, SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value));
+        foreach (var item in cls.GetSections())
+        {
+            sections.Add(new SelectListItem
+            {
+                Value = item.SectionId.ToString(),
+                Text = item.Name + " Strength: " + item.Strength
+            });
+        }
+    }
+    catch (NullReferenceException)
+    {
+        SMSProject.Models.Class cls = new SMSProject.Models.Class((int)ViewBag.Class, SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value));
+        foreach (var item in cls.GetSections())
+        {
+            sections.Add(new SelectListItem
+            {
+                Value = item.SectionId.ToString(),
+                Text = item.Name + " Strength: " + item.Strength
+            });
+        }
+    }
+}
+
+<h2>Add Student</h2>
+<div class="progress">
+    <div class="progress-bar progress-bar-success" style="width: 99%"></div>
+</div>
+<br />
+<h4><span class="badge badge-success">3.</span> Select Section</h4>
+<br />
+
+@using (Html.BeginForm("AddStudent3", "Admin", FormMethod.Post, new { id = "addstu3" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(Model => Model.AddmissionNumber)
+    @Html.HiddenFor(Model => Model.Name)
+    @Html.HiddenFor(Model => Model.BForm)
+    @Html.HiddenFor(Model => Model.DOB)
+    @Html.HiddenFor(Model => Model.Gender)
+    @Html.HiddenFor(Model => Model.MonthlyFee)
+    @Html.HiddenFor(Model => Model.ParentId)
+    @Html.HiddenFor(Model => Model.Prevnst)
+    @Html.HiddenFor(Model => Model.Class)
+    <div class="form-horizontal agile_info_shadow col-md-6">
+        <hr />
+        <p class="text-info">Select the Section for the student.</p>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Section, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Section, sections, "Choose Section", new { @class = "form-control1" })
+                @Html.ValidationMessageFor(model => model.Section, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-6">
+                @try
+                {
+                    @Html.ActionLink("Back", "AddStudent2", new { pId = Model.ParentId }, new { @class = "btn btn-warning" })
+                }
+                catch (NullReferenceException)
+                {
+                    @Html.ActionLink("Back", "AddStudent2", new { pId = ViewBag.ParentId }, new { @class = "btn btn-warning" })
+                }
+            </div>
+            <div class="col-md-offset-2 col-md-2">
+                <a href="javascript:document.getElementById('addstu3').submit()" class="btn btn-primary">Finish</a>
+            </div>
+        </div>
+    </div>
+    <br />
+
+
+}
+<div class="row">
+    <div class="col-md-12">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -12,9 +12,11 @@ namespace SMSProject
                         "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*",
-                        "~/Scripts/valida.*",
-                      "~/Scripts/validator.min.js"));
+                        "~/Scripts/jquery.validate*"
+                        //,
+                      //  "~/Scripts/valida.*",
+                      //"~/Scripts/validator.min.js"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
@@ -27,7 +29,7 @@ namespace SMSProject
                       "~/Scripts/circles.js",
                       "~/Scripts/contact_me.js",
                       "~/Scripts/flipclock.js",
-                      "~/Scripts/jqBootstrapValidation.js",
+                      //"~/Scripts/jqBootstrapValidation.js",
                       "~/Scripts/jQuery-plugin-progressbar.js",
                       "~/Scripts/jquery.basictable.min.js",
                       "~/Scripts/jquery.nicescroll.js",

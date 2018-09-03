@@ -676,6 +676,29 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        public static List<Parent> GetAllParentsByCNIC(string connectionString, string matchCNIC = "")
+        {
+            List<Parent> lst = new List<Parent>();
+            try
+            {
+                SqlConnection con = new SqlConnection(connectionString);
+                string query = "select ParentId from PARENTS where FCNIC ='" + matchCNIC + "'";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lst.Add(new Parent((int)reader[0], con.ConnectionString));
+                }
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Error Occured in Database processing. CodeIndex:113", ex);
+                throw e;
+            }
+            return lst;
+        }
         public static List<Parent> GetParentsWithUnpaidDues(string connectionString, DateTime month)
         {
             List<Parent> lst = new List<Parent>();

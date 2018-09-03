@@ -168,3 +168,5 @@
 267: Error in GetAllPublishedExaminations() static Method in Examination Model Class.
 268: Error in Delete() Method in Downloadable Model Class.
 269: Error in Get TotalAdditionalFunds in StudentMonthlyFee Model Class.
+270: Error in GetAllParentsByCNIC() static method in Parent Model Class.
+271: Error in GetSections() Method in Class Model Class.

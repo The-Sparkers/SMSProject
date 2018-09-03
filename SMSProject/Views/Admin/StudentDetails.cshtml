@@ -1,0 +1,113 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.StudentDetailsViewModel
+
+@{
+    ViewBag.Title = "Student Details";
+}
+
+<h2>Student Details</h2>
+
+<div class="agile_info_shadow">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BForm)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BForm)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOB)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOB)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Class)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Class)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Section)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Section)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RollNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RollNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fee)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fee)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AdmissionNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AdmissionNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DOA)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DOA)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrevInst)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrevInst)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

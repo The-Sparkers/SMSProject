@@ -22,7 +22,7 @@ namespace SMSProject.Models
             this.id = id;
             SetValues();
         }
-        public Student(string name, string bFormNumber, string admissionNo, DateTime dateOfBirth, DateTime dateOfAddmission, string prevInst, decimal monthlyFee, Genders gender, int parentId, int sectionId, string connectionString)
+        public Student(string name, string admissionNo, DateTime dateOfBirth, DateTime dateOfAddmission, decimal monthlyFee, Genders gender, int parentId, int sectionId, string connectionString, string bFormNumber="", string prevInst="")
         {
             con = new SqlConnection(connectionString);
             try
@@ -53,16 +53,16 @@ namespace SMSProject.Models
             {
                 if (ex.Number == 2601)
                 {
-                    throw new Exception("Field(s) Addmission Number exists. CodeIndex:143", ex);
+                    throw new Exception("Field(s) Admission Number exists. CodeIndex:143", ex);
                 }
                 Exception e = new Exception("Error Occured in Database processing. CodeIndex:144", ex);
                 throw e;
             }
             this.name = name;
             bFormNo = bFormNumber;
-            admissionNo = adNo;
-            dateOfBirth = dob;
-            dateOfAddmission = doa;
+            adNo = admissionNo;
+            dob = dateOfBirth;
+            doa = dateOfAddmission;
             this.prevInst = prevInst;
             this.monthlyFee = monthlyFee;
             this.gender = gender;
@@ -141,6 +141,13 @@ namespace SMSProject.Models
                     Exception e = new Exception("Error Occured in Database processing. CodeIndex:161", ex);
                     throw e;
                 }
+            }
+        }
+        public int RollNumber
+        {
+            get
+            {
+                return rollNo;
             }
         }
         public Genders Gender
