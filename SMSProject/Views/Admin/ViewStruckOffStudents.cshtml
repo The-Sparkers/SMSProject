@@ -4,6 +4,7 @@
 
 @{
     ViewBag.Title = "View Struck-Off Students";
+    int i = Model.PageSize * (Model.PageNumber - 1);
 }
 @Html.Action("_SearchStruckOffPartial")
 <br />
@@ -12,6 +13,7 @@
 <div class="table table-responsive">
     <table class="table table-hover">
         <tr>
+            <th>#</th>
             <th>
                 @Html.DisplayNameFor(model => model.First().StudentName)
             </th>
@@ -41,6 +43,7 @@
         @foreach (var item in Model)
         {
             <tr>
+                <td>@(++i)</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.StudentName)
                 </td>

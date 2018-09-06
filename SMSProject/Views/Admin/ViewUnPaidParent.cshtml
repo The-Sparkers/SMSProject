@@ -4,7 +4,7 @@
 
 @{
     ViewBag.Title = "Parents with Unpaid Dues";
-    int i = 1;
+    int i = Model.PageSize * (Model.PageNumber - 1);
 }
 
 <h2>Parents with Unpaid Dues</h2>
@@ -32,7 +32,7 @@
                     @foreach (var item in Model)
                     {
                         <tr>
-                            <td>@(i++)</td>
+                            <td>@(++i)</td>
                             <td>@Html.DisplayFor(modelItem => item.FName)</td>
                             <td>@Html.DisplayFor(modelItem => item.Amount)</td>
                             <td><input type="checkbox" value="@item.ParentId" name="pId" id="pId" class="form-control checkbox-inline myCheckBox" /></td>

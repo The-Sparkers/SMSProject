@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Parent Details";
+    int i = 1;
 }
 
 <h2>Parent Details</h2>
@@ -89,6 +90,7 @@
     <div class="table table-responsive">
         <table class="table table-hover">
             <tr>
+                <th>#</th>
                 <th>Student Name</th>
                 <th>Class</th>
                 <th></th>
@@ -96,6 +98,7 @@
             @foreach (var item in Model.StudentsList)
         {
         <tr>
+            <td>#(i++)</td>
             <td>@item.Name</td>
             <td>@item.Class</td>
             <td>@Html.ActionLink("View", "ViewStudentDetails", new { id = item.StudentId }, new { @class = "btn btn-danger", target="_blank" })</td>

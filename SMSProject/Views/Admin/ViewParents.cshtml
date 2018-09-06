@@ -4,6 +4,7 @@
 
 @{
     ViewBag.Title = "View Parents";
+    int i = Model.PageSize * (Model.PageNumber - 1);
 }
 <h3>Search</h3>
 @if (ViewBag.Invalid != null)
@@ -22,12 +23,13 @@
 </div>
 <br />
 <br />
-<h2>View Parents</h2>
+<h2>Parents</h2>
 <br />
 <div class="agile_info_shadow">
     <div class="table table-responsive">
         <table class="table table-hover">
             <tr>
+                <th>#</th>
                 <th>
                     @Html.DisplayNameFor(model => model.First().Fname)
                 </th>
@@ -46,6 +48,7 @@
             @foreach (var item in Model)
             {
                 <tr>
+                    <td>@(++i)</td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Fname)
                     </td>
