@@ -15,6 +15,7 @@ namespace SMSProject.ServiceModules
             foreach (var item in s.ToCharArray())
             {
                 int i = Convert.ToSByte(item);
+                i += 581;
                 stack.Push(i);
             }
             foreach (var item in stack)
@@ -33,6 +34,7 @@ namespace SMSProject.ServiceModules
                 if (item == '-')
                 {
                     int i = Convert.ToInt32(x);
+                    i -= 581;
                     stack.Push(i);
                     x = "";
                 }

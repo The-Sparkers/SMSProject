@@ -1,0 +1,79 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<SMSProject.ViewModels.AdminViewModels.ViewStruckOffStudentViewModel>
+
+@{
+    ViewBag.Title = "View Struck-Off Students";
+}
+@Html.Action("_SearchStruckOffPartial")
+<br />
+<h2>Struck-Off Students</h2>
+<br />
+<div class="table table-responsive">
+    <table class="table table-hover">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.First().StudentName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().BFormNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Gender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().LastClass)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().FatherName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().Contact)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().BoardExam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.First().DOS)
+            </th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StudentName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BFormNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastClass)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.FatherName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Contact)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BoardExam)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DOS)
+                </td>
+            </tr>
+        }
+
+    </table>
+    @if ((bool)ViewBag.Error)
+    {
+        <p class="text-danger">No record found against your search.</p>
+    }
+    <div class="col-md-offset-4 col-md-4">
+        @Html.PagedListPager(Model, page => @Url.Action("ViewStruckOffStudents", new { page , SearchName= ViewBag.Search }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, })
+    </div>
+</div>

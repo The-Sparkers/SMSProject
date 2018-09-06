@@ -133,13 +133,13 @@ namespace SMSProject.Models
                 return lastClass;
             }
         }
-        public static List<StruckOffStudent> GetAllStruckedStudents(string connectionString)
+        public static List<StruckOffStudent> GetAllStruckedStudents(string searchName, string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);
             List<StruckOffStudent> lst = new List<StruckOffStudent>();
             try
             {
-                string query = "Select SStudentId from [STRUCK-OFF_STUDENTS]";
+                string query = "Select SStudentId from [STRUCK-OFF_STUDENTS] WHERE Name LIKE '" + searchName + "%' ORDER BY DateOfStruck";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();

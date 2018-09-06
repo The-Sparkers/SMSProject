@@ -34,11 +34,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DOB)
+            @Html.DisplayNameFor(model => model.Age)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DOB)
+            @Html.DisplayFor(model => model.Age)
         </dd>
 
         <dt>
@@ -106,8 +106,18 @@
         </dd>
 
     </dl>
+    <p>
+        @Html.ActionLink("Edit", "EditStudent", new { id = Model.Id },new { @class = "btn btn-warning" })
+    </p>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@section Scripts {
+    @if (ViewBag.Success != null)
+    {
+        if ((bool)ViewBag.Success)
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record saved successfully."));
+            </script>
+        }
+    }
+}
