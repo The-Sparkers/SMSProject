@@ -341,7 +341,17 @@
     <Content Include="Views\Admin\AddStudent1.cshtml" />
     <Content Include="Views\Admin\AddStudent2.cshtml" />
     <Content Include="Views\Admin\AddStudent3.cshtml" />
-    <Content Include="Views\Admin\StudentDetails.cshtml" />
+    <Content Include="Views\Admin\ViewStudentDetails.cshtml" />
+    <Content Include="Views\Admin\StruckOffStudent.cshtml" />
+    <Content Include="Views\Admin\ViewStruckOffStudents.cshtml" />
+    <Content Include="Views\Admin\_searchStruckOffPartial.cshtml" />
+    <Content Include="Views\Admin\AddParent.cshtml" />
+    <Content Include="Views\Admin\ViewParentDetails.cshtml" />
+    <Content Include="Views\Admin\EditStudent.cshtml" />
+    <Content Include="Views\Admin\EditParent.cshtml" />
+    <Content Include="Views\Admin\ViewParents.cshtml" />
+    <Content Include="Views\Admin\_searchParentByNamePartial.cshtml" />
+    <Content Include="Views\Admin\_searchParentByCNICPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

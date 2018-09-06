@@ -219,6 +219,10 @@ namespace SMSProject.Models
                 }
                 catch (SqlException ex)
                 {
+                    if (ex.Number == 2601)
+                    {
+                        throw new Exception("Field CNIC exists. CodeIndex:143", ex);
+                    }
                     Exception e = new Exception("Error Occured in Database processing. CodeIndex:104", ex);
                     throw e;
                 }

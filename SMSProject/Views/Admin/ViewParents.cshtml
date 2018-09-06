@@ -1,0 +1,82 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<SMSProject.ViewModels.AdminViewModels.ViewParentsViewModel>
+
+@{
+    ViewBag.Title = "View Parents";
+}
+<h3>Search</h3>
+@if (ViewBag.Invalid != null)
+{
+    if ((bool)ViewBag.Invalid)
+    {
+        <p class="text-danger">Please enter the CNIC number in the correct format.</p>
+    }
+}
+<br />
+<div class="col-md-6">
+    @Html.Partial("_searchParentByNamePartial")
+</div>
+<div class="col-md-6">
+    @Html.Action("_SearchParentByCNICPartial")
+</div>
+<br />
+<br />
+<h2>View Parents</h2>
+<br />
+<div class="agile_info_shadow">
+    <div class="table table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Fname)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FCNIC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().MName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Balance)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Fname)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FCNIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Balance)
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "ViewParentDetails", new { pId = item.ParentId }, new { @class = "btn btn-danger", target="_blank" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+        @if (ViewBag.Error != null)
+        {
+            if ((bool)ViewBag.Error)
+            {
+                <p class="text-danger">No record found against your search.</p>
+            }
+        }
+        <div class="col-md-offset-4 col-md-4">
+            @Html.PagedListPager(Model, page => @Url.Action("ViewParents", new { page, searchName = ViewBag.SearchName, searchCNIC=ViewBag.SearchCNIC }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, })
+        </div>
+    </div>
+</div>  
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
