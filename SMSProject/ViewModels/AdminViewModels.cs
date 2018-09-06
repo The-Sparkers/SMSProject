@@ -479,29 +479,36 @@ namespace SMSProject.ViewModels.AdminViewModels
     public struct ParentStudent
     {
         public int StudentId { get; set; }
-        [Display(Name ="Student Name")]
+        [Display(Name = "Student Name")]
         public string Name { get; set; }
-        [Display(Name ="Class")]
+        [Display(Name = "Class")]
         public string Class { get; set; }
     }
     public class ViewParentsViewModel
     {
         public int ParentId { get; set; }
-        [Display(Name ="Father Name")]
+        [Display(Name = "Father Name")]
         public string Fname { get; set; }
-        [Display(Name ="Father CNIC")]
+        [Display(Name = "Father CNIC")]
         public string FCNIC { get; set; }
-        [Display(Name ="Mother Name")]
+        [Display(Name = "Mother Name")]
         public string MName { get; set; }
-        [Display(Name ="Balance")]
+        [Display(Name = "Balance")]
         public string Balance { get; set; }
     }
     public class _SearchParentByCNICPartialViewModel
     {
         [Required]
-        [Display(Name = "CNIC", Description = "Enter the name in format: XXXXX-XXXXXXX_X")]
+        [Display(Name = "CNIC", Description = "Enter the name in format: XXXXX-XXXXXXX-X")]
         [RegularExpression(@"^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "The CNIC number should be in the given format")]
         public string searchCNIC { get; set; }
     }
-
+    public class ViewUnPaidParentsViewModel
+    {
+        [Display(Name = "Father Name")]
+        public string FName { get; set; }
+        [Display(Name = "Amount Due")]
+        public string Amount { get; set; }
+        public int ParentId { get; set; }
+    }
 }

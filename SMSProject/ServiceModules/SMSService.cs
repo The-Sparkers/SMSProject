@@ -16,7 +16,7 @@ namespace SMSProject.ServiceModules
             string query;
             try
             {
-                query = "INSERT INTO [ServiceTable] ([Body] ,[RecieverNumber]) VALUES (" + message + " ," + number + ")";
+                query = "INSERT INTO [ServiceTable] ([Body] ,[RecieverNumber]) VALUES ('" + message + "' ,'" + number + "')";
                 cmd = new SqlCommand(query, con);
                 con.Open();
                 if (cmd.ExecuteNonQuery() != 0)

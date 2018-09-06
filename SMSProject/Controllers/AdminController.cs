@@ -25,6 +25,10 @@ namespace SMSProject.Controllers
                 conString.Expires = DateTime.Now.AddDays(1);
                 conString.Value = Cryptography.Encrypt(ConfigurationManager.ConnectionStrings["ModelConString"].ConnectionString);
                 Response.Cookies.Add(conString);
+                HttpCookie schoolName = new HttpCookie("schlNm");
+                schoolName.Expires = DateTime.Now.AddDays(1);
+                schoolName.Value = "Demo";
+                Response.Cookies.Add(schoolName);
                 return RedirectToAction("Dashboard");
             }
             catch (Exception ex)
@@ -540,7 +544,7 @@ namespace SMSProject.Controllers
                 }
                 return View(vpvm);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return Content(ex.Message);
             }
@@ -657,6 +661,64 @@ namespace SMSProject.Controllers
         public ActionResult _SearchParentByCNICPartial()
         {
             return PartialView();
+        }
+        public ActionResult ViewUnPaidParent(int? page, bool err = false, bool succ = false)
+        {
+            ViewBag.Error = err;
+            ViewBag.Success = succ;
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                List<ViewUnPaidParentsViewModel> lstParents = new List<ViewUnPaidParentsViewModel>();
+                foreach (var item in Parent.GetParentsWithUnpaidDues(Cryptography.Decrypt(conString.Value), DateTime.Now))
+                {
+                    lstParents.Add(new ViewUnPaidParentsViewModel
+                    {
+                        Amount = "Rs. " + decimal.Round(item.GetMonthFee(DateTime.Now)).ToString(),
+                        FName = item.FatherName,
+                        ParentId = item.ParentId
+                    });
+                }
+                if (lstParents.Count == 0)
+                {
+                    ViewBag.Empty = true;
+                }
+                PagedList<ViewUnPaidParentsViewModel> model = new PagedList<ViewUnPaidParentsViewModel>(lstParents, page ?? 1, 50);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendFeeNotification(IEnumerable<int> pId)
+        {
+            HttpCookie schoolName = Request.Cookies.Get("schlNm");
+            if (pId == null || pId.Count() == 0)
+            {
+                return RedirectToAction("ViewUnPaidParent", new { err = true });
+            }
+            try
+            {
+                Parent p;
+                string message;
+                Notification n;
+                foreach (var item in pId)
+                {
+                    HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                    p = new Parent(item, Cryptography.Decrypt(conString.Value));
+                    message = "Your have Rs. " + decimal.Round(p.GetMonthFee(DateTime.Now)) + " un-paid at " + schoolName.Value + ". Please submit all your dues as soon as possible.";
+                    n = new Notification(message, DateTime.Now, NotificationStatuses.ForParent, NotificationTypes.SMS, Cryptography.Decrypt(conString.Value));
+                    p.SendNotification(n);
+                }
+                return RedirectToAction("ViewUnPaidParent", new { succ = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
         }
     }
 }

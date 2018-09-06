@@ -711,7 +711,7 @@ namespace SMSProject.Models
             try
             {
                 SqlConnection con = new SqlConnection(connectionString);
-                string query = "SELECT DISTINCT p.ParentId FROM PARENTS p, PARENT_MONTHLY_FEE pm WHERE pm.ParentId!=p.ParentId AND (pm.DatePaid BETWEEN '" + startDate + "' AND '" + endDate + "')";
+                string query = "SELECT p.ParentId FROM PARENTS p WHERE NOT EXISTS(SELECT pm.ParentId FROM PARENT_MONTHLY_FEE pm WHERE pm.ParentId=p.ParentId AND (pm.DatePaid BETWEEN '" + startDate + "' AND '" + endDate + "'))";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();
