@@ -162,7 +162,7 @@
 261: Error in processing Account constuctor by teacherId in TeacherAccount Model Class.
 262: Error in Updating IsActive in ParentAccount Model Class.
 263: Error in Updating IsActive in TeacherAccount Model Class.
-264: Error in Setting  Parent by CNI in Parent Model Class.
+264: Error in Setting  Parent by CNIC in Parent Model Class.
 265: Error in AddMarks() Method in Examination Model Class.
 266: Error in Getting total in IsEligible in Parent Model Class.
 267: Error in GetAllPublishedExaminations() static Method in Examination Model Class.
@@ -170,3 +170,7 @@
 269: Error in Get TotalAdditionalFunds in StudentMonthlyFee Model Class.
 270: Error in GetAllParentsByCNIC() static method in Parent Model Class.
 271: Error in GetSections() Method in Class Model Class.
+272: Error in Setting jobType in get constructor in NonTeachingStaff Model Class.
+273: Error in RemoveSection() Method in Teacher Model Class.
+274: Error in GetAllUnsetSalaryStaff() static method in Staff Model Class.
+274: Error in GetAllSetSalaryStaff() static method in Staff Model Class.

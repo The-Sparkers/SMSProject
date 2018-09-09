@@ -5,7 +5,7 @@
             <ul class="gn-menu agile_menu_drop">
                 <li><a href="@Url.Action("Dashboard","Admin")"> <i class="fa fa-tachometer" title="Dashboard"></i> Dashboard</a></li>
                 <li>
-                    <a href=""><i class="fa fa-user" aria-hidden="true" title="Students"></i> Students <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <i class="fa fa-user" aria-hidden="true" title="Students"></i> Students <i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="@Url.Action("AddStudent1","Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Student</a></li>
                         <li class="mini_list_agile"><a href="@Url.Action("StruckOffStudent","Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Struck Off</a></li>
@@ -13,7 +13,7 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"> <i class="fa fa-male" aria-hidden="true" title="Parents"></i>Parents <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <i class="fa fa-male" aria-hidden="true" title="Parents"></i>Parents <i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="@Url.Action("AddParent","Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Parent</a></li>
                         <li class="mini_list_agile"><a href="@Url.Action("ViewParents","Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>View Parents</a></li>
@@ -21,18 +21,17 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="table.html"> <i class="fa fa-briefcase" title="Staff" aria-hidden="true"></i>Staff</a>
+                    <i class="fa fa-briefcase" title="Staff" aria-hidden="true"></i>Staff<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Staff Member</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Teachers</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Non Teaching Staff</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Set Salaries</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("AddStaff", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Staff Member</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("ViewTeachers", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>View Teachers</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("ViewNonStaff", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>View Non Teaching Staff</a></li>
                     </ul>
                 </li>
 
 
                 <li>
-                    <a href="charts.html"> <i class="fa fa-book" title="Classes" aria-hidden="true"></i>Classes</a>
+                    <i class="fa fa-book" title="Classes" aria-hidden="true"></i>Classes<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Class</a></li>
                         <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Class Details</a></li>
@@ -40,8 +39,9 @@
                         <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Promote Students</a></li>
                     </ul>
                 </li>
+
                 <li>
-                    <a href="maps.html"><i class="fa  fa-check-square-o" title="Attendance" aria-hidden="true"></i>Attendance</a>
+                    <i class="fa  fa-check-square-o" title="Attendance" aria-hidden="true"></i>Attendance<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Student Attendance</a></li>
                         <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Staff Attendance</a></li>
@@ -49,14 +49,14 @@
                     </ul>
                 </li>
                 <li>
-                    <a href="#"> <i class="fa fa-bullhorn" title="Notifications" aria-hidden="true"></i>Notifications<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <i class="fa fa-bullhorn" title="Notifications" aria-hidden="true"></i>Notifications<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Send Notification</a></li>
                         <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>View Notifications</a></li>
                     </ul>
                 </li>
                 <li>
-                    <a href="#"> <i class="fa fa-location-arrow" title="Inventory" aria-hidden="true"></i>Inventory<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <i class="fa fa-location-arrow" title="Inventory" aria-hidden="true"></i>Inventory<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Sell Item</a></li>
                         <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Add Item</a></li>
@@ -65,7 +65,7 @@
                     </ul>
                 </li>
                 <li class="">
-                    <a href="#"><i class="fa fa-bar-chart-o" title="Examinations" aria-hidden="true"></i>Examinations<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <i class="fa fa-bar-chart-o" title="Examinations" aria-hidden="true"></i>Examinations<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"> <a href="signin.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Add New Exam</a></li>
                         <li class="mini_list_agile"><a href="signup.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>View Exams</a></li>
@@ -75,16 +75,18 @@
                 </li>
 
                 <li>
-                    <a href="#"> <i class="fa fa-money" title="Fees" aria-hidden="true"></i>Fees<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <i class="fa fa-money" title="Accounts" aria-hidden="true"></i>Accounts<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Fee Reception</a></li>
                         <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Parent Fee Record</a></li>
                         <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Set Fee</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("LoadViewSalaries", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>View Salaries</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("LoadSetSalaries", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Set Salaries</a></li>
                     </ul>
                 </li>
 
                 <li>
-                    <a href="#"> <i class="fa fa-laptop" title="Portal Accounts Management" aria-hidden="true"></i>Accounts Management<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                    <i class="fa fa-laptop" title="Portal Accounts Management" aria-hidden="true"></i>Accounts Management<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
                         <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Reset Password</a></li>
                         <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Disable Account</a></li>

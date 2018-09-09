@@ -1,0 +1,101 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<SMSProject.ViewModels.AdminViewModels.ViewStaffViewModel>
+
+@{
+    ViewBag.Title = "View Teachers";
+    int i = Model.PageSize * (Model.PageNumber - 1);
+}
+<h2>Teachers</h2>
+<br />
+<div class="col-md-6 agile_info_shadow">
+    <h4>Search</h4>
+    <br />
+    <form action="@Url.Action("ViewTeachers")" class="form-horizontal" method="get" id="sTeaName">
+        <div class="form-group">
+            <label class="control-label col-md-2">Name</label>
+            <div class="col-md-10">
+                <input type="text" name="searchName" value="" placeholder="eg: Muhammad Ali Ahmad" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('sTeaName').submit()" class="btn btn-primary">Search</a>
+            </div>
+        </div>
+    </form>
+</div>
+<br />
+<br />
+<br />
+<br />
+<div class="agile_map_info">
+    <div class="table table-responsive">
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().CNIC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().PNumber)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(++i)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PNumber)
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "ViewTeacherDetails", new { id = item.Id }, new { @class = "btn btn-danger", target = "_blank" }) |
+                        @Html.ActionLink("Remove", "RemoveStaff", new { id = item.Id }, new { @class = "btn btn-success" })
+                    </td>
+                </tr>
+            }
+        </table>
+        @if (ViewBag.Error != null)
+        {
+            if ((bool)ViewBag.Error)
+            {
+                <p class="text-danger">No record found against your search.</p>
+            }
+        }
+        <div class="col-md-offset-4 col-md-4">
+            @Html.PagedListPager(Model, page => @Url.Action("ViewTeachers", new { page, searchName = ViewBag.SearchName }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, })
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <!--Script to confirm remove-->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".btn-success").click(function () {
+                return confirm("Are you sure want to remove this? Please make sure that the Teacher isn't Incharge of any class before removing. If so, then remove it from the class incharge first.");
+            });
+        });
+    </script>
+    <!--Script to show the success message-->
+    @if (ViewBag.Success != null)
+    {
+        if ((bool)ViewBag.Success)
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record saved successfully."));
+            </script>
+        }
+    }
+}

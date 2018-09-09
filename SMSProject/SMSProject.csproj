@@ -217,6 +217,8 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Common\Code Snippets\ConnectionStringCookie.snippet" />
+    <None Include="Common\Code Snippets\ActionResultWithFalg.snippet" />
     <Content Include="Content\basictable.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
@@ -259,6 +261,7 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Common\Code Snippets\DecryptConString.snippet" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\circles.js" />
@@ -353,6 +356,21 @@
     <Content Include="Views\Admin\_searchParentByNamePartial.cshtml" />
     <Content Include="Views\Admin\_searchParentByCNICPartial.cshtml" />
     <Content Include="Views\Admin\ViewUnPaidParent.cshtml" />
+    <Content Include="Views\Admin\AddStaff.cshtml" />
+    <Content Include="Views\Admin\ViewTeacherDetails.cshtml" />
+    <Content Include="Views\Admin\_ViewTeacherQualificationPartialView.cshtml" />
+    <Content Include="Views\Admin\_ViewTeacherSectionPartialView.cshtml" />
+    <Content Include="Views\Admin\ViewNonStaffDetails.cshtml" />
+    <Content Include="Views\Admin\EditStaff.cshtml" />
+    <Content Include="Views\Admin\AddQualification.cshtml" />
+    <Content Include="Views\Admin\AddTeacherSection.cshtml" />
+    <Content Include="Views\Admin\ViewTeachers.cshtml" />
+    <Content Include="Views\Admin\ViewNonStaff.cshtml" />
+    <Content Include="Views\Admin\SetSalaries.cshtml" />
+    <Content Include="Views\Admin\LoadSetSalaries.cshtml" />
+    <Content Include="Views\Admin\LoadViewSalaries.cshtml" />
+    <Content Include="Views\Admin\ViewSalaries.cshtml" />
+    <Content Include="Views\Admin\_MonthlySalariesChart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

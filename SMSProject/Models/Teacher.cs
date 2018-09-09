@@ -19,12 +19,12 @@ namespace SMSProject.Models
             con = new SqlConnection(connectionString);
             try
             {
-                query = "INSERT INTO [STAFF] ([Name] ,[CNIC] ,[Address] ,[MCountryCode] ,[MCompanyCode] ,[MNumber] ,[Salary], [Gender]) VALUES ('" + name + "' ,'" + cnic + "' ,'" + address + "' ,'" + number.CountryCode + "' ,'" + number.CompanyCode + "' ,'" + number.Number + "' ," + salary + " ," + (int)gender + ");SELECT MAX(StaffId) FROM STAFF;";
+                query = "INSERT INTO [STAFF] ([Name] ,[CNIC] ,[Address] ,[MCountryCode] ,[MCompanyCode] ,[MNumber] ,[Salary], [Gender], [JoiningDate]) VALUES ('" + name + "' ,'" + cnic + "' ,'" + address + "' ,'" + number.CountryCode + "' ,'" + number.CompanyCode + "' ,'" + number.Number + "' ," + salary + " ," + (int)gender + ", " + DateTime.Now + ");SELECT MAX(StaffId) FROM STAFF;";
                 cmd = new SqlCommand(query, con);
                 con.Open();
                 id = (int)cmd.ExecuteScalar();
-                cmd = new SqlCommand(query, con);
                 query = "INSERT INTO [TEACHING_STAFF] ([StaffId]) VALUES (" + id + ")";
+                cmd = new SqlCommand(query, con);
                 cmd.ExecuteNonQuery();
                 con.Close();
             }
@@ -167,6 +167,31 @@ namespace SMSProject.Models
                     return false;
                 }
                 Exception e = new Exception("Error Occured in Database processing. CodeIndex:245", ex);
+                throw e;
+            }
+            return flag;
+        }
+        public bool RemoveSection(int sectionId, int subjectId)
+        {
+            bool flag = false;
+            try
+            {
+                query = "DELETE FROM [TEACHER_TEACHES_SUBJECT_OF_A_SECTION] WHERE [StaffId]=" + id + " AND [SubjectId]=" + subjectId + " AND [SectionId]=" + sectionId;
+                cmd = new SqlCommand(query, con);
+                con.Open();
+                if (cmd.ExecuteNonQuery() != 0)
+                {
+                    flag = true;
+                }
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                if (ex.Number == 2627)
+                {
+                    return false;
+                }
+                Exception e = new Exception("Error Occured in Database processing. CodeIndex:273", ex);
                 throw e;
             }
             return flag;
@@ -335,13 +360,13 @@ namespace SMSProject.Models
                 return count;
             }
         }
-        public static List<Teacher> GetAllTeachers(string connectionString)
+        public static List<Teacher> GetAllTeachers(string connectionString, string matchName)
         {
             List<Teacher> lst = new List<Teacher>();
             try
             {
                 SqlConnection con = new SqlConnection(connectionString);
-                string query = "SELECT StaffId FROM TEACHING_STAFF";
+                string query = "SELECT s.StaffId FROM STAFF s , TEACHING_STAFF ts WHERE s.StaffId=ts.StaffId AND s.Name LIKE '%" + matchName + "%'";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();

@@ -1,0 +1,97 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.ViewNonStaffDetailsViewModel
+
+@{
+    ViewBag.Title = "Non-Teaching Staff Details";
+}
+
+<h2>Non-Teaching Staff Details</h2>
+<br />
+<div class="agile_info_shadow">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CNIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CNIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+        
+        <dt>
+            @Html.DisplayNameFor(model => model.JoiningDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JoiningDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JobType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JobType)
+        </dd>
+
+    </dl>
+    <p>
+        @Html.ActionLink("Edit", "EditStaff", new { id = Model.Id, t = 1 }, new { @class = "btn btn-warning" })
+    </p>
+</div>
+
+<br />
+<br />
+<br />
+<br />
+<br />
+@section Scripts{
+    @if (ViewBag.Success != null)
+    {
+        if ((bool)ViewBag.Success)
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record has been saved successfully."));
+            </script>
+        }
+    }
+}

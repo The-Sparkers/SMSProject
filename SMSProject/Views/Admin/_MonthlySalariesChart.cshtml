@@ -1,0 +1,71 @@
+﻿@model IEnumerable<SMSProject.ViewModels.AdminViewModels._MonthlySalariesChartPartialViewModel>
+@{
+    var random = new Random();
+}
+<div class="w3ls_agile_cylinder chart agile_info_shadow">
+    <h3 class="w3_inner_tittle two">Monthly Salaries</h3>
+
+    <div id="chartdiv"></div>
+
+
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/amcharts")
+    <!-- Chart code -->
+    <script>
+        var chart = AmCharts.makeChart("chartdiv", {
+            "theme": "light",
+            "type": "serial",
+            "startDuration": 2,
+            "dataProvider": [
+                @foreach (var item in Model)
+                {
+                    var color = String.Format("#{0:X6}", random.Next(0x1000000));
+                    <text>
+                        {
+                            "country": "@item.Month",
+                            "visits": @item.TotalSalaries ,
+                            "color": "@color"
+                        },
+                    </text>
+
+                }
+            ],
+            "valueAxes": [{
+                "position": "left",
+                "axisAlpha": 0,
+                "gridAlpha": 0
+            }],
+            "graphs": [{
+                "balloonText": "[[category]]: <b>[[value]]</b>",
+                "colorField": "color",
+                "fillAlphas": 0.85,
+                "lineAlpha": 0.1,
+                "type": "column",
+                "topRadius": 1,
+                "valueField": "visits"
+            }],
+            "depth3D": 40,
+            "angle": 30,
+            "chartCursor": {
+                "categoryBalloonEnabled": false,
+                "cursorAlpha": 0,
+                "zoomable": false
+            },
+            "categoryField": "country",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "axisAlpha": 0,
+                "gridAlpha": 0
+
+            },
+            "export": {
+                "enabled": true
+            }
+
+        }, 0);
+    </script>
+    <!-- Chart code -->
+    <!-- //amcharts -->
+}
+

@@ -6,7 +6,7 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
-    public class NonTeachingStaff : Staff 
+    public class NonTeachingStaff : Staff
     {
         string jobType;
         public NonTeachingStaff(int id, string connectionString)
@@ -14,8 +14,21 @@ namespace SMSProject.Models
             con = new SqlConnection(connectionString);
             this.id = id;
             SetValues();
+            try
+            {
+                query = "SELECT JobType FROM [NON-TEACHING_STAFF] WHERE StaffId=" + id;
+                cmd = new SqlCommand(query, con);
+                con.Open();
+                jobType = (string)cmd.ExecuteScalar();
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                throw new Exception("Database processing error. CodeIndex:272.", ex);
+            }
+
         }
-        public NonTeachingStaff(string name, string cnic, string address, MobileNumber number,decimal salary,Genders gender, string jobType, string connectionString)
+        public NonTeachingStaff(string name, string cnic, string address, MobileNumber number, decimal salary, Genders gender, string jobType, string connectionString)
         {
             con = new SqlConnection(connectionString);
             try
@@ -32,6 +45,7 @@ namespace SMSProject.Models
                 cmd.Parameters.Add(new SqlParameter("@salary", System.Data.SqlDbType.Money)).Value = salary;
                 cmd.Parameters.Add(new SqlParameter("@jobType", System.Data.SqlDbType.VarChar)).Value = jobType;
                 cmd.Parameters.Add(new SqlParameter("@gender", System.Data.SqlDbType.Bit)).Value = (int)gender;
+                cmd.Parameters.Add(new SqlParameter("@joiningDate", System.Data.SqlDbType.Date)).Value = DateTime.Now;
                 con.Open();
                 id = (int)cmd.ExecuteScalar();
                 con.Close();
@@ -79,13 +93,13 @@ namespace SMSProject.Models
                 jobType = value;
             }
         }
-        public static List<NonTeachingStaff> GetAllNonTeachingStaff(string connectionString)
+        public static List<NonTeachingStaff> GetAllNonTeachingStaff(string connectionString, string matchName)
         {
             List<NonTeachingStaff> lst = new List<NonTeachingStaff>();
             try
             {
                 SqlConnection con = new SqlConnection(connectionString);
-                string query = "SELECT StaffId FROM [NON-TEACHING_STAFF]";
+                string query = "SELECT s.StaffId FROM STAFF s , [NON-TEACHING_STAFF] ns WHERE s.StaffId=ns.StaffId AND s.Name LIKE '%" + matchName + "%'";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
                 SqlDataReader reader = cmd.ExecuteReader();

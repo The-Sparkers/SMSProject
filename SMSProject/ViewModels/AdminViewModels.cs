@@ -511,4 +511,197 @@ namespace SMSProject.ViewModels.AdminViewModels
         public string Amount { get; set; }
         public int ParentId { get; set; }
     }
+    public enum StaffTypes
+    {
+        Teacher,
+        NonTeaching
+    }
+    public class AddStaffViewModel
+    {
+        [Required]
+        [Display(Name = "Full Name", Description = "Enter the name in format: Muhammad Ali Ahmad")]
+        [RegularExpression(@"^([A-Z][a-z]+)(\s[A-Z][a-z]+)*$", ErrorMessage = "Please Write Name in the given format")]
+        public string Name { get; set; }
+        [Required]
+        [Display(Name = "CNIC Number", Description = "Enter the name in format: XXXXX-XXXXXXX_X")]
+        [RegularExpression(@"^[0-9+]{5}-[0-9+]{7}-[0-9]{1}$", ErrorMessage = "The CNIC number should be in the given format")]
+        public string CNIC { get; set; }
+        [Required]
+        [Display(Name = "Home Address")]
+        public string Address { get; set; }
+        [Required]
+        [Display(Name = "Country Code")]
+        [RegularExpression("^[+][0-9]{2}$", ErrorMessage = "Coutry Code not correct.")]
+        [StringLength(3, MinimumLength = 3)]
+        public string MCountryCode { get; set; }
+        [Required]
+        [Display(Name = "Company Code")]
+        [RegularExpression("^[3]([0-4][0-9])|[5][5]$", ErrorMessage = "Please Enter a correct Phone Number.")]
+        [StringLength(3, MinimumLength = 3)]
+        public string MCompanyCode { get; set; }
+        [Required]
+        [Display(Name = "Mobile Number")]
+        [RegularExpression("^[0-9]{7}$", ErrorMessage = "Please Enter a correct Phone Number.")]
+        [StringLength(7, MinimumLength = 7)]
+        public string MNumber { get; set; }
+        [Required]
+        [Display(Name = "Salary (Rs.)")]
+        [DataType(DataType.Currency)]
+        [RegularExpression(@"^[0-9]+([\,\.][0-9]+)?$", ErrorMessage = "Please Enter a Valid Fee")]
+        public decimal Salary { get; set; }
+        [Required]
+        [Display(Name = "Gender")]
+        [EnumDataType(typeof(Genders))]
+        public Genders Gender { get; set; }
+        [Display(Name = "Job Type")]
+        [StringLength(50)]
+        [RegularExpression(@"^([A-Z]+([-]|[_]){0,1}[A-Z]*)+$", ErrorMessage = "Use only UPPERCASE Letters with ('-' or '_') in between.")]
+        public string JobType { get; set; }
+        [Required]
+        [Display(Name = "Staff Type")]
+        public StaffTypes StaffType { get; set; }
+    }
+    public class ViewTeacherDetailsViewModel
+    {
+        [Display(Name = "Full Name", Description = "Enter the name in format: Muhammad Ali Ahmad")]
+        public string Name { get; set; }
+        [Display(Name = "CNIC Number", Description = "Enter the name in format: XXXXX-XXXXXXX_X")]
+        public string CNIC { get; set; }
+        [Display(Name = "Home Address")]
+        public string Address { get; set; }
+        [Display(Name = "Mobile Number")]
+        public string MNumber { get; set; }
+        [Display(Name = "Salary (Rs.)")]
+        public decimal Salary { get; set; }
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+        [Display(Name = "Joining Date")]
+        public string JoiningDate { get; set; }
+        public int Id { get; set; }
+        public List<TeacherQualification> Qualifications { get; set; }
+        public List<TeacherSection> Sections { get; set; }
+
+    }
+    public class TeacherQualification
+    {
+        [Display(Name = "Degree")]
+        public string Degree { get; set; }
+        [Display(Name = "Year")]
+        public string Year { get; set; }
+        public int Id { get; set; }
+        public int TeacherId { get; set; }
+    }
+    public class TeacherSection
+    {
+        [Display(Name = "Class")]
+        public string Class { get; set; }
+        [Display(Name = "Section")]
+        public string Section { get; set; }
+        [Display(Name = "Subject")]
+        public string Subject { get; set; }
+        public int SubjectId { get; set; }
+        public int SectionId { get; set; }
+        public int TeacherId { get; set; }
+    }
+    public class ViewNonStaffDetailsViewModel
+    {
+        [Display(Name = "Full Name", Description = "Enter the name in format: Muhammad Ali Ahmad")]
+        public string Name { get; set; }
+        [Display(Name = "CNIC Number", Description = "Enter the name in format: XXXXX-XXXXXXX_X")]
+        public string CNIC { get; set; }
+        [Display(Name = "Home Address")]
+        public string Address { get; set; }
+        [Display(Name = "Mobile Number")]
+        public string MNumber { get; set; }
+        [Display(Name = "Salary (Rs.)")]
+        public decimal Salary { get; set; }
+        [Display(Name = "Gender")]
+        public string Gender { get; set; }
+        [Display(Name = "Job Type")]
+        public string JobType { get; set; }
+        [Display(Name ="Joining Date")]
+        public string JoiningDate { get; set; }
+        public int Id { get; set; }
+    }
+    public class AddQualificationViewModel
+    {
+        [Required]
+        [Display(Name = "Degree")]
+        public string Degree { get; set; }
+        [Required]
+        [Display(Name = "Year")]
+        [RegularExpression("^([1][9][0-9]{2})|([2][0][0-9]{2})$",ErrorMessage ="Please enter a correct year.")]
+        public string Year { get; set; }
+    }
+    public class AddTeacherSectionViewModel
+    {
+        [Required]
+        [Display(Name ="Class")]
+        public int Class { get; set; }
+        [Required]
+        [Display(Name ="Subject")]
+        public int Subject { get; set; }
+        [Required]
+        [Display(Name ="Section")]
+        public int Section { get; set; }
+    }
+    public class ViewStaffViewModel
+    {
+        [Display(Name ="Full Name")]
+        public string Name { get; set; }
+        [Display(Name ="CNIC Number")]
+        public string CNIC { get; set; }
+        [Display(Name ="Mobile Number")]
+        public string PNumber { get; set; }
+        public int Id { get; set; }
+    }
+    public class LoadSetSalariesViewModel
+    {
+        [Required]
+        [Display(Name ="Month")]
+        public MonthNames Month { get; set; }
+        [Required]
+        [Display(Name ="Year")]
+        public short Year { get; set; }
+    }
+    public class SetSalariesViewModel
+    {
+        [Display(Name = "Full Name")]
+        public string Name { get; set; }
+        [Display(Name = "CNIC Number")]
+        public string CNIC { get; set; }
+        [Display(Name = "Date of Joining")]
+        public string JoiningDate { get; set; }
+        public int Id { get; set; }
+    }
+    public class ViewSalariesViewModel
+    {
+        [Display(Name = "Full Name")]
+        public string Name { get; set; }
+        [Display(Name = "CNIC Number")]
+        public string CNIC { get; set; }
+        [Display(Name ="Salary")]
+        public decimal Salary { get; set; }
+        [Display(Name ="Absents")]
+        public int Absents { get; set; }
+        [Display (Name ="Per Absent Deduction")]
+        public decimal PerAbsent { get; set; }
+        [Display(Name = "Total Salary")]
+        public decimal TSalary { get; set; }
+        public int Id { get; set; }
+    }
+    public class LoadViewSalariesViewModel
+    {
+        [Required]
+        [Display(Name = "Month")]
+        public MonthNames Month { get; set; }
+        [Required]
+        [Display(Name = "Year")]
+        public short Year { get; set; }
+    }
+    public class _MonthlySalariesChartPartialViewModel
+    {
+        public string Month { get; set; }
+        public string TotalSalaries { get; set; }
+    }
 }

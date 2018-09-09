@@ -1,0 +1,64 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.LoadViewSalariesViewModel
+
+@{
+    ViewBag.Title = "Load Salaries";
+    List<SelectListItem> lstYear = new List<SelectListItem>();
+    lstYear.Add(new SelectListItem
+    {
+        Value = DateTime.Now.AddYears(-1).Year.ToString(),
+        Text = DateTime.Now.AddYears(-1).Year.ToString()
+    });
+    lstYear.Add(new SelectListItem
+    {
+        Value = DateTime.Now.Year.ToString(),
+        Text = DateTime.Now.Year.ToString()
+    });
+    lstYear.Add(new SelectListItem
+    {
+        Value = DateTime.Now.AddYears(1).Year.ToString(),
+        Text = DateTime.Now.AddYears(1).Year.ToString()
+    });
+}
+
+<h2>Load Salaries</h2>
+<br />
+
+@using (Html.BeginForm("LoadViewSalaries", "Admin", FormMethod.Post, new { id = "loSal" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal agile_info_shadow">
+        <p class="text-info">Please Select the Month for which you want to set the salaries.</p>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Month, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Month, "Select Month", new { @class = "form-control1" })
+                @Html.ValidationMessageFor(model => model.Month, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Year, lstYear, "Select Year", new { @class = "form-control1" })
+                @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('loSal').submit()" class="btn btn-primary">Load</a>
+            </div>
+        </div>
+    </div>
+}
+<br />
+<br />
+<br />
+<br />
+<br />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

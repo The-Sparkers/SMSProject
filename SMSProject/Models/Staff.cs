@@ -15,6 +15,7 @@ namespace SMSProject.Models
         protected int id;
         protected SqlConnection con;
         protected SqlCommand cmd;
+        protected DateTime joiningDate;
         protected string query;
         public Staff(int id, string connectionString)
         {
@@ -178,6 +179,13 @@ namespace SMSProject.Models
                 salary = value;
             }
         }
+        public DateTime Joiningdate
+        {
+            get
+            {
+                return joiningDate;
+            }
+        }
         public bool SetSalary(Month month, decimal perAbsentDeduction)
         {
             bool flag;
@@ -292,7 +300,7 @@ namespace SMSProject.Models
             bool flag = false;
             try
             {
-                query = "DELETE STAFF WHERE StaffId=" + id;
+                query = "DELETE FROM STAFF WHERE StaffId=" + id;
                 cmd = new SqlCommand(query, con);
                 con.Open();
                 if (cmd.ExecuteNonQuery() != 0)
@@ -325,6 +333,7 @@ namespace SMSProject.Models
                     number = new MobileNumber((string)reader[4], (string)reader[5], (string)reader[6]);
                     salary = (decimal)reader[7];
                     gender = (Genders)Convert.ToInt16(reader[8]);
+                    joiningDate = (DateTime)reader[9];
                 }
                 con.Close();
             }
@@ -353,6 +362,52 @@ namespace SMSProject.Models
             catch (SqlException ex)
             {
                 Exception e = new Exception("Error Occured in Database processing. CodeIndex:233", ex);
+                throw e;
+            }
+            return lst;
+        }
+        public static List<Staff> GetAllUnsetSalaryStaff(Month month, string connectionString)
+        {
+            List<Staff> lst = new List<Staff>();
+            try
+            {
+                SqlConnection con = new SqlConnection(connectionString);
+                string query = "SELECT s.StaffId FROM STAFF s WHERE NOT EXISTS(SELECT ms.MSId FROM MONTHLY_SALARIES ms WHERE ms.StaffId=s.StaffId AND ms.[Month]=" + month.Number + " AND ms.[Year]=" + month.Year + " )";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lst.Add(new Staff((int)reader[0], con.ConnectionString));
+                }
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Error Occured in Database processing. CodeIndex:274", ex);
+                throw e;
+            }
+            return lst;
+        }
+        public static List<Staff> GetAllSetSalaryStaff(Month month, string connectionString)
+        {
+            List<Staff> lst = new List<Staff>();
+            try
+            {
+                SqlConnection con = new SqlConnection(connectionString);
+                string query = "SELECT StaffId FROM MONTHLY_SALARIES WHERE [Month]=" + month.Number + " AND [Year]=" + month.Year; 
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    lst.Add(new Staff((int)reader[0], con.ConnectionString));
+                }
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Error Occured in Database processing. CodeIndex:275", ex);
                 throw e;
             }
             return lst;

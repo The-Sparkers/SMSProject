@@ -1,0 +1,120 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.ViewTeacherDetailsViewModel
+
+@{
+    ViewBag.Title = "Teacher Details";
+}
+
+<h2>Teacher Details</h2>
+<br />
+<div class="agile_info_shadow">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CNIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CNIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salary)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salary)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.JoiningDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.JoiningDate)
+        </dd>
+
+    </dl>
+    @Html.ActionLink("Edit", "EditStaff", new { id = Model.Id, t = 0 }, new { @class = "btn btn-warning" })
+</div>
+<br />
+<h4>Qualifications</h4>
+<br />
+<div class="agile_info_shadow">
+    <p class="col-md-offset-10 col-md-2">
+        @Html.ActionLink("Add Qualification", "AddQualification", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    </p>
+    <br />
+    @Html.Partial("_ViewTeacherQualificationPartialView", Model.Qualifications)
+</div>
+<br />
+<h4>Assinged Sections</h4>
+<br />
+<div class="agile_info_shadow">
+    <p class="col-md-offset-10 col-md-2">
+        @Html.ActionLink("Assign Section", "AddTeacherSection", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    </p>
+    <br />
+    @Html.Partial("_ViewTeacherSectionPartialView", Model.Sections)
+</div>
+
+@section Scripts{
+    @if (ViewBag.Success != null)
+    {
+        if ((bool)ViewBag.Success)
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record has been saved successfully."));
+            </script>
+        }
+    }
+    @if (ViewBag.Error != null)
+    {
+        if ((bool)ViewBag.Error)
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record not saved."));
+            </script>
+        }
+    }
+    <!--Script which confirms from the user to remove or not-->
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $(".btn-danger").click(function () {
+                return confirm("Are your sure want to remove this?");
+            });
+        });
+    </script>
+}
