@@ -262,6 +262,7 @@
     <Content Include="fonts\fontawesome-webfont.woff2" />
     <Content Include="fonts\FontAwesome.otf" />
     <Content Include="Common\Code Snippets\DecryptConString.snippet" />
+    <Content Include="Common\Code Snippets\TryCatchToAddtoModel.snippet" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\circles.js" />
@@ -371,6 +372,11 @@
     <Content Include="Views\Admin\LoadViewSalaries.cshtml" />
     <Content Include="Views\Admin\ViewSalaries.cshtml" />
     <Content Include="Views\Admin\_MonthlySalariesChart.cshtml" />
+    <Content Include="Views\Admin\AddClass.cshtml" />
+    <Content Include="Views\Admin\ViewClassDetails.cshtml" />
+    <Content Include="Views\Admin\ChangeClassIncharge.cshtml" />
+    <Content Include="Views\Admin\AddSection.cshtml" />
+    <Content Include="Views\Admin\AddSubject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

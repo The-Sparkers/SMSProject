@@ -1454,7 +1454,7 @@ namespace SMSProject.Controllers
                 {
                     decimal monthTotal = 0;
                     Month month = new Month { Number = i, Year = year };
-                    foreach (var item in Staff.GetAllSetSalaryStaff(month,Cryptography.Decrypt(conString.Value)))
+                    foreach (var item in Staff.GetAllSetSalaryStaff(month, Cryptography.Decrypt(conString.Value)))
                     {
                         monthTotal += item.GetMonthSalary(month).TotalSalary;
                     }
@@ -1479,6 +1479,268 @@ namespace SMSProject.Controllers
                     });
                 }
                 return PartialView(model);
+            }
+        }
+        public ActionResult AddClass()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddClass(AddClassViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Class c = null;
+                try
+                {
+                    c = new Class(model.Name, model.RollNo, model.TeacherId, Cryptography.Decrypt(conString.Value));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+                ViewClassDetailsViewModel vcdvm = new ViewClassDetailsViewModel();
+                if (c != null)
+                {
+                    vcdvm = new ViewClassDetailsViewModel
+                    {
+                        Id = c.ClassId,
+                        Incharge = c.Incharge.Name,
+                        Name = c.Name,
+                        RollNo = c.RollNoIndex,
+                        Sections = new List<ClassSection>(),
+                        Strength = c.Strength,
+                        Subjects = new List<ClassSubject>()
+                    };
+                    foreach (var item in c.GetSections())
+                    {
+                        vcdvm.Sections.Add(new ClassSection
+                        {
+                            Id = item.SectionId,
+                            Name = item.Name,
+                            Strength = item.Strength
+                        });
+                    }
+                    foreach (var item in c.GetSubjects())
+                    {
+                        vcdvm.Subjects.Add(new ClassSubject
+                        {
+                            Id = item.SubjectId,
+                            Name = item.Name
+                        });
+                    }
+                }
+                ViewBag.Success = true;
+                return View("ViewClassDetails", vcdvm);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
+        public ActionResult ViewClassDetails(int? id, bool s = false, bool err = false)
+        {
+            try
+            {
+                ViewBag.Success = s;
+                ViewBag.Error = err;
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Class c = new Class(id ?? 2, Cryptography.Decrypt(conString.Value));
+                ViewClassDetailsViewModel vcdvm = new ViewClassDetailsViewModel
+                {
+                    Id = c.ClassId,
+                    Incharge = c.Incharge.Name,
+                    Name = c.Name,
+                    RollNo = c.RollNoIndex,
+                    Sections = new List<ClassSection>(),
+                    Strength = c.Strength,
+                    Subjects = new List<ClassSubject>()
+                };
+                foreach (var item in c.GetSections())
+                {
+                    vcdvm.Sections.Add(new ClassSection
+                    {
+                        Id = item.SectionId,
+                        Name = item.Name,
+                        Strength = item.Strength
+                    });
+                }
+                foreach (var item in c.GetSubjects())
+                {
+                    vcdvm.Subjects.Add(new ClassSubject
+                    {
+                        Id = item.SubjectId,
+                        Name = item.Name
+                    });
+                }
+                return View(vcdvm);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult RemoveSubject(int id)
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Subject s = new Subject(id, Cryptography.Decrypt(conString.Value));
+                s.Delete();
+                return RedirectToAction("ViewClassDetails", new { id = s.Class.ClassId, s = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult RemoveSection(int id)
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Section s = new Section(id, Cryptography.Decrypt(conString.Value));
+                if (s.Strength != 0)
+                {
+                    return RedirectToAction("ViewClassDetails", new { id = s.Class.ClassId, err = true });
+                }
+                else
+                {
+                    s.Delete();
+                    return RedirectToAction("ViewClassDetails", new { id = s.Class.ClassId, s = true });
+                }
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult ChangeClassIncharge(int id)
+        {
+            try
+            {
+                ViewBag.ClassId = id;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangeClassIncharge(ChangeClassInchargeViewModel model, int id)
+        {
+            try
+            {
+                ViewBag.ClassId = id;
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Class c = new Class(id, Cryptography.Decrypt(conString.Value));
+                try
+                {
+                    c.Incharge = new Teacher(model.TeacherId, Cryptography.Decrypt(conString.Value));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                }
+                return RedirectToAction("ViewClassDetails", new { s = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult AddSection(int id)
+        {
+            try
+            {
+                ViewBag.ClassId = id;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSection(AddSectionViewModel model, int id)
+        {
+            try
+            {
+                ViewBag.ClassId = id;
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                try
+                {
+                    Section s = new Section(model.Name.ToUpper(), id, Cryptography.Decrypt(conString.Value));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View();
+                }
+                return RedirectToAction("ViewClassDetails", new { id = id, s = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult AddSubject(int id)
+        {
+            try
+            {
+                ViewBag.ClassId = id;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddSubject(AddSubjectViewModel model, int id)
+        {
+            try
+            {
+                ViewBag.ClassId = id;
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                try
+                {
+                    Class c = new Class(id, Cryptography.Decrypt(conString.Value));
+                    c.AddSubjects(model.Name.ToUpper());
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View();
+                }
+                return RedirectToAction("ViewClassDetails", new { id = id, s = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
             }
         }
     }

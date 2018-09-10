@@ -619,7 +619,7 @@ namespace SMSProject.ViewModels.AdminViewModels
         public string Gender { get; set; }
         [Display(Name = "Job Type")]
         public string JobType { get; set; }
-        [Display(Name ="Joining Date")]
+        [Display(Name = "Joining Date")]
         public string JoiningDate { get; set; }
         public int Id { get; set; }
     }
@@ -630,38 +630,38 @@ namespace SMSProject.ViewModels.AdminViewModels
         public string Degree { get; set; }
         [Required]
         [Display(Name = "Year")]
-        [RegularExpression("^([1][9][0-9]{2})|([2][0][0-9]{2})$",ErrorMessage ="Please enter a correct year.")]
+        [RegularExpression("^([1][9][0-9]{2})|([2][0][0-9]{2})$", ErrorMessage = "Please enter a correct year.")]
         public string Year { get; set; }
     }
     public class AddTeacherSectionViewModel
     {
         [Required]
-        [Display(Name ="Class")]
+        [Display(Name = "Class")]
         public int Class { get; set; }
         [Required]
-        [Display(Name ="Subject")]
+        [Display(Name = "Subject")]
         public int Subject { get; set; }
         [Required]
-        [Display(Name ="Section")]
+        [Display(Name = "Section")]
         public int Section { get; set; }
     }
     public class ViewStaffViewModel
     {
-        [Display(Name ="Full Name")]
+        [Display(Name = "Full Name")]
         public string Name { get; set; }
-        [Display(Name ="CNIC Number")]
+        [Display(Name = "CNIC Number")]
         public string CNIC { get; set; }
-        [Display(Name ="Mobile Number")]
+        [Display(Name = "Mobile Number")]
         public string PNumber { get; set; }
         public int Id { get; set; }
     }
     public class LoadSetSalariesViewModel
     {
         [Required]
-        [Display(Name ="Month")]
+        [Display(Name = "Month")]
         public MonthNames Month { get; set; }
         [Required]
-        [Display(Name ="Year")]
+        [Display(Name = "Year")]
         public short Year { get; set; }
     }
     public class SetSalariesViewModel
@@ -680,11 +680,11 @@ namespace SMSProject.ViewModels.AdminViewModels
         public string Name { get; set; }
         [Display(Name = "CNIC Number")]
         public string CNIC { get; set; }
-        [Display(Name ="Salary")]
+        [Display(Name = "Salary")]
         public decimal Salary { get; set; }
-        [Display(Name ="Absents")]
+        [Display(Name = "Absents")]
         public int Absents { get; set; }
-        [Display (Name ="Per Absent Deduction")]
+        [Display(Name = "Per Absent Deduction")]
         public decimal PerAbsent { get; set; }
         [Display(Name = "Total Salary")]
         public decimal TSalary { get; set; }
@@ -703,5 +703,68 @@ namespace SMSProject.ViewModels.AdminViewModels
     {
         public string Month { get; set; }
         public string TotalSalaries { get; set; }
+    }
+    public class AddClassViewModel
+    {
+        [Required]
+        [Display(Name = "Class Name", Description = "Define the name of the class")]
+        [StringLength(15, MinimumLength = 1)]
+        public string Name { get; set; }
+        [Required]
+        [RegularExpression("^[0-9]+$", ErrorMessage = "Please Enter a correct number")]
+        [Display(Name = "Roll# Index", Description = "The roll number index is the number from which a class roll no for students starts.")]
+        public int RollNo { get; set; }
+        [Required]
+        [Display(Name = "Class Incharge")]
+        public int TeacherId { get; set; }
+    }
+    public class ViewClassDetailsViewModel
+    {
+        [Display(Name = "Class Name", Description = "Define the name of the class")]
+        public string Name { get; set; }
+        [Display(Name = "Roll# Index", Description = "The roll number index is the number from which a class roll no for students starts.")]
+        public int RollNo { get; set; }
+        [Display(Name = "Class Incharge")]
+        public string Incharge { get; set; }
+        [Display(Name = "Strength")]
+        public int Strength { get; set; }
+        public List<ClassSection> Sections { get; set; }
+        public List<ClassSubject> Subjects { get; set; }
+        public int Id { get; set; }
+
+    }
+    public struct ClassSection
+    {
+        [Display(Name = "Section")]
+        public string Name { get; set; }
+        [Display(Name = "Strength")]
+        public int Strength { get; set; }
+        public int Id { get; set; }
+    }
+    public struct ClassSubject
+    {
+        [Display(Name = "Subject")]
+        public string Name { get; set; }
+        public int Id { get; set; }
+    }
+    public class ChangeClassInchargeViewModel
+    {
+        [Required]
+        [Display(Name = "Choose Teacher")]
+        public int TeacherId { get; set; }
+    }
+    public class AddSectionViewModel
+    {
+        [Required]
+        [Display(Name = "Section Name")]
+        [StringLength(5, MinimumLength = 1)]
+        public string Name { get; set; }
+    }
+    public class AddSubjectViewModel
+    {
+        [Required]
+        [Display(Name = "Subject Name")]
+        [StringLength(50, MinimumLength = 1)]
+        public string Name { get; set; }
     }
 }

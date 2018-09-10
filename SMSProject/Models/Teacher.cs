@@ -360,7 +360,7 @@ namespace SMSProject.Models
                 return count;
             }
         }
-        public static List<Teacher> GetAllTeachers(string connectionString, string matchName)
+        public static List<Teacher> GetAllTeachers(string connectionString, string matchName = "")
         {
             List<Teacher> lst = new List<Teacher>();
             try

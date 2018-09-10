@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>TryCatch To Addto Model</Title>
+      <Author>M Umair Tahir</Author>
+      <Description>This snippet will write a code of try catch with exception and modelstate error addition.</Description>
+      <Shortcut>mTrycatch</Shortcut>
+    </Header>
+    <Snippet>
+      <Code Language="CSharp">
+        <![CDATA[try
+                {
+
+                }
+                catch(Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View();
+                }]]>
+      </Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

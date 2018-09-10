@@ -62,7 +62,7 @@ namespace SMSProject.Models
         {
             try
             {
-                query = "DELETE SUBJECTS WHERE SubjectId=" + id;
+                query = "DELETE FROM SUBJECTS WHERE SubjectId=" + id;
                 cmd = new SqlCommand(query, con);
                 con.Open();
                 cmd.ExecuteNonQuery();
