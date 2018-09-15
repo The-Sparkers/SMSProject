@@ -855,7 +855,7 @@ namespace SMSProject.ViewModels.AdminViewModels
         public int Strength { get; set; }
         public int Id { get; set; }
     }
-    public class LoadStudentsToPromoteViewModel
+    public class LoadStudentsViewModel
     {
         [Required]
         [Display(Name ="Choose Class")]
@@ -871,14 +871,5 @@ namespace SMSProject.ViewModels.AdminViewModels
         [Display(Name ="Name")]
         public string Name { get; set; }
         public int Id { get; set; }
-    }
-    public class PromoteToSectionViewModel
-    {
-        [Required]
-        [Display(Name ="Choose Class")]
-        public int Class { get; set; }
-        [Required]
-        [Display(Name ="Choose Section")]
-        public int Section { get; set; }
     }
 }

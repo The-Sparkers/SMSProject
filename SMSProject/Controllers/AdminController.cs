@@ -2067,7 +2067,7 @@ namespace SMSProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult LoadStudentsToPromote(LoadStudentsToPromoteViewModel model)
+        public ActionResult LoadStudentsToPromote(LoadStudentsViewModel model)
         {
             try
             {
@@ -2137,7 +2137,7 @@ namespace SMSProject.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult PromoteToSection(PromoteToSectionViewModel model)
+        public ActionResult PromoteToSection(LoadStudentsViewModel model)
         {
             try
             {
