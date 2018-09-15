@@ -1,0 +1,59 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<SMSProject.ViewModels.AdminViewModels.ViewClassesViewModel>
+
+@{
+    ViewBag.Title = "View Classes";
+    int i = Model.PageSize * (Model.PageNumber - 1);
+}
+
+<h2>View Classes</h2>
+<br />
+<div class="agile_info_shadow">
+    <div class="table table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Sections)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Strength)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(++i)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Sections)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Strength)
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "ViewClassDetails", new { id = item.Id }, new { @class = "btn btn-danger", target = "_blank" })
+                    </td>
+                </tr>
+            }
+        </table>
+        @if (ViewBag.Empty != null)
+            {
+                if ((bool)ViewBag.Empty)
+                {
+                <p class="text-danger">No record found.</p>
+            }
+        }
+        <div class="col-md-offset-4 col-md-4">
+            @Html.PagedListPager(Model, page => @Url.Action("ViewClasses", new { page }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, })
+        </div>
+    </div>
+</div>

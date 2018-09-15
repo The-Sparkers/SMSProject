@@ -182,4 +182,28 @@ namespace SMSProject.Models.HelperModels
             }
         }
     }
+    public struct MonthlyProgress
+    {
+        public decimal MarksObtained { get; set; }
+        public decimal TotalMarks { get; set; }
+        public decimal Result
+        {
+            get
+            {
+                try
+                {
+                    return decimal.Multiply(decimal.Divide(MarksObtained, TotalMarks), 100);
+                }
+                catch (Exception)
+                {
+                    return 0;
+                }
+            }
+        }
+    }
+    public class AssignedTeacher
+    {
+        public Teacher Teacher { get; set; }
+        public Subject Subject { get; set; }
+    }
 }

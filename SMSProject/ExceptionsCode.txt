@@ -173,4 +173,9 @@
 272: Error in Setting jobType in get constructor in NonTeachingStaff Model Class.
 273: Error in RemoveSection() Method in Teacher Model Class.
 274: Error in GetAllUnsetSalaryStaff() static method in Staff Model Class.
-274: Error in GetAllSetSalaryStaff() static method in Staff Model Class.
+275: Error in GetAllSetSalaryStaff() static method in Staff Model Class.
+276: Error in GetAbsentStudents() in Section Model Class.
+277: Error in GetPresentStudents() in Section Model Class.
+278: Error in GetMonthlyProgress() in Section Model Class.
+279: Error in GetMonthlyProgress() Method in Student Model Class.
+280: Error in GetAssingedTeachers() Method in Section Model Class.

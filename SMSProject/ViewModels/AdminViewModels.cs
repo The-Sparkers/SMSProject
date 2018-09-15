@@ -730,8 +730,19 @@ namespace SMSProject.ViewModels.AdminViewModels
         public int Strength { get; set; }
         public List<ClassSection> Sections { get; set; }
         public List<ClassSubject> Subjects { get; set; }
+        public List<SectionMonthlyProgress> Progress { get; set; }
         public int Id { get; set; }
 
+    }
+    public struct SectionMonthlyProgress
+    {
+        public int Month { get; set; }
+        public List<SectionProgress> SectionsProgres { get; set; }
+    }
+    public struct SectionProgress
+    {
+        public string SectionName { get; set; }
+        public decimal ProgressPercent { get; set; }
     }
     public struct ClassSection
     {
@@ -766,5 +777,108 @@ namespace SMSProject.ViewModels.AdminViewModels
         [Display(Name = "Subject Name")]
         [StringLength(50, MinimumLength = 1)]
         public string Name { get; set; }
+    }
+    public class ViewSectionViewModel
+    {
+        [Display(Name = "Section Name")]
+        public string Name { get; set; }
+        [Display(Name = "Class Name")]
+        public string Class { get; set; }
+        public int Id { get; set; }
+        public List<SectionBrightStudent> BrightStudents { get; set; }
+        public int StudentPresent { get; set; }
+        public int StudentAbsent { get; set; }
+        public List<SectionAssignedTeacher> AssignedTeachers { get; set; }
+    }
+    public class SectionAssignedTeacher
+    {
+        [Display(Name ="Teacher Name")]
+        public string TName { get; set; }
+        [Display(Name ="Subject Name")]
+        public string SubName { get; set; }
+        public int TId { get; set; }
+        public int SubId { get; set; }
+    }
+    public class SectionStudent
+    {
+        [Display(Name = "Roll Number", ShortName = "Roll#")]
+        public int RollNumber { get; set; }
+        [Display(Name = "Student Name")]
+        public string Name { get; set; }
+        [Display(Name = "Addmission Number", ShortName = "Ad. Number")]
+        public string AdNmbr { get; set; }
+        [Display(Name = "Attendance")]
+        public string Attendance { get; set; }
+    }
+    public class SectionBrightStudent
+    {
+        [Display(Name = "Student Name")]
+        public string Name { get; set; }
+        [Display(Name = "Roll Number", ShortName = "Roll#")]
+        public int RollNumber { get; set; }
+        [Display(Name = "Progress")]
+        public decimal Progress { get; set; }
+        [Display(Name = "Attendance")]
+        public decimal Attendance { get; set; }
+    }
+    public class ViewStudentsViewModel
+    {
+        [Display(Name ="Addmision Number", ShortName ="Ad. #")]
+        public string AddNmbr { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+        [Display(Name ="Father Name", ShortName ="Father")]
+        public string FName { get; set; }
+        [Display(Name ="CLass")]
+        public string CName { get; set; }
+        [Display(Name ="Roll Number", ShortName ="Roll#")]
+        public int RollNumber { get; set; }
+        [Display(Name ="Progress")]
+        public int Progress { get; set; }
+        public int Id { get; set; }
+        public int ParentId { get; set; }
+
+    }
+    public class AssignTeacherViewModel
+    {
+        [Display(Name ="Choose Teacher")]
+        [Required]
+        public int TeacherId { get; set; }
+    }
+    public class ViewClassesViewModel
+    {
+        [Display(Name ="Class Name")]
+        public string Name { get; set;}
+        [Display(Name ="No. Of Sections")]
+        public int Sections { get; set; }
+        [Display(Name ="Strength")]
+        public int Strength { get; set; }
+        public int Id { get; set; }
+    }
+    public class LoadStudentsToPromoteViewModel
+    {
+        [Required]
+        [Display(Name ="Choose Class")]
+        public int Class { get; set; }
+        [Required]
+        [Display(Name ="Choose Section")]
+        public int Section { get; set; }
+    }
+    public class ViewStudentToPromoteViewModel
+    {
+        [Display(Name ="Roll#")]
+        public int RollNo { get; set; }
+        [Display(Name ="Name")]
+        public string Name { get; set; }
+        public int Id { get; set; }
+    }
+    public class PromoteToSectionViewModel
+    {
+        [Required]
+        [Display(Name ="Choose Class")]
+        public int Class { get; set; }
+        [Required]
+        [Display(Name ="Choose Section")]
+        public int Section { get; set; }
     }
 }

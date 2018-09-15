@@ -175,6 +175,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Common\ViewFunctions\AdminViewFunctions.cs" />
+    <Compile Include="Common\ViewFunctions\HelperModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -377,6 +379,14 @@
     <Content Include="Views\Admin\ChangeClassIncharge.cshtml" />
     <Content Include="Views\Admin\AddSection.cshtml" />
     <Content Include="Views\Admin\AddSubject.cshtml" />
+    <Content Include="Views\Admin\ViewSection.cshtml" />
+    <Content Include="Views\Admin\ViewStudents.cshtml" />
+    <Content Include="Views\Admin\AssignSecTeacher.cshtml" />
+    <Content Include="Views\Admin\ChangeSecTeacher.cshtml" />
+    <Content Include="Views\Admin\ViewClasses.cshtml" />
+    <Content Include="Views\Admin\ViewStudentsToPromote.cshtml" />
+    <Content Include="Views\Admin\PromoteToSection.cshtml" />
+    <Content Include="Views\Admin\LoadStudentsToPromote.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,48 +2,64 @@
 
 @{
     ViewBag.Title = Model.Name + " Class Details";
+    Model.Progress.Reverse();
 }
 
 <h2>Class Details</h2>
 <br />
 <div class="agile_info_shadow">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+    <div class="col-md-6">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.RollNo)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.RollNo)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.RollNo)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Incharge)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.RollNo)
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Incharge)<p>@Html.ActionLink("Change", "ChangeClassIncharge", new { id = Model.Id }, new { @class = "btn btn-warning" })</p>
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Incharge)
+            </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Strength)
-        </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Incharge)<p>@Html.ActionLink("Change", "ChangeClassIncharge", new { id = Model.Id }, new { @class = "btn btn-warning" })</p>
+            </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Strength)
-        </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Strength)
+            </dt>
 
-    </dl>
+            <dd>
+                @Html.DisplayFor(model => model.Strength)
+            </dd>
+
+        </dl>
+
+    </div>
+    <!--Start of Chart-->
+    <div class="col-md-6">
+        <div class="charts_section_agileinfo">
+            <div class="charts_agile_w3ls">
+                <h3>Section wise Progress</h3>
+                <div id="chartdiv7"></div>
+            </div>
+        </div>
+    </div>
+    <!--End of Chart-->
+    <div class="clearfix"></div>
 </div>
-<br />
+<div class="clearfix"></div>
 <div class="">
     <div class="col-md-6 agile_info_shadow">
         <div class="col-md-4">
@@ -106,8 +122,9 @@
             </table>
         </div>
     </div>
-    <div class="clearfix"></div>
 </div>
+<div class="clearfix"></div>
+<br />
 @section Scripts{
     @if (ViewBag.Error != null)
     {
@@ -139,4 +156,77 @@
             });
         });
     </script>
+    <!--Script for making chart for sections progress-->
+    @Scripts.Render("~/bundles/amcharts")
+    <script type="text/javascript">
+        var chart = AmCharts.makeChart("chartdiv7", {
+            "type": "serial",
+            "theme": "light",
+            "legend": {
+                "useGraphSettings": true
+            },
+            "dataProvider": [
+                
+                @foreach (var item in Model.Progress)
+        {
+            <text>
+                        {
+                            "year": @item.Month,
+                            @foreach (var item2 in item.SectionsProgres)
+                    {
+                        <text>
+                            "@item2.SectionName": @item2.ProgressPercent,
+                            </text>
+                    }
+
+                        },
+                    </text>
+        }],
+            "valueAxes": [{
+                "integersOnly": true,
+                "maximum": 100,
+                "minimum": 1,
+                "reversed": false,
+                "axisAlpha": 0,
+                "dashLength": 10,
+                "gridCount": 5,
+                "position": "right",
+                "title": "Result %"
+            }],
+            "startDuration": 0.5,
+            "graphs": [
+                @foreach (var item in Model.Progress[0].SectionsProgres)
+{
+    <text>
+                    {
+                        "balloonText": "overall result of @item.SectionName in month [[category]]: [[value]]%",
+                        "bullet": "round",
+                        "title": "@item.SectionName",
+                        "valueField": "@item.SectionName",
+                        "fillAlphas": 0
+                    },
+            </text>
+}],
+            "chartCursor": {
+                "cursorAlpha": 0,
+                "zoomable": false
+            },
+            "categoryField": "year",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "axisAlpha": 0,
+                "fillAlpha": 0.05,
+                "fillColor": "#000000",
+                "gridAlpha": 0,
+                "position": "top"
+            },
+            "export": {
+                "enabled": true,
+                "position": "bottom-right"
+            }
+        });
+
+    </script>
+
+
 }

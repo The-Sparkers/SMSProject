@@ -98,7 +98,7 @@
             @foreach (var item in Model.StudentsList)
         {
         <tr>
-            <td>#(i++)</td>
+            <td>@(i++)</td>
             <td>@item.Name</td>
             <td>@item.Class</td>
             <td>@Html.ActionLink("View", "ViewStudentDetails", new { id = item.StudentId }, new { @class = "btn btn-danger", target="_blank" })</td>

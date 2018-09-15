@@ -472,6 +472,43 @@ namespace SMSProject.Models
             }
             return result;
         }
+        public decimal GetMonthlyProgress(Month month)
+        {
+            decimal progress = 0;
+            DateTime monthStart = new DateTime(month.Year, month.Number, 1);
+            DateTime monthEnd = monthStart.AddMonths(1).AddDays(-1);
+            try
+            {
+                query = "GetStudentMonthlyProgress";
+                cmd = new SqlCommand(query, con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@monthStart", System.Data.SqlDbType.Date)).Value = monthStart;
+                cmd.Parameters.Add(new SqlParameter("@monthEnd", System.Data.SqlDbType.Date)).Value = monthEnd;
+                cmd.Parameters.Add(new SqlParameter("@month", System.Data.SqlDbType.Int)).Value = month.Number;
+                cmd.Parameters.Add(new SqlParameter("@year", System.Data.SqlDbType.Int)).Value = month.Year;
+                cmd.Parameters.Add(new SqlParameter("@studentId", System.Data.SqlDbType.Int)).Value = id;
+                con.Open();
+                try
+                {
+                    progress = (decimal)cmd.ExecuteScalar();
+                }
+                catch (NullReferenceException)
+                {
+                    
+                }
+                catch (InvalidCastException)
+                {
+
+                }
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Error Occured in Database processing. CodeIndex:279", ex);
+                throw e;
+            }
+            return progress;
+        }
         public TestResult GetTestResult(Test test)
         {
             TestResult result = new TestResult();

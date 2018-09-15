@@ -33,10 +33,9 @@
                 <li>
                     <i class="fa fa-book" title="Classes" aria-hidden="true"></i>Classes<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Class</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>View Class Details</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Add Section(s)</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Promote Students</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("AddClass", "Admin")l"><i class="fa fa-caret-right" aria-hidden="true"></i>Add New Class</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("ViewClasses", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>View Classes</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("LoadStudentsToPromote", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Promote/Shift Students</a></li>
                     </ul>
                 </li>
 
