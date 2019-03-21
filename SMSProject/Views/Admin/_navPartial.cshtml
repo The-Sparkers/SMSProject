@@ -42,16 +42,16 @@
                 <li>
                     <i class="fa  fa-check-square-o" title="Attendance" aria-hidden="true"></i>Attendance<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="input.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Student Attendance</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Staff Attendance</a></li>
-                        <li class="mini_list_agile"><a href="validation.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Edit Attendance</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("LoadStudentAttendance", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Student Attendance</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("ViewStaffAttendance", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Staff Attendance</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("LoadStudentAttendanceFor", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Edit Student Attendance</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("LoadStaffAttendanceFor", "Admin")"><i class="fa fa-caret-right" aria-hidden="true"></i>Edit Staff Attendance</a></li>
                     </ul>
                 </li>
                 <li>
                     <i class="fa fa-bullhorn" title="Notifications" aria-hidden="true"></i>Notifications<i class="fa fa-angle-down" aria-hidden="true"></i>
                     <ul class="gn-submenu">
-                        <li class="mini_list_agile"><a href="faq.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>Send Notification</a></li>
-                        <li class="mini_list_agile"><a href="blank.html"> <i class="fa fa-caret-right" aria-hidden="true"></i>View Notifications</a></li>
+                        <li class="mini_list_agile"><a href="@Url.Action("SendNotification", "Admin")"> <i class="fa fa-caret-right" aria-hidden="true"></i>Send Notification</a></li>
                     </ul>
                 </li>
                 <li>

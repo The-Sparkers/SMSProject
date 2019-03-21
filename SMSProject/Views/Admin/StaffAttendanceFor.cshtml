@@ -1,0 +1,93 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.ViewStaffAttendanceForViewModel
+
+@{
+    ViewBag.Title = "Staff Attendance";
+}
+
+<h2>Staff Attendance</h2>
+<br />
+<div class="agile_info_shadow">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CNIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CNIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Attendance)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Attendance)%
+        </dd>
+
+    </dl>
+</div>
+<br />
+<div class="clearfix"></div>
+<div class="agile_info_shadow">
+    <div class="table table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>Date</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+            @foreach (var item in Model.MonthlyAttendances)
+            {
+                <tr>
+                    <td>@item.Date</td>
+                    @if (!item.IsAbsent)
+                    {
+                        <td class="text-success">Present</td>
+                        <td>@Html.ActionLink("Was Absent", "ChangeAttendanceStatus", new { id = item.Id, isAbsent = true, stuId = ViewBag.StudentId, month = ViewBag.Month }, new { @class = "btn btn-danger chng" })</td>
+                    }
+                    else
+                    {
+                        <td class="text-danger">Absent</td>
+                        <td>@Html.ActionLink("Was Present", "ChangeAttendanceStatus", new { id = item.Id, isAbsent = false, stuId = ViewBag.StudentId, month = ViewBag.Month }, new { @class = "btn btn-success chng" })</td>
+                    }
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(".table-hover").basictable();
+    </script>
+    @*<--!Script to add select all checkboxes!-->*@
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript">
+
+        $(function () {
+            $(".chng").click(function () {
+                return confirm("This will change the status of the attendance.");
+            });
+        });
+    </script>
+    @if (ViewBag.Success != null)
+    {
+        if ((bool)ViewBag.Success)
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record saved successfully."));
+            </script>
+        }
+    }
+}
+
+
