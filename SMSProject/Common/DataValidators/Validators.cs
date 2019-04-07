@@ -21,11 +21,4 @@ namespace SMSProject.Common.DataValidators
 
         }
     }
-    public class AdminAuthorize : FilterAttribute, IAuthorizationFilter
-    {
-        public void OnAuthorization(AuthorizationContext filterContext)
-        {
-
-        }
-    }
 }
