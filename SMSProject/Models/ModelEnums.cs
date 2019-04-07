@@ -13,15 +13,15 @@
     }
     public enum NotificationTypes
     {
-        SMS,
-        Web,
-        All
+        SMS=3,
+        Web=2,
+        All=1
     }
     public enum NotificationStatuses
     {
-        ForTeacher,
-        ForParent,
-        ForAll
+        ForTeacher=3,
+        ForParent=2,
+        ForAll=1
     }
     public enum MonthNames
     {

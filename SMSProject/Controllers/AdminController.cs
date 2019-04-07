@@ -12,9 +12,10 @@ using PagedList;
 using PagedList.Mvc;
 using System.Web.Mvc.Html;
 using SMSProject.Models.HelperModels;
+using System.Threading;
 
 namespace SMSProject.Controllers
-{
+{ 
     public class AdminController : Controller
     {
         // GET: Admin
@@ -22,15 +23,20 @@ namespace SMSProject.Controllers
         {
             try
             {
-                HttpCookie conString = new HttpCookie("rwxgqlb");
-                conString.Expires = DateTime.Now.AddDays(1);
+                ///Index action will run when the user successfully logged into the system
+                ///It will fetch the connection string and school name from the database and store them into the client's cookies to be used for 1 day
+                ///The Index method has no view for itself it just stores the values from the databse to the cookies and redirect it to the dashboard
+                
+                HttpCookie conString = new HttpCookie("rwxgqlb"); //set a new cookie to store connection string
+                conString.Expires = DateTime.Now.AddDays(1); //set cookie expiry
+                //set cookie value to the encypted connection string
                 conString.Value = Cryptography.Encrypt(ConfigurationManager.ConnectionStrings["ModelConString"].ConnectionString);
-                Response.Cookies.Add(conString);
-                HttpCookie schoolName = new HttpCookie("schlNm");
-                schoolName.Expires = DateTime.Now.AddDays(1);
-                schoolName.Value = "Demo";
-                Response.Cookies.Add(schoolName);
-                return RedirectToAction("Dashboard");
+                Response.Cookies.Add(conString); //add the connection string to the client cookies
+                HttpCookie schoolName = new HttpCookie("schlNm"); //set a new cookie to store school name of the admin user
+                schoolName.Expires = DateTime.Now.AddDays(1); //set cookie expiry
+                schoolName.Value = "Demo"; //set value of cookie to the School Name
+                Response.Cookies.Add(schoolName); //add cookie to the client cookies
+                return RedirectToAction("Dashboard"); //redirect the controller to DASHBOARD ACTION
             }
             catch (Exception ex)
             {
@@ -41,9 +47,10 @@ namespace SMSProject.Controllers
         {
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                DashboardViewModel model = new DashboardViewModel(Cryptography.Decrypt(conString.Value));
-                return View(model);
+                ///DASHBOARD ACTION
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //retrive the encrypted connection string from the cookie
+                DashboardViewModel model = new DashboardViewModel(Cryptography.Decrypt(conString.Value)); //set model for the dashboard 
+                return View(model); //return the DASHBOARD VIEW by sending the model
             }
             catch (Exception ex)
             {
@@ -52,22 +59,29 @@ namespace SMSProject.Controllers
         }
         public ActionResult AddStudent1()
         {
+            ///ADD_STUDENT ACTION 1
+            ///Add student proccess has 3 parts
+            ///This controller will return the form to add student 
+            ///This controller is used to search the parent by CNIC or Father's name
             return View();
         }
         [ValidateAntiForgeryToken]
         [HttpPost]
         public ActionResult AddStudent1(AddStudent1ViewModel model, bool err = false)
         {
+            ///The POST Method to get the values from ADD_STUDENT_1 form
             if (!ModelState.IsValid)
             {
                 return View();
             }
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //get ecrypted connection string from the cookie
                 if (model.SearchCNIC != null)
                 {
+                    //if the user has searched by the CNIC
                     model.SearchResult = new List<AddStudent1SearchResultViewModel>();
+                    //store the search result 
                     foreach (var item in Parent.GetAllParentsByCNIC(Cryptography.Decrypt(conString.Value), model.SearchCNIC))
                     {
                         model.SearchResult.Add(new AddStudent1SearchResultViewModel
@@ -81,7 +95,9 @@ namespace SMSProject.Controllers
                 }
                 else if (model.SearchName != null)
                 {
+                    //if user has searched by the Father's Name
                     model.SearchResult = new List<AddStudent1SearchResultViewModel>();
+                    //store the search result
                     foreach (var item in Parent.GetAllParents(Cryptography.Decrypt(conString.Value), model.SearchName))
                     {
                         model.SearchResult.Add(new AddStudent1SearchResultViewModel
@@ -95,14 +111,19 @@ namespace SMSProject.Controllers
                 }
                 else
                 {
+                    //if user has searched blank fields
                     return RedirectToAction("AddStudent1");
                 }
                 if (model.SearchResult.Count == 0)
                 {
+                    //if no item matches with the search
                     err = true;
                 }
-                ViewBag.error = err;
-                return View(model);
+                /*
+                 * the value of error is used in the view to show that wheather if the search item is found or not
+                 */
+                ViewBag.error = err; 
+                return View(model); //return the view with model containing values
             }
             catch (Exception ex)
             {
@@ -111,10 +132,13 @@ namespace SMSProject.Controllers
         }
         public ActionResult AddStudent2(int pId, string returnAction = "")
         {
-            TempData.Add("returnAction", returnAction);
+            ///Part 2 of Add Student
+            ///pId is the parent Id to which the student is bieng added
+            ///returnAction is the address to the action to which the controller will be redirected
+            TempData.Add("returnAction", returnAction); //store the returnAction to the TempData to be used again after encoutering some error to adding new student
             try
             {
-                ViewBag.ParentId = pId;
+                ViewBag.ParentId = pId; //send parent Id to the view by using the viewbag
                 return View();
             }
             catch (Exception ex)
@@ -126,16 +150,18 @@ namespace SMSProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddStudent2(AddStudent2ViewModel model, int pId)
         {
+            ///Post Method to get the submitted values from the view
+            ///pId is the Parent Id to which the student will be added
             try
             {
-                ViewBag.ParentId = pId;
+                ViewBag.ParentId = pId; //send the parent Id to the view by using view bag
                 if (!ModelState.IsValid)
                 {
                     return View();
                 }
-                model.ParentId = pId;
-                TempData["reToAddStudent3"] = model;
-                return RedirectToAction("AddStudent3");
+                model.ParentId = pId; //assigning the pId to the Parent Id in the model
+                TempData["reToAddStudent3"] = model; //store the model data to the TempData to used it in other action
+                return RedirectToAction("AddStudent3"); //redirect the action to the 3rd part of Add student
             }
             catch (Exception ex)
             {
@@ -145,9 +171,13 @@ namespace SMSProject.Controllers
         [HttpGet]
         public ActionResult AddStudent3()
         {
+            ///Part 3 of the ADD STUDENT ACTION
+            ///It is the final step of adding student
+            ///The data will be retirve from the temp data stored in ADD_STUDENT_2 action
             try
             {
-                AddStudent2ViewModel data = (AddStudent2ViewModel)TempData["reToAddStudent3"];
+                AddStudent2ViewModel data = (AddStudent2ViewModel)TempData["reToAddStudent3"]; //get temp data and cast it into the model data
+                //assemble the data into new view model
                 AddStudent3ViewModel asvm = new AddStudent3ViewModel()
                 {
                     AddmissionNumber = data.AddmissionNumber,
@@ -161,7 +191,7 @@ namespace SMSProject.Controllers
                     Class = data.Class
                 };
 
-                return View(asvm);
+                return View(asvm); //return the view model to the view
             }
             catch (Exception ex)
             {
@@ -172,17 +202,17 @@ namespace SMSProject.Controllers
         [HttpPost]
         public ActionResult AddStudent3(AddStudent3ViewModel model)
         {
+            ///Post method to get submitted data of form in ADD_STUDENT_3 VIEW
             try
             {
-
-                ViewBag.Class = model.Class;
-                ViewBag.ParentId = model.ParentId;
+                ViewBag.Class = model.Class; //send class id to the view by using view bag
+                ViewBag.ParentId = model.ParentId; //send parent id to the view by using view bag
                 if (!ModelState.IsValid)
                 {
                     return View();
                 }
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Student s;
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting encrypted connection string from the cookie
+                Student s; //an object of Student type to enter a new student into database
                 try
                 {
                     if (model.BForm == null && model.Prevnst == null)
@@ -208,12 +238,13 @@ namespace SMSProject.Controllers
                     return View();
 
                 }
-                string returnAction = (string)TempData["returnAction"];
+                string returnAction = (string)TempData["returnAction"]; //get path to action to which the controller will be redirected
                 if (returnAction != "" || (returnAction != null && returnAction != ""))
                 {
-                    TempData.Remove("returnAction");
-                    return RedirectToAction(returnAction, new { pId = s.Parent.ParentId });
+                    TempData.Remove("returnAction"); //removes the temp data of return action
+                    return RedirectToAction(returnAction, new { pId = s.Parent.ParentId }); //redirect to the action with the parent id
                 }
+                //showing the details of newly added student
                 StudentDetailsViewModel savm = new StudentDetailsViewModel
                 {
                     Id = s.StudentId,
@@ -230,8 +261,8 @@ namespace SMSProject.Controllers
                     PrevInst = s.PreviousInstitute,
                     RollNumber = s.RollNumber.ToString()
                 };
-                ViewBag.Success = true;
-                return View("ViewStudentDetails", savm);
+                ViewBag.Success = true; //flag to show successful operation
+                return View("ViewStudentDetails", savm); //show the view student details view with view model having the student's details
             }
             catch (Exception ex)
             {
@@ -240,10 +271,13 @@ namespace SMSProject.Controllers
         }
         public ActionResult ViewStudentDetails(int id)
         {
+            ///Action to View Student Details
+            ///id is the Student Id which data has to be fetched
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Student s = new Student(id, Cryptography.Decrypt(conString.Value));
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //get the encrypted connection string from the cookie
+                Student s = new Student(id, Cryptography.Decrypt(conString.Value)); //initialized a new object with the student id
+                //coping the values of student to the view model
                 StudentDetailsViewModel sdvm = new StudentDetailsViewModel
                 {
                     AdmissionNumber = s.AdmissionNumber,
@@ -260,7 +294,7 @@ namespace SMSProject.Controllers
                     PrevInst = s.PreviousInstitute,
                     RollNumber = s.RollNumber.ToString()
                 };
-                return View(sdvm);
+                return View(sdvm); //return the View with the view model containging the student's values
             }
             catch (Exception ex)
             {
@@ -269,10 +303,13 @@ namespace SMSProject.Controllers
         }
         public ActionResult EditStudent(int id)
         {
+            ///Action to Edit the details of respective student
+            ///id is the Student Id of whcih the data has to be edited
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Student s = new Student(id, Cryptography.Decrypt(conString.Value));
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the encrypted connection string from cookie
+                Student s = new Student(id, Cryptography.Decrypt(conString.Value)); //initialize a new object of Student to get the values
+                //copying the student's data into view model
                 AddStudent2ViewModel asvm = new AddStudent2ViewModel
                 {
                     AddmissionNumber = s.AdmissionNumber,
@@ -283,8 +320,8 @@ namespace SMSProject.Controllers
                     Name = s.Name,
                     Prevnst = s.PreviousInstitute
                 };
-                ViewBag.StudentId = s.StudentId;
-                return View(asvm);
+                ViewBag.StudentId = s.StudentId; //send the student Id to the view, by using the view bag, in order to use it into edit form
+                return View(asvm); //return the view with the view model containing the values
             }
             catch (Exception ex)
             {
@@ -295,13 +332,17 @@ namespace SMSProject.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditStudent(AddStudent2ViewModel model, int sId)
         {
+            ///Post Method to get the values submitted from the form
+            ///model contains the data of student
+            ///sId is the Student Id to recognoize the student and update values
             try
             {
-                ViewBag.StudentId = sId;
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Student s = new Student(sId, Cryptography.Decrypt(conString.Value));
+                ViewBag.StudentId = sId; //send student Id to the view by using the view bag
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the encrypted connection string from the cookie
+                Student s = new Student(sId, Cryptography.Decrypt(conString.Value)); //initialzed a new object of Student by the student Id to get the data and update it
                 try
                 {
+                    //setting the properties of Student obeject with the model values
                     s.AdmissionNumber = model.AddmissionNumber;
                     s.BFormNumber = model.BForm;
                     s.DateOfBirth = model.DOB;
@@ -315,6 +356,7 @@ namespace SMSProject.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                     return View();
                 }
+                //copying new values to the Student Details View Model
                 StudentDetailsViewModel sdvm = new StudentDetailsViewModel
                 {
                     AdmissionNumber = s.AdmissionNumber,
@@ -331,8 +373,8 @@ namespace SMSProject.Controllers
                     PrevInst = s.PreviousInstitute,
                     RollNumber = s.RollNumber.ToString()
                 };
-                ViewBag.Success = true;
-                return View("ViewStudentDetails", sdvm);
+                ViewBag.Success = true; //set the flag for the successful operation
+                return View("ViewStudentDetails", sdvm); //return STUDENT_DETAILS VIEW with the view model containing the updated values
             }
             catch (Exception ex)
             {
@@ -341,21 +383,27 @@ namespace SMSProject.Controllers
         }
         public ActionResult StruckOffStudent(bool s = false)
         {
-            ViewBag.Success = s;
+            ///STRUCK_OFF_STUDENT ACTION will show a student list from which a student will be selected to be strucked-off
+            ///s is the flag which will show the successful previous operation
+            ///The View will show a search box to search the student, to be strucked-off
+            ViewBag.Success = s; 
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult StruckOffStudent(StruckOffStudentViewModel model, int? page, bool err = false)
         {
+            ///Post method to get values from the form on submit
+            ///page is the null able integer variable which stores the page number to handle pagination for PagedList
             if (!ModelState.IsValid)
             {
                 return View();
             }
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                model.Result = new List<StruckOffStudentSearchResult>();
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the encrypted connection string from the cookie
+                model.Result = new List<StruckOffStudentSearchResult>(); //initiate the result list
+                //adding the values to the result list
                 foreach (var item in Student.Search(model.SearchName, Cryptography.Decrypt(conString.Value)))
                 {
                     model.Result.Add(new StruckOffStudentSearchResult
@@ -369,10 +417,11 @@ namespace SMSProject.Controllers
                 }
                 if (model.Result.Count == 0)
                 {
+                    //if there is no result found then set the error flag to true
                     err = true;
                 }
-                ViewBag.error = err;
-                return View(model);
+                ViewBag.error = err; //send the error flag to the View by using view bag
+                return View(model); //
             }
             catch (Exception ex)
             {
@@ -381,12 +430,15 @@ namespace SMSProject.Controllers
         }
         public ActionResult StruckOffStudentDone(int id, string bRoll)
         {
+            ///Action for strucking off a student
+            ///id is the Student Id
+            ///bRoll is the board roll number for that student (empty if not occurs)
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Student s = new Student(id, Cryptography.Decrypt(conString.Value));
-                StruckOffStudent st = new StruckOffStudent(s, bRoll, Cryptography.Decrypt(conString.Value));
-                return RedirectToAction("StruckOffStudent", new { s = true });
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the encrypted connection string from the cookie
+                Student s = new Student(id, Cryptography.Decrypt(conString.Value)); //initialize a new object of Student with the Student Id 
+                StruckOffStudent st = new StruckOffStudent(s, bRoll, Cryptography.Decrypt(conString.Value)); //Make that student strucked off
+                return RedirectToAction("StruckOffStudent", new { s = true }); //redirect to the main struck-off student action
             }
             catch (Exception ex)
             {
@@ -2154,6 +2206,426 @@ namespace SMSProject.Controllers
             catch (Exception)
             {
                 return RedirectToAction("ViewStudentsToPromote", new { err = true });
+            }
+        }
+        public ActionResult LoadStudentAttendance(bool err = false, bool s = false)
+        {
+            ViewBag.Error = err;
+            ViewBag.Success = s;
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoadStudentAttendance(LoadStudentsViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Section section = new Section(model.Section, Cryptography.Decrypt(conString.Value));
+                List<ViewStudentAttendanceViewModel> lstStudents = new List<ViewStudentAttendanceViewModel>();
+                foreach (var item in section.GetStudents())
+                {
+                    lstStudents.Add(new ViewStudentAttendanceViewModel
+                    {
+                        Id = item.StudentId,
+                        IsAbsent = item.GetAbsentStatus(DateTime.Now),
+                        Name = item.Name,
+                        RollNo = item.RollNumber
+                    });
+                }
+                if (lstStudents.Count == 0)
+                {
+                    ViewBag.Empty = true;
+                }
+                ViewBag.SectionId = model.Section;
+                return View("ViewStudentAttendance", lstStudents);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitStudentAttendance(IEnumerable<int> id, int secId)
+        {
+            try
+            {
+                List<int> lstStudentId = new List<int>();
+                if (id != null)
+                {
+                    lstStudentId = id.ToList();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Section sec = new Section(secId, Cryptography.Decrypt(conString.Value));
+                foreach (var item in sec.GetStudents())
+                {
+                    bool absentFlag = false;
+                    foreach (var item2 in lstStudentId)
+                    {
+                        if (item.StudentId == item2)
+                            absentFlag = true;
+                    }
+                    item.SetAttandance(DateTime.Now, absentFlag);
+                }
+                return RedirectToAction("LoadStudentAttendance", new { s = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+
+        public ActionResult ViewStaffAttendance(bool s = false, bool err = false)
+        {
+            try
+            {
+                ViewBag.Success = s;
+                ViewBag.Error = err;
+                List<ViewStaffAttendanceViewModel> lstStaff = new List<ViewStaffAttendanceViewModel>();
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                foreach (var item in Staff.GetAllStaff(Cryptography.Decrypt(conString.Value)))
+                {
+                    lstStaff.Add(new ViewStaffAttendanceViewModel
+                    {
+                        CNIC = item.CNIC,
+                        Id = item.StaffId,
+                        IsAbsent = item.GetAbsentStatus(DateTime.Now),
+                        Name = item.Name
+                    });
+                }
+                if (lstStaff.Count == 0)
+                {
+                    ViewBag.Empty = true;
+                }
+                return View(lstStaff);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SubmitStaffAttendance(IEnumerable<int> id)
+        {
+            try
+            {
+                List<int> lstStaffId = new List<int>();
+                if (id != null)
+                {
+                    lstStaffId = id.ToList();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                foreach (var item in Staff.GetAllStaff(Cryptography.Decrypt(conString.Value)))
+                {
+                    bool absentFlag = false;
+                    foreach (var item2 in lstStaffId)
+                    {
+                        if (item.StaffId == item2)
+                            absentFlag = true;
+                    }
+                    item.SetAttendance(DateTime.Now, absentFlag);
+                }
+                return RedirectToAction("ViewStaffAttendance", new { s = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult LoadStudentAttendanceFor()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoadStudentAttendanceFor(LoadStudentAttendanceForViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Class c = new Class(model.Class, Cryptography.Decrypt(conString.Value));
+                Student s = null;
+                foreach (var item in c.GetSections())
+                {
+                    foreach (var item2 in item.GetStudents())
+                    {
+                        if (item2.RollNumber == model.RollNo)
+                        {
+                            s = item2;
+                            break;
+                        }
+                    }
+                }
+                if (s == null)
+                {
+                    ViewBag.Empty = true;
+                    return View();
+                }
+                return RedirectToAction("StudentAttendanceFor", new { id = s.StudentId, month = model.Month });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult StudentAttendanceFor(int id, DateTime month, bool s = false, bool err = false)
+        {
+            try
+            {
+                ViewBag.StudentId = id;
+                ViewBag.Month = month;
+                ViewBag.Success = s;
+                ViewBag.Error = err;
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Student student = new Student(id, Cryptography.Decrypt(conString.Value));
+                ViewStudentAttendanceForViewModel vsavm = new ViewStudentAttendanceForViewModel
+                {
+                    Name = student.Name,
+                    RollNo = student.RollNumber,
+                    Attendance = decimal.Divide((DateTime.DaysInMonth(month.Year, month.Month) - student.GetAbsents(month)), DateTime.DaysInMonth(month.Year, month.Month)) * 100,
+                    MonthlyAttendances = new List<MonthlyAttendanceViewModel>()
+                };
+                foreach (var item in student.GetMonthAttendances(month))
+                {
+                    vsavm.MonthlyAttendances.Add(new MonthlyAttendanceViewModel
+                    {
+                        IsAbsent = item.IsAbsent,
+                        Date = item.Date.ToLongDateString(),
+                        Id = item.AttendanceId
+                    });
+                }
+                return View(vsavm);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult ChangeAttendanceStatus(long id, bool isAbsent, int stuId, DateTime month)
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Attendance a = new Attendance(id, Cryptography.Decrypt(conString.Value));
+                a.IsAbsent = isAbsent;
+                return Redirect(Request.UrlReferrer.AbsoluteUri + "&s=true");
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult LoadStaffAttendanceFor()
+        {
+            return View();
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult LoadStaffAttendanceFor(LoadStaffAttendanceForViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    return View();
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Staff s = new Staff(model.Staff, Cryptography.Decrypt(conString.Value));
+                if (s.Name == null || s.Name == "")
+                {
+                    ViewBag.Empty = true;
+                    return View();
+                }
+                return RedirectToAction("StaffAttendanceFor", new { id = s.StaffId, month = model.Month });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult StaffAttendanceFor(int id, DateTime month, bool s = false, bool err = false)
+        {
+            try
+            {
+                ViewBag.StudentId = id;
+                ViewBag.Month = month;
+                ViewBag.Success = s;
+                ViewBag.Error = err;
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Staff staff = new Staff(id, Cryptography.Decrypt(conString.Value));
+                ViewStaffAttendanceForViewModel vsavm = new ViewStaffAttendanceForViewModel
+                {
+                    Name = staff.Name,
+                    CNIC = staff.CNIC,
+                    Attendance = decimal.Divide((DateTime.DaysInMonth(month.Year, month.Month) - staff.GetAbsents(month)), DateTime.DaysInMonth(month.Year, month.Month)) * 100,
+                    MonthlyAttendances = new List<MonthlyAttendanceViewModel>()
+                };
+                foreach (var item in staff.GetMonthAttendances(month))
+                {
+                    vsavm.MonthlyAttendances.Add(new MonthlyAttendanceViewModel
+                    {
+                        IsAbsent = item.IsAbsent,
+                        Date = item.Date.ToLongDateString(),
+                        Id = item.AttendanceId
+                    });
+                }
+                return View(vsavm);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        public ActionResult GetStaff(int staffType)
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                List<string> data = new List<string>();
+                data.Add("<option value = '' >Select Staff</option>");
+                if ((StaffTypes)staffType == StaffTypes.NonTeaching)
+                {
+                    foreach (var item in NonTeachingStaff.GetAllNonTeachingStaff(Cryptography.Decrypt(conString.Value), ""))
+                    {
+                        data.Add("<option value='" + item.StaffId + "'>Name: " + item.Name + " CNIC: " + item.CNIC + "</option>");
+                    }
+                }
+                else
+                {
+                    foreach (var item in Teacher.GetAllTeachers(Cryptography.Decrypt(conString.Value), ""))
+                    {
+                        data.Add("<option value='" + item.StaffId + "'>Name: " + item.Name + " CNIC: " + item.CNIC + "</option>");
+                    }
+                }
+                return Content(string.Join("", data));
+            }
+            catch (Exception)
+            {
+                return Content("");
+            }
+        }
+
+        public ActionResult SendNotification(bool s = false, bool err = false)
+        {
+            try
+            {
+                ViewBag.Success = s;
+                ViewBag.Error = err;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SendNotification(SendNotificationViewModel model)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                    return View();
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                Notification n = null;
+                try
+                {
+                    n = new Notification(model.Body, DateTime.Now, model.Status, model.Type, Cryptography.Decrypt(conString.Value));
+                }
+                catch (Exception ex)
+                {
+                    ModelState.AddModelError(string.Empty, ex.Message);
+                    return View();
+                }
+                if (model.Status == NotificationStatuses.ForParent)
+                {
+                    List<int> lstParentIds = model.Parents.ToList();
+                    Parent p;
+                    foreach (var item in lstParentIds)
+                    {
+                        p = new Parent(item, Cryptography.Decrypt(conString.Value));
+                        p.SendNotification(n);
+                    }
+                }
+                else if (model.Status == NotificationStatuses.ForTeacher)
+                {
+                    List<int> lstTeacherIds = model.Teachers.ToList();
+                    Teacher t;
+                    foreach (var item in lstTeacherIds)
+                    {
+                        t = new Teacher(item, Cryptography.Decrypt(conString.Value));
+                    }
+                }
+                else if (model.Status == NotificationStatuses.ForAll)
+                {
+                    List<int> lstParentIds = model.Parents.ToList();
+                    Parent p;
+                    foreach (var item in lstParentIds)
+                    {
+                        p = new Parent(item, Cryptography.Decrypt(conString.Value));
+                        p.SendNotification(n);
+                    }
+                    List<int> lstTeacherIds = model.Teachers.ToList();
+                    Teacher t;
+                    foreach (var item in lstTeacherIds)
+                    {
+                        t = new Teacher(item, Cryptography.Decrypt(conString.Value));
+                    }
+                }
+                return RedirectToAction("SendNotification", new { s = true });
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        [HttpPost]
+        public ActionResult GetNotificationParents()
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                List<string> data = new List<string>();
+                foreach (var item in Parent.GetAllParents(Cryptography.Decrypt(conString.Value)))
+                {
+                    string html = "<li><div class='notification_desc'><input type='checkbox' value='" + item.ParentId + "' class='chkParent' name='Parents' />" + item.FatherName + "</h6><p>CNIC: " + item.FatherCNIC + "</p></ div><div class='clearfix'></div></li>";
+                    data.Add(html);
+                }
+                return Content(string.Join("", data));
+            }
+            catch (Exception)
+            {
+                return Content("");
+            }
+        }
+        [HttpPost]
+        public ActionResult GetNotificationTeachers()
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                List<string> data = new List<string>();
+                foreach (var item in Teacher.GetAllTeachers(Cryptography.Decrypt(conString.Value)))
+                {
+                    string html = "<li><div class='notification_desc'><input type='checkbox' value='" + item.StaffId + "' class='chkTeacher' name='Teachers' />" + item.Name + "</h6><p>CNIC: " + item.CNIC + "</p></ div><div class='clearfix'></div></li>";
+                    data.Add(html);
+                }
+                return Content(string.Join("", data));
+            }
+            catch (Exception)
+            {
+                return Content("");
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using PagedList;
+using SMSProject.Common.DataValidators;
 using SMSProject.Models;
 using SMSProject.Models.ModelEnums;
 using SMSProject.ServiceModules;
@@ -304,6 +305,7 @@ namespace SMSProject.ViewModels.AdminViewModels
         [Display(Name = "Date of Birth*")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [CurrentDateRange(ErrorMessage = "Please enter a valid date")]
         public DateTime DOB { get; set; }
         [Required]
         [Display(Name = "Monthly Fee*")]
@@ -513,8 +515,8 @@ namespace SMSProject.ViewModels.AdminViewModels
     }
     public enum StaffTypes
     {
-        Teacher,
-        NonTeaching
+        Teacher = 1,
+        NonTeaching = 2
     }
     public class AddStaffViewModel
     {
@@ -792,9 +794,9 @@ namespace SMSProject.ViewModels.AdminViewModels
     }
     public class SectionAssignedTeacher
     {
-        [Display(Name ="Teacher Name")]
+        [Display(Name = "Teacher Name")]
         public string TName { get; set; }
-        [Display(Name ="Subject Name")]
+        [Display(Name = "Subject Name")]
         public string SubName { get; set; }
         public int TId { get; set; }
         public int SubId { get; set; }
@@ -823,17 +825,17 @@ namespace SMSProject.ViewModels.AdminViewModels
     }
     public class ViewStudentsViewModel
     {
-        [Display(Name ="Addmision Number", ShortName ="Ad. #")]
+        [Display(Name = "Addmision Number", ShortName = "Ad. #")]
         public string AddNmbr { get; set; }
         [Display(Name = "Name")]
         public string Name { get; set; }
-        [Display(Name ="Father Name", ShortName ="Father")]
+        [Display(Name = "Father Name", ShortName = "Father")]
         public string FName { get; set; }
-        [Display(Name ="CLass")]
+        [Display(Name = "CLass")]
         public string CName { get; set; }
-        [Display(Name ="Roll Number", ShortName ="Roll#")]
+        [Display(Name = "Roll Number", ShortName = "Roll#")]
         public int RollNumber { get; set; }
-        [Display(Name ="Progress")]
+        [Display(Name = "Progress")]
         public int Progress { get; set; }
         public int Id { get; set; }
         public int ParentId { get; set; }
@@ -841,35 +843,128 @@ namespace SMSProject.ViewModels.AdminViewModels
     }
     public class AssignTeacherViewModel
     {
-        [Display(Name ="Choose Teacher")]
+        [Display(Name = "Choose Teacher")]
         [Required]
         public int TeacherId { get; set; }
     }
     public class ViewClassesViewModel
     {
-        [Display(Name ="Class Name")]
-        public string Name { get; set;}
-        [Display(Name ="No. Of Sections")]
+        [Display(Name = "Class Name")]
+        public string Name { get; set; }
+        [Display(Name = "No. Of Sections")]
         public int Sections { get; set; }
-        [Display(Name ="Strength")]
+        [Display(Name = "Strength")]
         public int Strength { get; set; }
         public int Id { get; set; }
     }
     public class LoadStudentsViewModel
     {
         [Required]
-        [Display(Name ="Choose Class")]
+        [Display(Name = "Choose Class")]
         public int Class { get; set; }
         [Required]
-        [Display(Name ="Choose Section")]
+        [Display(Name = "Choose Section")]
         public int Section { get; set; }
     }
     public class ViewStudentToPromoteViewModel
     {
-        [Display(Name ="Roll#")]
+        [Display(Name = "Roll#")]
         public int RollNo { get; set; }
-        [Display(Name ="Name")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
         public int Id { get; set; }
+    }
+    public class ViewStudentAttendanceViewModel
+    {
+        [Display(Name = "Roll#")]
+        public int RollNo { get; set; }
+        [Display(Name = "Student Name")]
+        public string Name { get; set; }
+        [Display(Name = "Absent")]
+        public bool IsAbsent { get; set; }
+        public int Id { get; set; }
+    }
+    public class ViewStaffAttendanceViewModel
+    {
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+        [Display(Name = "CNIC")]
+        public string CNIC { get; set; }
+        [Display(Name = "Absent")]
+        public bool IsAbsent { get; set; }
+        public int Id { get; set; }
+    }
+    public class LoadStudentAttendanceForViewModel
+    {
+        [Required]
+        [Display(Name = "Choose Class")]
+        public int Class { get; set; }
+        [Required]
+        [Display(Name = "Roll#")]
+        public int RollNo { get; set; }
+        [Required]
+        [Display(Name = "Month")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [CurrentMonthRange(ErrorMessage = "Please choose a valid month. (You can't choose the current month)")]
+        public DateTime Month { get; set; }
+    }
+    public class LoadStaffAttendanceForViewModel
+    {
+        [Required]
+        [Display(Name = "Staff Type")]
+        public StaffTypes StaffType { get; set; }
+        [Required]
+        [Display(Name = "Choose Staff")]
+        public int Staff { get; set; }
+        [Required]
+        [Display(Name = "Month")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [CurrentMonthRange(ErrorMessage = "Please choose a valid month. (You can't choose the current month)")]
+        public DateTime Month { get; set; }
+    }
+    public class ViewStudentAttendanceForViewModel
+    {
+        [Display(Name = "Roll#")]
+        public int RollNo { get; set; }
+        [Display(Name = "Student Name")]
+        public string Name { get; set; }
+        [Display(Name = "Attendance")]
+        public decimal Attendance { get; set; }
+        public List<MonthlyAttendanceViewModel> MonthlyAttendances { get; set; }
+    }
+    public class MonthlyAttendanceViewModel
+    {
+        [Display(Name = "Date")]
+        public string Date { get; set; }
+        [Display(Name = "Status")]
+        public bool IsAbsent { get; set; }
+        public long Id { get; set; }
+    }
+    public class ViewStaffAttendanceForViewModel
+    {
+        [Display(Name = "CNIC")]
+        public string CNIC { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+        [Display(Name = "Attendance")]
+        public decimal Attendance { get; set; }
+        public List<MonthlyAttendanceViewModel> MonthlyAttendances { get; set; }
+    }
+    public class SendNotificationViewModel
+    {
+        [Required]
+        [StringLength(500, ErrorMessage = "The body length shouldn't be greater than 500 and less than 3.", MinimumLength = 3)]
+        [Display(Name = "Message Body")]
+        public string Body { get; set; }
+        [Required]
+        [Display(Name = "Notification Type")]
+        public NotificationTypes Type { get; set; }
+        [Required]
+        [Display(Name = "Notification Status")]
+        public NotificationStatuses Status { get; set; }
+        public IEnumerable<int> Parents { get; set; }
+        public IEnumerable<int> Teachers { get; set; }
     }
 }

@@ -439,6 +439,27 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        public bool GetAbsentStatus(DateTime date)
+        {
+            bool isAbsent = false;
+            try
+            {
+                query = "GetStudentAttendance";
+                cmd = new SqlCommand(query, con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@studentId", System.Data.SqlDbType.Int)).Value = id;
+                cmd.Parameters.Add(new SqlParameter("@date", System.Data.SqlDbType.Date)).Value = date;
+                con.Open();
+                isAbsent = Convert.ToBoolean(cmd.ExecuteScalar());
+                con.Close();
+            }
+            catch (SqlException ex)
+            {
+                Exception e = new Exception("Error Occured in Database processing. CodeIndex:281", ex);
+                throw e;
+            }
+            return isAbsent;
+        }
         public ExamResult GetExamResult(int examinationId)
         {
             ExamResult result = new ExamResult();

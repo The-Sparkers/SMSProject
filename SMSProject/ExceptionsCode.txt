@@ -179,3 +179,5 @@
 278: Error in GetMonthlyProgress() in Section Model Class.
 279: Error in GetMonthlyProgress() Method in Student Model Class.
 280: Error in GetAssingedTeachers() Method in Section Model Class.
+281: Error in GetAbsentStatus() Method in Student Model Class.
+282: Error in GetAbsentStatus() Method in Staff Model Class.
