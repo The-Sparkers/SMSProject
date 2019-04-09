@@ -52,12 +52,12 @@
                     @if (!item.IsAbsent)
                     {
                         <td class="text-success">Present</td>
-                        <td>@Html.ActionLink("Was Absent", "ChangeAttendanceStatus", new { id = item.Id, isAbsent = true, stuId = ViewBag.StudentId, month = ViewBag.Month }, new { @class = "btn btn-danger chng" })</td>
+                        <td>@Html.ActionLink("Was Absent", "ChangeAttendanceStatus", new { id = item.Id, isAbsent = true }, new { @class = "btn btn-danger chng" })</td>
                     }
                     else
                     {
                         <td class="text-danger">Absent</td>
-                        <td>@Html.ActionLink("Was Present", "ChangeAttendanceStatus", new { id = item.Id, isAbsent = false, stuId = ViewBag.StudentId, month = ViewBag.Month }, new { @class = "btn btn-success chng" })</td>
+                        <td>@Html.ActionLink("Was Present", "ChangeAttendanceStatus", new { id = item.Id, isAbsent = false }, new { @class = "btn btn-success chng" })</td>
                     }
                 </tr>
             }
