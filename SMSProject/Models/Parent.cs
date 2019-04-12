@@ -6,6 +6,10 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Parent whose student(s) are registered to the school
+    /// One of the main user of the system
+    /// </summary>
     public class Parent
     {
         string fatherName, motherName, fCNIC, homeAddress, emergencyContact;
@@ -107,6 +111,10 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// checks threshold to which the parent is allowed to use the system.
+        /// Parent will have to clear the account according to the threshold set by the admin.
+        /// </summary>
         public bool IsEligible
         {
             get
@@ -439,6 +447,10 @@ namespace SMSProject.Models
                 return ModelRoles.Parent;
             }
         }
+        /// <summary>
+        /// Gets the list of all applications submitted by this parent
+        /// </summary>
+        /// <returns></returns>
         public List<Application> GetAllApplications()
         {
             List<Application> lst = new List<Application>();
@@ -461,6 +473,10 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Gets a list of all notifications sent to this parent by the admin
+        /// </summary>
+        /// <returns></returns>
         public List<Notification> GetAllReceivedNotifications()
         {
             List<Notification> lst = new List<Notification>();
@@ -483,6 +499,11 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Method to send a notification to this parent
+        /// </summary>
+        /// <param name="notification">Notification to be sent</param>
+        /// <returns>true is the notiification will be sent successfully</returns>
         public bool SendNotification(Notification notification)
         {
             bool check = false;
@@ -517,6 +538,10 @@ namespace SMSProject.Models
             }
             return check;
         }
+        /// <summary>
+        /// Method to set the status to read, of a notification received by this parent.
+        /// </summary>
+        /// <param name="notification">notification received</param>
         public void ReadNotification(Notification notification)
         {
             try
@@ -536,6 +561,12 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Generates the Fee Record for this parent for a particular month
+        /// </summary>
+        /// <param name="month">number of month(e.g. 1 for Jan, 2 for Feb, etc)</param>
+        /// <param name="year">year to which the month belongs to (e.g. 2017)</param>
+        /// <returns></returns>
         public List<ParentFeeRecord> GetFeeRecord(int month, int year)
         {
             List<ParentFeeRecord> lst = new List<ParentFeeRecord>();
@@ -560,6 +591,10 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Generates the record for the billing done by this parent
+        /// </summary>
+        /// <returns></returns>
         public List<ParentFeeRecord> BillingHistory()
         {
             List<ParentFeeRecord> lst = new List<ParentFeeRecord>();
@@ -582,6 +617,11 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Gets the fee pending for a particular month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public decimal GetMonthFee(DateTime month)
         {
             DateTime startDate = new DateTime(month.Year, month.Month, 1);
@@ -608,6 +648,10 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Gets the notifications received on the web
+        /// </summary>
+        /// <returns></returns>
         public List<WebNotification> GetAllWebNotifications()
         {
             List<WebNotification> lst = new List<WebNotification>();
@@ -635,6 +679,10 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Gets a list of students registered in the school
+        /// </summary>
+        /// <returns></returns>
         public List<Student> GetAllStudents()
         {
             List<Student> lst = new List<Student>();
@@ -703,6 +751,12 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Gets a Lst of Parents who have not cleared their dues for a month.
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public static List<Parent> GetParentsWithUnpaidDues(string connectionString, DateTime month)
         {
             List<Parent> lst = new List<Parent>();

@@ -4,6 +4,10 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Additional Fund is associated with a fee.
+    /// Can be one or more with one fee.
+    /// </summary>
     public class AdditionalFund
     {
         int id;

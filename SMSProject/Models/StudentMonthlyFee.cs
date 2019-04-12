@@ -5,6 +5,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Record of monthly fee for student
+    /// </summary>
     public class StudentMonthlyFee
     {
         long id;

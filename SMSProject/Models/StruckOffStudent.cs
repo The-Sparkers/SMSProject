@@ -5,7 +5,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
-    
+    /// <summary>
+    /// A student for school is never deletes however it changes to sturck-off student
+    /// </summary>
     public class StruckOffStudent
     {
         int id;

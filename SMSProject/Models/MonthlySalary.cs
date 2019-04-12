@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Monthly Salary register of a staff member
+    /// </summary>
     public class MonthlySalary
     {
         int staffId;
@@ -40,6 +43,9 @@ namespace SMSProject.Models
                 return salary;
             }
         }
+        /// <summary>
+        /// Number of absents in the month of registering the salary
+        /// </summary>
         public int Absents
         {
             get
@@ -70,6 +76,9 @@ namespace SMSProject.Models
                 return decimal.Subtract(Salary, decimal.Multiply(Absents, perAbsent));
             }
         }
+        /// <summary>
+        /// Deduction of amount on per absent
+        /// </summary>
         public decimal PerAbsentDeduction
         {
             get

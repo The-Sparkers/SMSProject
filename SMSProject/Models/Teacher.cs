@@ -6,6 +6,9 @@ using SMSProject.Models.ModelEnums;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// A Teacher is a staff member who teaches in the school
+    /// </summary>
     public class Teacher : Staff
     {
         public Teacher(int id, string connectionString)
@@ -146,6 +149,12 @@ namespace SMSProject.Models
             }
             return flag;
         }
+        /// <summary>
+        /// Method to assign a section to this teacher
+        /// </summary>
+        /// <param name="sectionId">section id to which this teacher is going to assign</param>
+        /// <param name="subjectId">subject id of which this teacher is going to teach</param>
+        /// <returns></returns>
         public bool AssignSection(int sectionId, int subjectId)
         {
             bool flag = false;
@@ -196,6 +205,10 @@ namespace SMSProject.Models
             }
             return flag;
         }
+        /// <summary>
+        /// Gets a list of sections which have been assigned to this teacher
+        /// </summary>
+        /// <returns></returns>
         public List<AssignedSection> GetAssignedSections()
         {
             List<AssignedSection> lst = new List<AssignedSection>();
@@ -218,6 +231,10 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Gets a list of the classes which have been incharged by this teacher
+        /// </summary>
+        /// <returns></returns>
         public List<Class> GetInchargedClasses()
         {
             List<Class> lst = new List<Class>();
@@ -240,6 +257,10 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Gets all the notifications sent to this taecher
+        /// </summary>
+        /// <returns></returns>
         public List<Notification> GetAllReceivedNotifications()
         {
             List<Notification> lst = new List<Notification>();
@@ -262,6 +283,10 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Gets all notifications sent to this teacher on web
+        /// </summary>
+        /// <returns></returns>
         public List<WebNotification> GetAllWebNotifications()
         {
             List<WebNotification> lst = new List<WebNotification>();
@@ -289,6 +314,10 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Sets the status of a particular notification to read
+        /// </summary>
+        /// <param name="notification"></param>
         public void ReadNotification(Notification notification)
         {
             try
@@ -308,6 +337,11 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Method to send notification to this teacher
+        /// </summary>
+        /// <param name="notification"></param>
+        /// <returns></returns>
         public bool SendNotification(Notification notification)
         {
             bool check = false;
@@ -339,6 +373,9 @@ namespace SMSProject.Models
             }
             return check;
         }
+        /// <summary>
+        /// Number of Notifications which are sent to this teacher but are not read by the teacher
+        /// </summary>
         public int UnreadNotificationsCount
         {
             get

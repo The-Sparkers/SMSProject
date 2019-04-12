@@ -6,6 +6,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Entity who works at the school
+    /// </summary>
     public class Staff
     {
         protected Genders gender;
@@ -233,6 +236,11 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Gets a List of Attendances for a particular month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public List<Attendance> GetMonthAttendances(DateTime month)
         {
             List<Attendance> lst = new List<Attendance>();
@@ -277,6 +285,11 @@ namespace SMSProject.Models
             }
             return absents;
         }
+        /// <summary>
+        /// Gets salary of this staff for a particular month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public MonthlySalary GetMonthSalary(Month month)
         {
             MonthlySalary sal;
@@ -366,6 +379,11 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Returns the status of the attendance on a particular date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public bool GetAbsentStatus(DateTime date)
         {
             bool isAbsent = false;
@@ -387,6 +405,12 @@ namespace SMSProject.Models
             }
             return isAbsent;
         }
+        /// <summary>
+        /// Gets a list of staff members who's salaries are not set
+        /// </summary>
+        /// <param name="month">month for the data is going to load</param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static List<Staff> GetAllUnsetSalaryStaff(Month month, string connectionString)
         {
             List<Staff> lst = new List<Staff>();

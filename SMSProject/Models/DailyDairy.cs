@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Student's Daily Diary on which homework tasks are written.
+    /// </summary>
     public class DailyDairy
     {
         DateTime date;
@@ -126,6 +129,13 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Gets a diary of a specific subject for a specific date.
+        /// </summary>
+        /// <param name="subjectId">Unique Id of Subject</param>
+        /// <param name="date">Date</param>
+        /// <param name="connectionString">Connection to the DB of School</param>
+        /// <returns></returns>
         public static DailyDairy GetDairyOfSubjectOnDate(int subjectId, DateTime date, string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -145,6 +155,12 @@ namespace SMSProject.Models
             }
             return new DailyDairy(dId, con.ConnectionString);
         }
+        /// <summary>
+        /// Gets a list of All Diaries for a subject.
+        /// </summary>
+        /// <param name="subjectId">unique id of the subject</param>
+        /// <param name="connectionString">connection to the DB of school</param>
+        /// <returns></returns>
         public static List<DailyDairy> GetDairiesOfSubject(int subjectId, string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);

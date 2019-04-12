@@ -4,6 +4,10 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// A Class is a combination of students of a specific Level.
+    /// A Class has different sections.
+    /// </summary>
     public class Class
     {
         int id, inchargeId, rollNoIndex;
@@ -44,6 +48,9 @@ namespace SMSProject.Models
                 return id;
             }
         }
+        /// <summary>
+        /// Index from which the first Roll number of a class starts
+        /// </summary>
         public int RollNoIndex
         {
             get
@@ -58,6 +65,9 @@ namespace SMSProject.Models
                 return name;
             }
         }
+        /// <summary>
+        /// Number of students in the class
+        /// </summary>
         public int Strength
         {
             get
@@ -122,6 +132,14 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Adds Downloadable files for a class.
+        /// Mostly Includes the learning content.
+        /// </summary>
+        /// <param name="name">Name of the Content</param>
+        /// <param name="fileName">File Name</param>
+        /// <param name="uploadDate">Date of Upload</param>
+        /// <param name="extention">File Extention</param>
         public void AddDownloadable(string name, string fileName, DateTime uploadDate, string extention)
         {
             try

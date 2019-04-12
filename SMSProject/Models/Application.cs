@@ -5,6 +5,11 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Application will be sent by the parent or student of will be reviewed by the admin.
+    /// Can be sent more than one by a parent or a teacher.
+    /// Have three types of statuses: Pending, Accepted and Rejected.
+    /// </summary>
     public class Application
     {
         long id;
@@ -121,6 +126,11 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Returns a list of appliciations with Pending Status
+        /// </summary>
+        /// <param name="connectionString">Connection String of School DB</param>
+        /// <returns></returns>
         public static List<Application> GetPendingApplications(string connectionString)
         {
             List<Application> lst = new List<Application>();

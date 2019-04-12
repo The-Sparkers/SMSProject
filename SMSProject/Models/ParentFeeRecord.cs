@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Register which contains the history of billing for a parent
+    /// </summary>
     public class ParentFeeRecord
     {
         DateTime datePaid;
@@ -55,6 +58,9 @@ namespace SMSProject.Models
                 return datePaid;
             }
         }
+        /// <summary>
+        /// Discount done on the fee by the school
+        /// </summary>
         public decimal Concession
         {
             get
@@ -134,6 +140,12 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Gets the Total amount of dues submitted to the school for a particular month.
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static decimal GetTotalCollection(DateTime month, string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -162,6 +174,12 @@ namespace SMSProject.Models
             }
             return total;
         }
+        /// <summary>
+        /// Gets the total amount of dues pending to the school
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static decimal GetTotalDue(DateTime month, string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);
@@ -194,6 +212,12 @@ namespace SMSProject.Models
             }
             return total;
         }
+        /// <summary>
+        /// Gets a fee record for a particular month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static List<ParentFeeRecord> GetAllMonthRecord(DateTime month, string connectionString)
         {
             List<ParentFeeRecord> lst = new List<ParentFeeRecord>();

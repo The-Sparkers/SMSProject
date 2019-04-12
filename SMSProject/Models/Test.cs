@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// A test is conducted by the class teacher
+    /// </summary>
     public class Test
     {
         long id;
@@ -87,6 +90,13 @@ namespace SMSProject.Models
                 return new Subject(subjectId, con.ConnectionString);
             }
         }
+        /// <summary>
+        /// Add marks for this test
+        /// </summary>
+        /// <param name="studentId">Id of the student whose marks are being added</param>
+        /// <param name="marks">marks of the student taken in this test</param>
+        /// <param name="remarks">Remarks by the teacher</param>
+        /// <returns></returns>
         public bool AddTestMarks(int studentId, decimal marks, string remarks)
         {
             bool flag = false;
