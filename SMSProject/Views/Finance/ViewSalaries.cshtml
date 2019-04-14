@@ -1,0 +1,164 @@
+﻿@using SMSProject.ViewModels.AdminViewModels
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<ViewSalariesViewModel>
+
+@{
+    ViewBag.Title = "View Salaries";
+    SMSProject.Models.HelperModels.Month month = (SMSProject.Models.HelperModels.Month)ViewBag.Month;
+    int i=0;
+    try
+    {
+        i = Model.PageSize * (Model.PageNumber - 1);
+    }
+    catch (Exception) { }
+    decimal total = 0;
+    List<_MonthlySalariesChartPartialViewModel> chartData = (List<_MonthlySalariesChartPartialViewModel>)TempData["MonthlySalaryChart"];
+    var random = new Random();
+}
+<!--Start of chart-->
+<div class="w3ls_agile_cylinder chart agile_info_shadow">
+    <h3 class="w3_inner_tittle two">Monthly Salaries @DateTime.Now.Year</h3>
+
+    <div id="chartdiv"></div>
+
+
+</div>
+<!--End of chart-->
+<br />
+<h2>View Salaries for @month.Name, @month.Year</h2>
+<br />
+<div class="agile_info_shadow">
+    <div class="table table-responsive">
+        <table class="table table-hover">
+            <tr>
+                <th>#</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().CNIC)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Salary)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Absents)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().PerAbsent)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().TSalary)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                total += item.TSalary;
+                <tr>
+                    <td>@(++i)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CNIC)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Salary)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Absents)
+                    </td>
+                    <td>
+                       Rs. @Html.DisplayFor(modelItem => item.PerAbsent)
+                    </td>
+                    <td>
+                        Rs. @Html.DisplayFor(modelItem => item.TSalary)
+                    </td>
+                    <td>
+                        <!--This Action need to be created-->
+                        @Html.ActionLink("Details", "ViewSalaryDetails", new { id = item.Id }, new { @class = "btn btn-danger" })
+                    </td>
+                </tr>
+            }
+            <tr>
+                <td colspan="7"></td>
+                <td><h4>Total: Rs. @(decimal.Round(total))</h4></td>
+            </tr>
+        </table>
+        @if (ViewBag.Error != null)
+            {
+                if ((bool)ViewBag.Error)
+                {
+                <p class="text-danger">No record to show</p>
+            }
+        }
+        <div class="col-md-offset-4 col-md-4">
+            @Html.PagedListPager(Model, page => @Url.Action("ViewSalaries", new { page, month = month.Number, year = month.Year }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, })
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<br />
+@section Scripts{
+    @Scripts.Render("~/bundles/amcharts")
+    <!-- Chart code -->
+    <script>
+        var chart = AmCharts.makeChart("chartdiv", {
+            "theme": "light",
+            "type": "serial",
+            "startDuration": 2,
+            "dataProvider": [
+                @foreach (var item in chartData)
+                {
+                    var color = String.Format("#{0:X6}", random.Next(0x1000000));
+                    <text>
+                        {
+                            "country": "@item.Month",
+                            "visits": @item.TotalSalaries ,
+                            "color": "@color"
+                        },
+                    </text>
+
+                }
+            ],
+            "valueAxes": [{
+                "position": "left",
+                "axisAlpha": 0,
+                "gridAlpha": 0
+            }],
+            "graphs": [{
+                "balloonText": "[[category]]: <b>[[value]]</b>",
+                "colorField": "color",
+                "fillAlphas": 0.85,
+                "lineAlpha": 0.1,
+                "type": "column",
+                "topRadius": 1,
+                "valueField": "visits"
+            }],
+            "depth3D": 40,
+            "angle": 30,
+            "chartCursor": {
+                "categoryBalloonEnabled": false,
+                "cursorAlpha": 0,
+                "zoomable": false
+            },
+            "categoryField": "country",
+            "categoryAxis": {
+                "gridPosition": "start",
+                "axisAlpha": 0,
+                "gridAlpha": 0
+
+            },
+            "export": {
+                "enabled": true
+            }
+
+        }, 0);
+    </script>
+    <!-- Chart code -->
+    <!-- //amcharts -->
+}

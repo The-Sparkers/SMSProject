@@ -1,0 +1,106 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.StruckOffStudentViewModel
+
+@{
+    ViewBag.Title = "Struck-Off Student";
+    int i = 0;
+}
+<div class="fullHeight">
+    <h2>Struck-Off Student</h2>
+    <br />
+    <h4>Select Student</h4>
+    <br />
+    @using (Html.BeginForm("StruckOffStudent", "Students", FormMethod.Post, new { id = "struckOffStu" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal agile_info_shadow">
+            <p class="text-info">Search Student by entering Admission Number</p>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.SearchName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.SearchName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SearchName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href="javascript:document.getElementById('struckOffStu').submit()" class="btn btn-primary">Search</a>
+                </div>
+            </div>
+        </div>
+    }
+    @if (Model != null)
+    {
+        <div class="table table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <th>#</th>
+                    <th>Student Name</th>
+                    <th>Father Name</th>
+                    <th>Admission Number</th>
+                    <th>Class</th>
+                    <th>Action</th>
+                </tr>
+                @foreach (var item in Model.Result)
+                {
+                    <tr>
+                        <td>@(++i)</td>
+                        <td>@item.StudentName</td>
+                        <td>@item.FatherName</td>
+                        <td>@item.AdmissionNumber</td>
+                        <td>@item.Class</td>
+                        <td><a onclick="Confirm(@item.StudentId, '@item.StudentName')" class="btn btn-danger">Struck-Off</a></td>
+                    </tr>
+                }
+            </table>
+        </div>
+        if ((bool)ViewBag.error)
+        {
+            <p class="text-danger">No record found against your search.</p>
+        }
+    }
+    else
+    {
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+    }
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        function Confirm(studentId, studentName) {
+            var id = studentId;
+            var name = studentName;
+            var roll;
+            var person = prompt("Are you sure want to struck-off " + name + "? If so, then enter the board roll number for previous examination (leave the field empty if roll number dosen't exists)", "");
+            if (person == null) {
+
+            }
+            else {
+                roll = person;
+                location.href = '@Url.Action("StruckOffStudentDone", "Admin")?id=' + id + '&bRoll=' + roll;
+            }
+
+        }
+    </script>
+    @if (ViewBag.Success != null)
+    {
+        if ((bool)ViewBag.Success)
+        {
+            <script type="text/javascript">
+            $(document).ready(
+                    window.alert("Student has been Strucked-Off")
+                );
+            </script>
+        }
+
+    }
+}
+

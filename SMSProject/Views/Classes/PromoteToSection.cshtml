@@ -1,0 +1,84 @@
+﻿@using SMSProject.Models
+@model SMSProject.ViewModels.AdminViewModels.LoadStudentsViewModel
+
+@{
+    ViewBag.Title = "Promote To Section";
+    List<SelectListItem> lstClasses = new List<SelectListItem>();
+    foreach (var item in Class.GetAllClasses(SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value)))
+    {
+        lstClasses.Add(new SelectListItem
+        {
+            Value = item.ClassId + "",
+            Text = item.Name
+        });
+    }
+    List<SelectListItem> lstSections = new List<SelectListItem>();
+}
+
+<h2>Promote To Section</h2>
+<br />
+
+@using (Html.BeginForm("PromoteToSection", "Classes", FormMethod.Post, new { id = "chSec" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal agile_info_shadow">
+        <p class="text-info">Choose below the class and section to which you are promoting the student(s).</p>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Class, lstClasses, "Select Class", new { @class = "form-control1", id="lstClass" })
+                @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Section, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Section, lstSections, "Select Section", new { @class = "form-control1", id = "lstSection" })
+                @Html.ValidationMessageFor(model => model.Section, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('chSec').submit()" class="btn btn-primary">Save</a>
+            </div>
+        </div>
+    </div>
+}
+<div class="clearfix"></div>
+<br />
+<br />
+<br />
+<br />
+<br />
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <!--Script to load sections for a class by using AJAX Request-->
+    <script type="text/javascript">
+        $(function () {
+            $("#lstClass").change(function () {
+                var classId = $(this).val();
+                if ($(this).val() != "") {
+                    //AJAX Request to load sections
+                    $.ajax({
+                        url: '@Url.Action("GetSections")',
+                        type: 'post',
+                        data: {
+                            id: classId
+                        }
+                    }).done(function (response) {
+                        $("#lstSection").html(response);
+                    });
+                }
+                else {
+                    $("#lstSection").html("<option value=''>Select Section</option>");
+                }
+            });
+        });
+    </script>
+}

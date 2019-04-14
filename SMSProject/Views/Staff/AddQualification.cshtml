@@ -1,0 +1,50 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.AddQualificationViewModel
+
+@{
+    ViewBag.Title = "Add Qualification";
+}
+
+<h2>Add Qualification</h2>
+<br />
+
+@using (Html.BeginForm("AddQualification", "Staff", new { id =(int) ViewBag.StaffId }, FormMethod.Post, new { id = "addqua" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal agile_info_shadow">
+        <p class="text-info">Please enter the required information correctly.</p>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Degree, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Degree, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Degree, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Year, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Year, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Year, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('addqua').submit()" class="btn btn-primary">Add</a>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+@if (ViewBag.Error != null)
+{
+    if ((bool)ViewBag.Error)
+    {
+        <script type="text/javascript">
+            $(document).ready(window.alert("Data not saved"));
+        </script>
+    }
+}
+}

@@ -1,0 +1,105 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.LoadStaffAttendanceForViewModel
+
+@{
+    ViewBag.Title = "Load Staff Attendance";
+}
+
+<h2>LoadS Attendance</h2>
+<br />
+
+@using (Html.BeginForm("LoadStaffAttendanceFor", "Attendance", FormMethod.Post, new { id = "ldad" })) 
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal agile_info_shadow">
+        <p class="text-info">Choose Staff Type, then staff member and choose month to load attendance.</p>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.StaffType, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.StaffType,"Select Type", new { @class = "form-control1", id = "StaffType" } )
+                @Html.ValidationMessageFor(model => model.StaffType, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Staff, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Staff,new List<SelectListItem>(),"Select Staff", new { @class = "form-control1", id="Staff" } )
+                @Html.ValidationMessageFor(model => model.Staff, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Month, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Month, new { htmlAttributes = new { @class = "form-control1" } })
+                @Html.ValidationMessageFor(model => model.Month, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('ldad').submit()" class="btn btn-primary">Load</a>
+            </div>
+        </div>
+    </div>
+}
+<br />
+<br />
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<!--Script to load staff by using AJAX Request-->
+<script type="text/javascript">
+    $(function () {
+        $(document).ready(function () {
+            var staffType = $("#StaffType").val();
+            if ($("#StaffType").val() != 0) {
+                //AJAX Request to load staff
+                $.ajax({
+                    url: '@Url.Action("GetStaff","Staff")',
+                    type: 'post',
+                    data: {
+                        staffType: staffType
+                    }
+                }).done(function (response) {
+                    $("#Staff").html(response);
+                });
+            }
+            else {
+                $("#Staff").html("<option value=''>Select Staff</option>");
+            }
+        });
+            $("#StaffType").change(function () {
+                var staffType = $(this).val();
+                if ($(this).val() != 0) {
+                    //AJAX Request to load staff
+                    $.ajax({
+                        url: '@Url.Action("GetStaff","Staff")',
+                        type: 'post',
+                        data: {
+                            staffType: staffType
+                        }
+                    }).done(function (response) {
+                        $("#Staff").html(response);
+                    });
+                }
+                else {
+                    $("#Staff").html("<option value=''>Select Staff</option>");
+                }
+            });
+        });
+</script>
+@if (ViewBag.Empty != null)
+    {
+        if ((bool)ViewBag.Empty)
+        {
+        <script type="text/javascript">
+                $(document).ready(window.alert("No record found."));
+        </script>
+    }
+}
+}

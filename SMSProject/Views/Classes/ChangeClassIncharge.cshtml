@@ -1,0 +1,59 @@
+﻿@using SMSProject.Models
+    @model SMSProject.ViewModels.AdminViewModels.ChangeClassInchargeViewModel
+
+    @{
+        int classId = ViewBag.ClassId;
+        Class c = new Class(classId, SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value));
+        List<SelectListItem> lstTeachers = new List<SelectListItem>();
+        foreach (var item in Teacher.GetAllTeachers(SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value)))
+        {
+            lstTeachers.Add(new SelectListItem
+            {
+                Text = "Name: " + item.Name + "\t CNIC: " + item.CNIC,
+                Value = item.StaffId + ""
+            });
+        }
+        ViewBag.Title = "Change " + c.Name + " Class Incharge";
+    }
+
+    <h2>@c.Name Class Incharge</h2>
+<br />
+
+    @using (Html.BeginForm("ChangeClassIncharge", "Classes", new { id = classId }, FormMethod.Post, new { id = "EdtIn" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal agile_info_shadow">
+            <p class="text-info">Choose a from the list below as the incharge of class @c.Name</p>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.TeacherId, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.TeacherId, lstTeachers,"Select Teacher", new { @class = "form-control1 dropdown" })
+                    @Html.ValidationMessageFor(model => model.TeacherId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href="javascript:document.getElementById('EdtIn').submit()" class="btn btn-primary">Save</a>
+                </div>
+            </div>
+        </div>
+    }
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+    <div class="clearfix">
+
+    </div>
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
