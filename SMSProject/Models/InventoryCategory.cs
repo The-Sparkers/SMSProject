@@ -4,6 +4,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Category for Inventory Item
+    /// </summary>
     public class InventoryCategory
     {
         int id;

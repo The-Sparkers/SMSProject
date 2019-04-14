@@ -3,6 +3,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// File or Content to be uploaded or downloaded.
+    /// </summary>
     public class Downloadable
     {
         string name, fileName, fileExtention;

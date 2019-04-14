@@ -3,6 +3,10 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Attendance is the state of going regularly to or being present at a the school.
+    /// Will be marked for every staff member and student.
+    /// </summary>
     public class Attendance
     {
         bool isAbsent;

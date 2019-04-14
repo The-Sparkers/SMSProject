@@ -6,6 +6,10 @@ using System.Web;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Item present in the inventory
+    /// Every Item belongs to a category
+    /// </summary>
     public class InventoryItem
     {
         decimal price;
@@ -116,6 +120,12 @@ namespace SMSProject.Models
                 }
             }
         }
+        /// <summary>
+        /// Method to sell an Item to the student
+        /// </summary>
+        /// <param name="studentId">Id of the student who bought the item</param>
+        /// <param name="quantity">Number of pieces bought</param>
+        /// <returns>true if Item sold successfully after checking all parameters</returns>
         public bool ItemSell(int studentId, int quantity)
         {
             bool flag = false;

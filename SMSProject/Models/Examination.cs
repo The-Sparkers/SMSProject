@@ -7,6 +7,9 @@ using System.Web;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Examination takes place to check the student skills
+    /// </summary>
     public class Examination
     {
         Month month;
@@ -75,6 +78,9 @@ namespace SMSProject.Models
                 }
             }
         }
+        /// <summary>
+        /// Unqiue Month on which the examination takes place
+        /// </summary>
         public Month Month
         {
             get
@@ -82,6 +88,9 @@ namespace SMSProject.Models
                 return month;
             }
         }
+        /// <summary>
+        /// Status to make the examination results visible to the parents
+        /// </summary>
         public bool IsPublished
         {
             get
@@ -125,6 +134,14 @@ namespace SMSProject.Models
 
             }
         }
+        /// <summary>
+        /// Method to add marks of the examination for a particular student for a particular subject
+        /// </summary>
+        /// <param name="studentId">unique id of student</param>
+        /// <param name="subjectId">unique id of subject</param>
+        /// <param name="obtainedMarks">marks obtained by the student</param>
+        /// <param name="totalMarks">total marks of the subject</param>
+        /// <param name="teacherRemarks">Remarks by the teacher</param>
         public void AddMarks(int studentId, int subjectId, decimal obtainedMarks, decimal totalMarks, string teacherRemarks)
         {
             try
@@ -187,6 +204,11 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// List of Examinations which are visible
+        /// </summary>
+        /// <param name="connectionString"></param>
+        /// <returns></returns>
         public static List<Examination> GetAllPublishedExamnations(string connectionString)
         {
             SqlConnection con = new SqlConnection(connectionString);

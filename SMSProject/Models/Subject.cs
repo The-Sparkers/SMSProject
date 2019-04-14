@@ -3,6 +3,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// A subject belongs to a class
+    /// </summary>
     public class Subject
     {
         int id;

@@ -6,6 +6,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Main entity of the school which come to the school to take classes. 
+    /// </summary>
     public class Student
     {
         string name, bFormNo, adNo, prevInst;
@@ -385,6 +388,11 @@ namespace SMSProject.Models
                 return age;
             }
         }
+        /// <summary>
+        /// Gets the Fee for a particular month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public StudentMonthlyFee GetMonthlyFee(DateTime month)
         {
             StudentMonthlyFee st;
@@ -410,6 +418,11 @@ namespace SMSProject.Models
                 throw e;
             }
         }
+        /// <summary>
+        /// Gets a list of the items puchased by this student in a particular month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public List<PurchasedItemsDetails> GetPurchasedItems(DateTime month)
         {
             DateTime monthStart = new DateTime(month.Year, month.Month, 1);
@@ -439,6 +452,11 @@ namespace SMSProject.Models
             }
             return lst;
         }
+        /// <summary>
+        /// Get the absent status for this student on a particular date
+        /// </summary>
+        /// <param name="date"></param>
+        /// <returns></returns>
         public bool GetAbsentStatus(DateTime date)
         {
             bool isAbsent = false;
@@ -460,6 +478,11 @@ namespace SMSProject.Models
             }
             return isAbsent;
         }
+        /// <summary>
+        /// Get result of all subjects for a particular examination
+        /// </summary>
+        /// <param name="examinationId"></param>
+        /// <returns></returns>
         public ExamResult GetExamResult(int examinationId)
         {
             ExamResult result = new ExamResult();
@@ -493,6 +516,11 @@ namespace SMSProject.Models
             }
             return result;
         }
+        /// <summary>
+        /// Get monthly progress for this student for a particular month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <returns></returns>
         public decimal GetMonthlyProgress(Month month)
         {
             decimal progress = 0;
@@ -530,6 +558,11 @@ namespace SMSProject.Models
             }
             return progress;
         }
+        /// <summary>
+        /// Gets result of a particular test for this student 
+        /// </summary>
+        /// <param name="test"></param>
+        /// <returns></returns>
         public TestResult GetTestResult(Test test)
         {
             TestResult result = new TestResult();
@@ -554,6 +587,10 @@ namespace SMSProject.Models
             }
             return result;
         }
+        /// <summary>
+        /// Gets List of the tests given by this student
+        /// </summary>
+        /// <returns></returns>
         public List<Test> GetGivenTests()
         {
             List<Test> lst = new List<Test>();

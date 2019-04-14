@@ -5,6 +5,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// A sub of a class
+    /// </summary>
     public class Section
     {
         int id, classId;

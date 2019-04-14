@@ -6,6 +6,9 @@ using System.Data.SqlClient;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Category of Staff whose job is other than teaching
+    /// </summary>
     public class NonTeachingStaff : Staff
     {
         string jobType;

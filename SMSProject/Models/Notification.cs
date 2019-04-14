@@ -7,6 +7,9 @@ using System.Web;
 
 namespace SMSProject.Models
 {
+    /// <summary>
+    /// Notification sent to the parent and/or teacher
+    /// </summary>
     public class Notification
     {
         string message;

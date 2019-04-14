@@ -446,15 +446,18 @@ namespace SMSProject.Controllers
             }
         }
         [HttpGet]
-        public ActionResult ViewStruckOffStudents(int? page, string SearchName = "")
+        public ActionResult ViewStruckOffStudents(int? page, string searchName = "")
         {
-            ViewBag.Search = SearchName;
+            ///Action to view list of strucked-off students
+            ///page is nullable datatype which carries the page number (compulsary for handling the paged list)
+            ///searchName carries the name of the student entered in the searchbox
+            ViewBag.Search = searchName;
             bool err = false;
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting connection string from the cookies
                 List<ViewStruckOffStudentViewModel> result = new List<ViewStruckOffStudentViewModel>();
-                foreach (var item in Models.StruckOffStudent.GetAllStruckedStudents(SearchName, Cryptography.Decrypt(conString.Value)))
+                foreach (var item in Models.StruckOffStudent.GetAllStruckedStudents(searchName, Cryptography.Decrypt(conString.Value)))
                 {
                     result.Add(new ViewStruckOffStudentViewModel
                     {
@@ -468,6 +471,7 @@ namespace SMSProject.Controllers
                         StudentName = item.Name
                     });
                 }
+                //convert the student's list into paged list object in order to get pagging on view
                 PagedList<ViewStruckOffStudentViewModel> model = new PagedList<ViewStruckOffStudentViewModel>(result, page ?? 1, 20);
                 if (model.Count == 0)
                     err = true;
@@ -481,33 +485,38 @@ namespace SMSProject.Controllers
         }
         public ActionResult _SearchStruckOffPartial()
         {
+            ///return partial view for search struck-off students
             return PartialView();
         }
         public ActionResult AddParent()
         {
+            ///Action which returns view to add parent
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddParent(AddParentViewModel model)
         {
+            ///Post Method to Add Parent called on submitting the form
+            ///model contains the data entered by the user
             try
             {
                 if (!ModelState.IsValid)
                 {
                     return View();
                 }
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting connection string from the cookie
                 Parent p;
                 try
                 {
-                    p = new Parent(model.FatherName, model.MotherName, model.FCNIC, new Models.HelperModels.MobileNumber(model.FCountryCode, model.FCompanyCode, model.FNumber), new Models.HelperModels.MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber), model.Address, model.EmergencyContact, Math.Abs(model.ElgibilityThreshold), Cryptography.Decrypt(conString.Value));
+                    p = new Parent(model.FatherName, model.MotherName, model.FCNIC, new Models.HelperModels.MobileNumber(model.FCountryCode, model.FCompanyCode, model.FNumber), new Models.HelperModels.MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber), model.Address, model.EmergencyContact, Math.Abs(model.ElgibilityThreshold), Cryptography.Decrypt(conString.Value)); //adding new parent
                 }
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.Message);
                     return View();
                 }
+                //copying data to view model
                 ViewParentDetailsViewModel vpvm = new ViewParentDetailsViewModel
                 {
                     Address = p.HomeAddress,
@@ -521,6 +530,7 @@ namespace SMSProject.Controllers
                     ParentId = p.ParentId,
                     StudentsList = new List<ParentStudent>()
                 };
+                //getting student belong to the parent
                 foreach (var item in p.GetAllStudents())
                 {
                     vpvm.StudentsList.Add(new ParentStudent
@@ -531,7 +541,7 @@ namespace SMSProject.Controllers
                     });
                 }
                 ViewBag.Success = true;
-                return View("ViewParentDetails", vpvm);
+                return View("ViewParentDetails", vpvm); //returning newly added parent details
             }
             catch (Exception ex)
             {
@@ -540,10 +550,13 @@ namespace SMSProject.Controllers
         }
         public ActionResult EditParent(int pId)
         {
+            ///Action to edit parent details
+            ///pId is the parent id of which details have to be edited
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Parent p = new Parent(pId, Cryptography.Decrypt(conString.Value));
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting connection string from the cookie
+                Parent p = new Parent(pId, Cryptography.Decrypt(conString.Value)); //new instance of parent with the given parent id
+                //copying the data to the view model
                 AddParentViewModel apvm = new AddParentViewModel
                 {
                     Address = p.HomeAddress,
@@ -559,8 +572,8 @@ namespace SMSProject.Controllers
                     MNumber = p.MotherMobile.Number,
                     MotherName = p.MotherName
                 };
-                ViewBag.ParentId = p.ParentId;
-                return View(apvm);
+                ViewBag.ParentId = p.ParentId; //sending parent Id ot the view through ViewBag
+                return View(apvm); //return view with view model
             }
             catch (Exception ex)
             {
@@ -569,10 +582,13 @@ namespace SMSProject.Controllers
         }
         public ActionResult ViewParentDetails(int pId)
         {
+            ///Action to View Details of a parent 
+            ///pTd is the parent Id of which details want to be view
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Parent p = new Parent(pId, Cryptography.Decrypt(conString.Value));
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting connection string from the cookie
+                Parent p = new Parent(pId, Cryptography.Decrypt(conString.Value)); //initializing new instance of parent by using parent Id
+                //copying data to model
                 ViewParentDetailsViewModel vpvm = new ViewParentDetailsViewModel
                 {
                     Address = p.HomeAddress,
@@ -586,6 +602,7 @@ namespace SMSProject.Controllers
                     ParentId = p.ParentId,
                     StudentsList = new List<ParentStudent>()
                 };
+                //getting students belong to the parent
                 foreach (var item in p.GetAllStudents())
                 {
                     vpvm.StudentsList.Add(new ParentStudent
@@ -595,24 +612,31 @@ namespace SMSProject.Controllers
                         StudentId = item.StudentId
                     });
                 }
-                return View(vpvm);
+                return View(vpvm); //return view by passing model
             }
             catch (Exception ex)
             {
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post method to Edit Parent. Gathers the data from the form and submit to this action.
+        /// </summary>
+        /// <param name="model">Data gathered from the form</param>
+        /// <param name="id">Unique Iid of the parent</param>
+        /// <returns>Newly Added parent details.</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditParent(AddParentViewModel model, int id)
         {
             try
             {
-                ViewBag.ParentId = id;
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                Parent p = new Parent(id, Cryptography.Decrypt(conString.Value));
+                ViewBag.ParentId = id; //Sends id to the View by using View Bag
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //get connection string from the cookies
+                Parent p = new Parent(id, Cryptography.Decrypt(conString.Value)); //initalizes new instance by using the parent Id
                 try
                 {
+                    //updating the values into the database
                     p.EligibiltyThreshold = model.ElgibilityThreshold;
                     p.EmergencyContact = model.EmergencyContact;
                     p.FatherCNIC = model.FCNIC;
@@ -627,6 +651,7 @@ namespace SMSProject.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                     return View();
                 }
+                //copying data to the view model to show details of newly added parent
                 ViewParentDetailsViewModel vpvm = new ViewParentDetailsViewModel
                 {
                     Address = p.HomeAddress,
@@ -649,32 +674,43 @@ namespace SMSProject.Controllers
                         StudentId = item.StudentId
                     });
                 }
-                ViewBag.Success = true;
-                return View("ViewParentDetails", vpvm);
+                ViewBag.Success = true; //setting success flag to true after successful operation
+                return View("ViewParentDetails", vpvm); //returning view to show newly added parent details
             }
             catch (Exception ex)
             {
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Shows the list of all parents present into the database.
+        /// Also search for the parent
+        /// </summary>
+        /// <param name="page">nullable variable to set pagination</param>
+        /// <param name="searchName">parameter to search parent by name</param>
+        /// <param name="searchCNIC">parameter to search parent by CNIC number</param>
+        /// <returns>List view of parents</returns>
         public ActionResult ViewParents(int? page, string searchName = "", string searchCNIC = "")
         {
             try
             {
-                ViewBag.SearchName = searchName;
+                ViewBag.SearchName = searchName; 
                 ViewBag.SearchCNIC = searchCNIC;
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the connection string from the cookies
                 List<ViewParentsViewModel> lstParent = new List<ViewParentsViewModel>();
                 if (searchCNIC != "")
                 {
-                    System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(@"^[0-9]{5}[-][0-9]{7}[-][0-9]{1}$");
+                    //if user have searched by the CNIC
+                    System.Text.RegularExpressions.Regex regex = new System.Text.RegularExpressions.Regex(@"^[0-9]{5}[-][0-9]{7}[-][0-9]{1}$"); //making a regualr expression for CNIC number format
                     if (!regex.IsMatch(searchCNIC))
                     {
-                        ViewBag.Invalid = true;
+                        ViewBag.Invalid = true; //sets the flag for invalid entry
                     }
                     else
                     {
-                        Parent p = new Parent(searchCNIC, Cryptography.Decrypt(conString.Value));
+                        //if the format is true
+                        Parent p = new Parent(searchCNIC, Cryptography.Decrypt(conString.Value)); //initializing new instance by using the CNIC number
+                        //addng to the model list
                         lstParent.Add(new ViewParentsViewModel
                         {
                             Balance = decimal.Round(p.Balance).ToString(),
@@ -687,6 +723,7 @@ namespace SMSProject.Controllers
                 }
                 else
                 {
+                    //if the user have searched by parent name
                     foreach (var item in Parent.GetAllParents(Cryptography.Decrypt(conString.Value), searchName))
                     {
                         lstParent.Add(new ViewParentsViewModel
@@ -699,12 +736,13 @@ namespace SMSProject.Controllers
                         });
                     }
                 }
+                //converting the data into paged list model to accurately handling the pagging
                 PagedList<ViewParentsViewModel> model = new PagedList<ViewParentsViewModel>(lstParent, page ?? 1, 20);
                 if (lstParent.Count == 0)
                 {
                     ViewBag.Error = true;
                 }
-                return View(model);
+                return View(model); //returns the view
             }
             catch (Exception ex)
             {
@@ -715,13 +753,20 @@ namespace SMSProject.Controllers
         {
             return PartialView();
         }
+        /// <summary>
+        /// Displays the list of parents who haven't paid their dues
+        /// </summary>
+        /// <param name="page">nullable int to handle pagging</param>
+        /// <param name="err">error flag to control some error</param>
+        /// <param name="succ">success flag to control some success</param>
+        /// <returns>View showing list of parents</returns>
         public ActionResult ViewUnPaidParent(int? page, bool err = false, bool succ = false)
         {
-            ViewBag.Error = err;
-            ViewBag.Success = succ;
+            ViewBag.Error = err; //sending flag to the view via viewbag
+            ViewBag.Success = succ; //sending flag to the view via viewbag
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the connection string from the cookies
                 List<ViewUnPaidParentsViewModel> lstParents = new List<ViewUnPaidParentsViewModel>();
                 foreach (var item in Parent.GetParentsWithUnpaidDues(Cryptography.Decrypt(conString.Value), DateTime.Now))
                 {
@@ -744,13 +789,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to send fee notificatiions to the parents
+        /// </summary>
+        /// <param name="pId">List of Parent Id's to which the notification ha to be sent</param>
+        /// <returns>Redirects to the ViewUnPaidParent action</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SendFeeNotification(IEnumerable<int> pId)
         {
-            HttpCookie schoolName = Request.Cookies.Get("schlNm");
+            HttpCookie schoolName = Request.Cookies.Get("schlNm"); //getting the school name from the cookies stored at the time of loging
             if (pId == null || pId.Count() == 0)
             {
+                //if there is no parent Id into the list then redirect back to the previous action
                 return RedirectToAction("ViewUnPaidParent", new { err = true });
             }
             try
@@ -760,37 +811,43 @@ namespace SMSProject.Controllers
                 Notification n;
                 foreach (var item in pId)
                 {
-                    HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                    HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the connection string the cookies
                     p = new Parent(item, Cryptography.Decrypt(conString.Value));
-                    message = "Your have Rs. " + decimal.Round(p.GetMonthFee(DateTime.Now)) + " un-paid at " + schoolName.Value + ". Please submit all your dues as soon as possible.";
+                    message = "Your have Rs. " + decimal.Round(p.GetMonthFee(DateTime.Now)) + " un-paid at " + schoolName.Value + ". Please submit all your dues as soon as possible."; //formatting the text to be sent
                     n = new Notification(message, DateTime.Now, NotificationStatuses.ForParent, NotificationTypes.SMS, Cryptography.Decrypt(conString.Value));
                     p.SendNotification(n);
                 }
-                return RedirectToAction("ViewUnPaidParent", new { succ = true });
+                return RedirectToAction("ViewUnPaidParent", new { succ = true }); //redirect back to the action with a success message
             }
             catch (Exception ex)
             {
                 return Content(ex.Message);
             }
         }
-        public ActionResult AddStaff()
-        {
-            return View();
-        }
+        /// <summary>
+        /// Action to return View to add new staff
+        /// </summary>
+        /// <returns>View containing a form to add</returns>
+        public ActionResult AddStaff() => View();
+        /// <summary>
+        /// Post Action to get submtted data from the add staff form.
+        /// </summary>
+        /// <param name="model">Contains the data from the add staff form</param>
+        /// <returns>View newly added staff details</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddStaff(AddStaffViewModel model)
         {
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the connection string from cookies 
                 if (!ModelState.IsValid)
                 {
                     return View();
                 }
                 if (model.StaffType == StaffTypes.NonTeaching && model.JobType == null)
                 {
-                    ModelState.AddModelError("JobType", "This field is required");
+                    ModelState.AddModelError("JobType", "This field is required"); //adding model error which displayed on invalid entry
                     return View();
                 }
                 NonTeachingStaff nts = null;
@@ -878,6 +935,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Displays the details of a 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="s"></param>
+        /// <param name="err"></param>
+        /// <returns></returns>
         public ActionResult ViewTeacherDetails(int id, bool s = false, bool err = false)
         {
             ViewBag.Success = s;
@@ -899,7 +963,7 @@ namespace SMSProject.Controllers
                     Sections = new List<TeacherSection>(),
                     JoiningDate = t.Joiningdate.ToLongDateString()
                 };
-                foreach (var item in t.Qualifications)
+                foreach (var item in t .Qualifications)
                 {
                     vtdvm.Qualifications.Add(new TeacherQualification
                     {
@@ -928,13 +992,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-        public ActionResult ViewNonStaffDetails(int? id, bool s = false)
+        /// <summary>
+        /// View the list of Non-Teaching staff.
+        /// </summary>
+        /// <param name="id">unique id of the staff</param>
+        /// <param name="s">success flag </param>
+        /// <returns></returns>
+        public ActionResult ViewNonStaffDetails(int id, bool s = false)
         {
             try
             {
                 ViewBag.Success = s;
                 HttpCookie conString = Request.Cookies.Get("rwxgqlb");
-                NonTeachingStaff nts = new NonTeachingStaff(id ?? 2012, Cryptography.Decrypt(conString.Value));
+                NonTeachingStaff nts = new NonTeachingStaff(id, Cryptography.Decrypt(conString.Value));
                 ViewNonStaffDetailsViewModel vnvm = new ViewNonStaffDetailsViewModel
                 {
                     Address = nts.Address,
@@ -954,6 +1024,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to edit staff details
+        /// </summary>
+        /// <param name="id">Unique id of the staff.</param>
+        /// <param name="t">Type of Staff</param>
+        /// <returns>View showing staff details</returns>
         public ActionResult EditStaff(int id, StaffTypes t)
         {
             try
@@ -1005,48 +1081,58 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post action to get form data from the edit staff view
+        /// </summary>
+        /// <param name="model">Form data</param>
+        /// <param name="id">Unique id of the staff</param>
+        /// <returns>View containing Staff details</returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditStaff(AddStaffViewModel model, int id)
         {
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the encrypted connection string from cookies
                 if (!ModelState.IsValid)
                 {
-                    ViewBag.StaffId = id;
-                    ViewBag.StaffType = model.StaffType;
+                    //f the model state is not acorrding to the given format
+                    ViewBag.StaffId = id; //sending the staff id back to the view for again processing
+                    ViewBag.StaffType = model.StaffType; //sending staff type to the view  via viewbag
                     return View();
                 }
                 if (model.StaffType == StaffTypes.NonTeaching && model.JobType == null)
                 {
-                    ModelState.AddModelError("JobType", "This field is required");
-                    ViewBag.StaffId = id;
-                    ViewBag.StaffType = model.StaffType;
+                    //if the staff type is non-teaching & job type is not selected 
+                    ModelState.AddModelError("JobType", "This field is required"); //adding error meesage 
+                    ViewBag.StaffId = id; //sending the staff id back to the view for again processing
+                    ViewBag.StaffType = model.StaffType; //sending staff type to the view  via viewbag
                     return View();
                 }
                 try
                 {
                     if (model.StaffType == StaffTypes.NonTeaching)
                     {
+                        //if non-teachng staff is selected
                         NonTeachingStaff s = new NonTeachingStaff(id, Cryptography.Decrypt(conString.Value))
                         {
                             Address = model.Address,
                             CNIC = model.CNIC,
                             JobType = model.JobType,
                             Name = model.Name,
-                            PhoneNumber = new Models.HelperModels.MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber),
+                            PhoneNumber = new MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber),
                             Salary = model.Salary
                         };
                     }
                     else if (model.StaffType == StaffTypes.Teacher)
                     {
+                        //if teaching staff is selected
                         Teacher s = new Teacher(id, Cryptography.Decrypt(conString.Value))
                         {
                             Address = model.Address,
                             CNIC = model.CNIC,
                             Name = model.Name,
-                            PhoneNumber = new Models.HelperModels.MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber),
+                            PhoneNumber = new MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber),
                             Salary = model.Salary
                         };
                     }
@@ -1082,13 +1168,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post method to add qualification of a teacher 
+        /// </summary>
+        /// <param name="model">values of the qualification</param>
+        /// <param name="id">id of the teacher</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddQualification(AddQualificationViewModel model, int id)
         {
             try
             {
-                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb"); //getting the connection string from the cookies
                 if (!ModelState.IsValid)
                 {
                     ViewBag.StaffId = id;
@@ -1097,7 +1189,7 @@ namespace SMSProject.Controllers
                 try
                 {
                     Teacher t = new Teacher(id, Cryptography.Decrypt(conString.Value));
-                    if (t.AddQualification(new Models.HelperModels.Qualification { Degree = model.Degree, Year = Convert.ToInt16(model.Year) }))
+                    if (t.AddQualification(new Qualification { Degree = model.Degree, Year = Convert.ToInt16(model.Year) }))
                     {
                         return RedirectToAction("ViewTeacherDetails", new { id = id, s = true });
                     }
@@ -1120,13 +1212,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to remove qualification
+        /// </summary>
+        /// <param name="id">qualfication id</param>
+        /// <param name="sId">staff id</param>
+        /// <returns></returns>
         public ActionResult RemoveQualification(int id, int sId)
         {
             try
             {
                 HttpCookie conString = Request.Cookies.Get("rwxgqlb");
                 Teacher t = new Teacher(sId, Cryptography.Decrypt(conString.Value));
-                if (t.RemoveQualification(new Models.HelperModels.Qualification { Id = id }))
+                if (t.RemoveQualification(new Qualification { Id = id }))
                 {
                     return RedirectToAction("ViewTeacherDetails", new { id = id, s = true });
                 }
@@ -1140,11 +1238,22 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to assign section to the teacher
+        /// </summary>
+        /// <param name="id">TeacherId</param>
+        /// <returns></returns>
         public ActionResult AddTeacherSection(int id)
         {
             ViewBag.TeacherId = id;
             return View();
         }
+        /// <summary>
+        /// Post method to add section to the teacher 
+        /// </summary>
+        /// <param name="model">data from the form</param>
+        /// <param name="id">Teacher Id</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddTeacherSection(AddTeacherSectionViewModel model, int id)
@@ -1182,6 +1291,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to unassign section to the teacher
+        /// </summary>
+        /// <param name="tId">Teacher Id</param>
+        /// <param name="subId">Subject Id</param>
+        /// <param name="secId">Section Id</param>
+        /// <returns></returns>
         public ActionResult RemoveAssignedSection(int tId, int subId, int secId)
         {
             try
@@ -1202,6 +1318,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Returns the sections list of a class
+        /// Called by the AJAX request
+        /// </summary>
+        /// <param name="id">Class Id</param>
+        /// <returns>HTML Content (in the form of string)</returns>
         [HttpPost]
         public ActionResult GetSections(int id)
         {
@@ -1222,6 +1344,12 @@ namespace SMSProject.Controllers
                 return Content("");
             }
         }
+        /// <summary>
+        /// Returns the Subjects List of a class
+        /// Called by the AJAX request
+        /// </summary>
+        /// <param name="id">Class Id</param>
+        /// <returns>HTML content (in the form of string)</returns>
         [HttpPost]
         public ActionResult GetSubjects(int id)
         {
@@ -1242,6 +1370,14 @@ namespace SMSProject.Controllers
                 return Content("");
             }
         }
+        /// <summary>
+        /// Action to view list teachers in the database
+        /// </summary>
+        /// <param name="page">page number</param>
+        /// <param name="searchName">name query to search</param>
+        /// <param name="err">error flag</param>
+        /// <param name="s">success flag</param>
+        /// <returns></returns>
         public ActionResult ViewTeachers(int? page, string searchName = "", bool err = false, bool s = false)
         {
             try
@@ -1265,7 +1401,7 @@ namespace SMSProject.Controllers
                 {
                     ViewBag.Error = true;
                 }
-                PagedList<ViewStaffViewModel> model = new PagedList<ViewStaffViewModel>(lstTeachers, page ?? 1, 20);
+                PagedList<ViewStaffViewModel> model = new PagedList<ViewStaffViewModel>(lstTeachers, page ?? 1, 20); //paged list for pagination in the view
                 return View(model);
             }
             catch (Exception ex)
@@ -1273,6 +1409,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to view non-teaching staff
+        /// </summary>
+        /// <param name="page">page number</param>
+        /// <param name="searchName">quesry to search by name</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult ViewNonStaff(int? page, string searchName = "", bool err = false)
         {
             try
@@ -1303,7 +1446,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Action to remove staff
+        /// </summary>
+        /// <param name="id">staff id</param>
+        /// <returns></returns>
         public ActionResult RemoveStaff(int id)
         {
             string previousAction = Request.UrlReferrer.AbsolutePath.ToString();
@@ -1330,10 +1477,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to load view for set salaries
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LoadSetSalaries()
         {
             return View();
         }
+        /// <summary>
+        /// Post method call on submit the form on Load Salaries View
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoadSetSalaries(LoadSetSalariesViewModel model)
@@ -1356,6 +1512,15 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to show the salaries to be set accordng to the month
+        /// </summary>
+        /// <param name="month"></param>
+        /// <param name="year"></param>
+        /// <param name="page">Page number</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult SetSalaries(int month, int year, int? page, bool s = false, bool err = false)
         {
             try
@@ -1388,6 +1553,14 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to set salary of a staff for a certain month
+        /// </summary>
+        /// <param name="id">Staff Id</param>
+        /// <param name="month">Month for the salary is being set</param>
+        /// <param name="year">Year from which the month belong to</param>
+        /// <param name="perAbsent">Per absent deduction</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SetSalary(int id, int month, int year, decimal? perAbsent)
@@ -1417,10 +1590,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to return the view which will get the month for which the salaries have to be loaded.
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LoadViewSalaries()
         {
             return View();
         }
+        /// <summary>
+        /// Post Method to get the form data from LoadViewSalaries
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoadViewSalaries(LoadViewSalariesViewModel model)
@@ -1443,6 +1625,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to view the salaries of a respective month
+        /// </summary>
+        /// <param name="month">Month of which the salaries is going to load</param>
+        /// <param name="year">Year from which the month belong</param>
+        /// <param name="page">page number</param>
+        /// <returns></returns>
         public ActionResult ViewSalaries(int month, int year, int? page)
         {
             try
@@ -1495,6 +1684,10 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to make chart for monthly salaries
+        /// </summary>
+        /// <returns>Partial chart view</returns>
         public ActionResult _MonthlySalariesChart()
         {
             try
@@ -1533,10 +1726,19 @@ namespace SMSProject.Controllers
                 return PartialView(model);
             }
         }
+        /// <summary>
+        /// Action to return the add class view
+        /// </summary>
+        /// <returns></returns>
         public ActionResult AddClass()
         {
             return View();
         }
+        /// <summary>
+        /// Post Method to get data from form filled in Add class view
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddClass(AddClassViewModel model)
@@ -1596,7 +1798,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Action to View Details of a certain class
+        /// </summary>
+        /// <param name="id">class id</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult ViewClassDetails(int id, bool s = false, bool err = false)
         {
             try
@@ -1662,6 +1870,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to remove a subject from  the class
+        /// </summary>
+        /// <param name="id">subject Id</param>
+        /// <returns></returns>
         public ActionResult RemoveSubject(int id)
         {
             try
@@ -1676,6 +1889,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to remove section of a class
+        /// </summary>
+        /// <param name="id">Section Id</param>
+        /// <returns></returns>
         public ActionResult RemoveSection(int id)
         {
             try
@@ -1697,6 +1915,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to load form to change the incharge of a particular class
+        /// </summary>
+        /// <param name="id">Class IIncharge Id</param>
+        /// <returns></returns>
         public ActionResult ChangeClassIncharge(int id)
         {
             try
@@ -1709,6 +1932,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method to get form data to change class incharge
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <param name="id">class id</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangeClassIncharge(ChangeClassInchargeViewModel model, int id)
@@ -1737,6 +1966,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to add section for a certain class
+        /// </summary>
+        /// <param name="id">class id</param>
+        /// <returns></returns>
         public ActionResult AddSection(int id)
         {
             try
@@ -1749,6 +1983,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method to get form data and add section to the class
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <param name="id">class id</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddSection(AddSectionViewModel model, int id)
@@ -1777,6 +2017,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to return view to add a subject to the class
+        /// </summary>
+        /// <param name="id">class id</param>
+        /// <returns></returns>
         public ActionResult AddSubject(int id)
         {
             try
@@ -1789,6 +2034,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method to Add Subject to a certain class
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <param name="id">class id</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddSubject(AddSubjectViewModel model, int id)
@@ -1818,6 +2069,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to view list of sections of a perticular class
+        /// </summary>
+        /// <param name="id">class id</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult ViewSection(int id, bool s = false, bool err = false)
         {
             try
@@ -1904,7 +2162,15 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Action to view the list of students
+        /// </summary>
+        /// <param name="secId">Section Id of which the students belong to</param>
+        /// <param name="page">page number</param>
+        /// <param name="searchName">query to search the students by name</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult ViewStudents(int? secId, int? page, string searchName = "", bool s = false, bool err = false)
         {
             try
@@ -1960,6 +2226,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to assign section to the teacher
+        /// </summary>
+        /// <param name="secId">unique id of section</param>
+        /// <param name="subId">unique id of subject</param>
+        /// <returns></returns>
         public ActionResult AssignSecTeacher(int secId, int subId)
         {
             ViewBag.SectionId = secId;
@@ -1973,6 +2245,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post method to implement Assignement of the section to a teacher
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <param name="secId">section id</param>
+        /// <param name="subId">subject id</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AssignSecTeacher(AssignTeacherViewModel model, int secId, int subId)
@@ -2011,6 +2290,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to change Section of a teacher
+        /// </summary>
+        /// <param name="secId">section id</param>
+        /// <param name="subId">subject id</param>
+        /// <param name="tId">teacher id</param>
+        /// <returns></returns>
         public ActionResult ChangeSecTeacher(int secId, int subId, int tId)
         {
             ViewBag.SectionId = secId;
@@ -2025,6 +2311,14 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post method ot implement Changing of the section for teacher
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <param name="secId">section id</param>
+        /// <param name="subId">subject id</param>
+        /// <param name="tId">teacher id</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ChangeSecTeacher(AssignTeacherViewModel model, int secId, int subId, int tId)
@@ -2075,7 +2369,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Action to view list of classes
+        /// </summary>
+        /// <param name="page">page number</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult ViewClasses(int? page, bool s = false, bool err = false)
         {
             try
@@ -2112,11 +2412,21 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to return the view to load students to promote according to the class
+        /// </summary>
+        /// <param name="s">success flag</param>
+        /// <returns></returns>
         public ActionResult LoadStudentsToPromote(bool s = false)
         {
             ViewBag.Success = s;
             return View();
         }
+        /// <summary>
+        /// Post Method to load students to promote for a class
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoadStudentsToPromote(LoadStudentsViewModel model)
@@ -2134,6 +2444,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action which returns the list of loaded students to promote form LoadStudentsToPromote Action
+        /// </summary>
+        /// <param name="secId">section id</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult ViewStudentsToPromote(int secId, bool s = false, bool err = false)
         {
             try
@@ -2160,6 +2477,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method to implement Promote Students
+        /// </summary>
+        /// <param name="secId">unique section id</param>
+        /// <param name="studentId">unique student id</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PromoteStudents(int secId, IEnumerable<int> studentId)
@@ -2187,6 +2510,11 @@ namespace SMSProject.Controllers
         {
             return View();
         }
+        /// <summary>
+        /// Post Method that implements the promote students to a certain section
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult PromoteToSection(LoadStudentsViewModel model)
@@ -2208,12 +2536,23 @@ namespace SMSProject.Controllers
                 return RedirectToAction("ViewStudentsToPromote", new { err = true });
             }
         }
+        /// <summary>
+        /// Action which returns a view to load srudent attendance according to a certain class and section
+        /// </summary>
+        /// <param name="err">error flag</param>
+        /// <param name="s">success flag</param>
+        /// <returns></returns>
         public ActionResult LoadStudentAttendance(bool err = false, bool s = false)
         {
             ViewBag.Error = err;
             ViewBag.Success = s;
             return View();
         }
+        /// <summary>
+        /// Post Method to Accept form data and returns the view that contains list of students of a section of a class
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoadStudentAttendance(LoadStudentsViewModel model)
@@ -2249,6 +2588,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method to add Attendance of the students
+        /// </summary>
+        /// <param name="id">list of unique student ids</param>
+        /// <param name="secId">unique id of the section from which a student belongs</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitStudentAttendance(IEnumerable<int> id, int secId)
@@ -2279,7 +2624,12 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-
+        /// <summary>
+        /// Action returns a view which contains list of staff
+        /// </summary>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult ViewStaffAttendance(bool s = false, bool err = false)
         {
             try
@@ -2309,6 +2659,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method that saves the attendance status of selected staff members
+        /// </summary>
+        /// <param name="id">List of unique ids of students</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SubmitStaffAttendance(IEnumerable<int> id)
@@ -2338,10 +2693,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action returns view to load attendance details for a particular student for a certain date
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LoadStudentAttendanceFor()
         {
             return View();
         }
+        /// <summary>
+        /// Post Method which takes data from form and load roll number for the student
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoadStudentAttendanceFor(LoadStudentAttendanceForViewModel model)
@@ -2378,6 +2742,14 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to view the details of an attendance for a student
+        /// </summary>
+        /// <param name="id">unique id of student</param>
+        /// <param name="month">month for which the attendance has been loaded</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult StudentAttendanceFor(int id, DateTime month, bool s = false, bool err = false)
         {
             try
@@ -2411,7 +2783,13 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-        public ActionResult ChangeAttendanceStatus(long id, bool isAbsent, int stuId, DateTime month)
+        /// <summary>
+        /// Action to change the status of a particular attendance
+        /// </summary>
+        /// <param name="id">unique id for attendance</param>
+        /// <param name="isAbsent">absent flag</param>
+        /// <returns></returns>
+        public ActionResult ChangeAttendanceStatus(long id, bool isAbsent)
         {
             try
             {
@@ -2425,10 +2803,19 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Action to return view to load staff attendance for a particular month
+        /// </summary>
+        /// <returns></returns>
         public ActionResult LoadStaffAttendanceFor()
         {
             return View();
         }
+        /// <summary>
+        /// Post Method to Load Staff Attendace for the entered month by the user
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult LoadStaffAttendanceFor(LoadStaffAttendanceForViewModel model)
@@ -2452,7 +2839,14 @@ namespace SMSProject.Controllers
             {
                 return Content(ex.Message);
             }
-        }
+        }/// <summary>
+        /// Action to show the Staff Attendance details for a particular month
+        /// </summary>
+        /// <param name="id">unique id of student</param>
+        /// <param name="month">month</param>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult StaffAttendanceFor(int id, DateTime month, bool s = false, bool err = false)
         {
             try
@@ -2486,6 +2880,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post method to get Staff for the AJAX request
+        /// </summary>
+        /// <param name="staffType">Type of the staff</param>
+        /// <returns>HTML content in string format. Name & CNIC</returns>
         [HttpPost]
         public ActionResult GetStaff(int staffType)
         {
@@ -2515,7 +2914,12 @@ namespace SMSProject.Controllers
                 return Content("");
             }
         }
-
+        /// <summary>
+        /// Action to Send Notifications to the parents and/or Teachers
+        /// </summary>
+        /// <param name="s">success flag</param>
+        /// <param name="err">error flag</param>
+        /// <returns></returns>
         public ActionResult SendNotification(bool s = false, bool err = false)
         {
             try
@@ -2529,6 +2933,11 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method to Send Notification
+        /// </summary>
+        /// <param name="model">form data</param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult SendNotification(SendNotificationViewModel model)
@@ -2590,6 +2999,10 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
+        /// <summary>
+        /// Post Method to get list of parents to send the notifications for AJAX request
+        /// </summary>
+        /// <returns>HTML content in string format. Parent Name, CNIC and checkbox</returns>
         [HttpPost]
         public ActionResult GetNotificationParents()
         {
@@ -2609,6 +3022,10 @@ namespace SMSProject.Controllers
                 return Content("");
             }
         }
+        /// <summary>
+        /// Post Method to get list of teachers to send the notifications for AJAX request
+        /// </summary>
+        /// <returns>HTML content in string format. Teacher Name, CNIC and checkbox</returns>
         [HttpPost]
         public ActionResult GetNotificationTeachers()
         {
