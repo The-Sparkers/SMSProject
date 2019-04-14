@@ -1,0 +1,22 @@
+﻿@model SMSProject.ViewModels.AdminViewModels._SearchParentByCNICPartialViewModel
+@using (Html.BeginForm("ViewParents","Parents",FormMethod.Get,new { id = "sPrCNIC" }))
+{   
+    <div class="form-horizontal agile_info_shadow">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.searchCNIC, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.searchCNIC, new { htmlAttributes = new { @class = "form-control", placeholder = "eg: XXXXX-XXXXXXX-X"} })
+                @Html.ValidationMessageFor(model => model.searchCNIC, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('sPrCNIC').submit()" class="btn btn-primary">Search</a>
+            </div>
+        </div>
+    </div>
+}
+

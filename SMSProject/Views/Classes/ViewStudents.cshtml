@@ -1,0 +1,116 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<SMSProject.ViewModels.AdminViewModels.ViewStudentsViewModel>
+
+@{
+    if (ViewBag.SectionId != null)
+    {
+        SMSProject.Models.Section sec = new SMSProject.Models.Section((int)ViewBag.SectionId, SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value));
+        ViewBag.Title = "Students of Class " + sec.Class.Name + ", Section " + sec.Name;
+    }
+    else
+    {
+        ViewBag.Title = "View Students";
+    }
+    int i = Model.PageSize * (Model.PageNumber - 1);
+}
+
+@if (ViewBag.SectionId != null)
+{
+    SMSProject.Models.Section sec = new SMSProject.Models.Section((int)ViewBag.SectionId, SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value));
+    <h2>@("Students of Class " + sec.Class.Name + ", Section " + sec.Name)</h2>
+}
+else
+{
+    <h2>Students</h2>
+}
+<br />
+<div class="col-md-6 agile_info_shadow">
+    <h4>Search</h4>
+    <br />
+    <form action="@Url.Action("ViewStudents")" class="form-horizontal" method="get" id="sStuName">
+        @if (ViewBag.SectionId != null)
+        {
+            @Html.Hidden("secId", (int)ViewBag.SectionId)
+        }
+        <div class="form-group">
+            <label class="control-label col-md-2">Name</label>
+            <div class="col-md-10">
+                <input type="text" name="searchName" value="" placeholder="eg: Muhammad Ali Ahmad" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('sStuName').submit()" class="btn btn-primary">Search</a>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="clearfix"></div>
+<div class="agile_info_shadow">
+    <div class="table table-responsive">
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().AddNmbr)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().FName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().CName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().RollNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Progress)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@(++i)</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AddNmbr)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.RollNumber)
+                    </td>
+                    <td>
+                        <span class="badge badge-primary">@Html.DisplayFor(modelItem => item.Progress)%</span>
+                    </td>
+                    <td>
+                        @Html.ActionLink("View", "ViewStudentDetails","Students", new { id = item.Id }, new { @class = "btn btn-danger", target = "_blank" }) |
+                        @Html.ActionLink("View Parent", "ViewParentDetails","Parents", new { pId = item.ParentId }, new { @class = "btn btn-success", target = "_blank" })
+                </tr>
+            }
+
+        </table>
+        @if (ViewBag.Empty != null)
+        {
+            if ((bool)ViewBag.Empty)
+            {
+                <p class="text-danger">No record found.</p>
+            }
+        }
+        <div class="col-md-offset-4 col-md-4">
+            @Html.PagedListPager(Model, page => @Url.Action("ViewStudents", new { page, err = (bool)ViewBag.Error, secId = ViewBag.SectionId }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, })
+        </div>
+    </div>
+</div>

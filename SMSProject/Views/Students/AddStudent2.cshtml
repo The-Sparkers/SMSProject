@@ -1,0 +1,105 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.AddStudent2ViewModel
+
+@{
+    ViewBag.Title = "Add Student";
+    List<SelectListItem> lst = new List<SelectListItem>();
+    foreach (var item in SMSProject.Models.Class.GetAllClasses(SMSProject.ServiceModules.Cryptography.Decrypt(Request.Cookies.Get("rwxgqlb").Value)))
+    {
+        lst.Add(new SelectListItem()
+        {
+            Text = item.Name,
+            Value = item.ClassId.ToString()
+        });
+    }
+}
+
+<h2>Add Student</h2>
+<div class="progress">
+    <div class="progress-bar progress-bar-success" style="width: 66%"></div>
+</div>
+<br />
+<h4><span class="badge badge-success">2.</span> Add Student Information</h4>
+<br />
+@using (Html.BeginForm("AddStudent2", "Students", new {pId = ViewBag.ParentId }, FormMethod.Post, new { id = "addstu2" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal agile_info_shadow">
+        <p class="text-info">Add the data correctly for the student to be added.</p>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @if (ViewBag.Error != null) 
+        {
+            <p class="text-danger">@ViewBag.Error</p>
+        }
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control", placeholder= "eg: Muhammad Ali Ahmad" } })
+                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BForm, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BForm, new { htmlAttributes = new { @class = "form-control", placeholder = "eg: XXXXX-XXXXXXX-X" } })
+                @Html.ValidationMessageFor(model => model.BForm, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Gender, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EnumDropDownListFor(model => model.Gender,"Select Gender", new { @class = "form-control1" })
+                @Html.ValidationMessageFor(model => model.Gender, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.DOB, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DOB, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DOB, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.AddmissionNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.AddmissionNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.AddmissionNumber, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Class, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Class, lst, "Select Class", new { @class = "form-control1" } )
+                @Html.ValidationMessageFor(model => model.Class, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.MonthlyFee, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.MonthlyFee, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.MonthlyFee, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Prevnst, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Prevnst, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Prevnst, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="javascript:document.getElementById('addstu2').submit()" class="btn btn-primary">Next</a>
+            </div>
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
