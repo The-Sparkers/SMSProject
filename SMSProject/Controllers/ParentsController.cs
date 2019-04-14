@@ -13,11 +13,8 @@ namespace SMSProject.Controllers
 {
     public class ParentsController : Controller
     {
-        public ActionResult AddParent()
-        {
-            ///Action which returns view to add parent
-            return View();
-        }
+        public ActionResult AddParent() => View();
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddParent(AddParentViewModel model)

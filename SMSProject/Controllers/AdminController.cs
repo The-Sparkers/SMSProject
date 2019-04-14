@@ -18,7 +18,6 @@ namespace SMSProject.Controllers
 {
     public class AdminController : Controller
     {
-        // GET: Admin
         public ActionResult Index()
         {
             try
@@ -60,6 +59,6 @@ namespace SMSProject.Controllers
 
 
 
-        
+
     }
 }
