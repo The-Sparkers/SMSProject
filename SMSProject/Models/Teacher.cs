@@ -22,13 +22,20 @@ namespace SMSProject.Models
             con = new SqlConnection(connectionString);
             try
             {
-                query = "INSERT INTO [STAFF] ([Name] ,[CNIC] ,[Address] ,[MCountryCode] ,[MCompanyCode] ,[MNumber] ,[Salary], [Gender], [JoiningDate]) VALUES ('" + name + "' ,'" + cnic + "' ,'" + address + "' ,'" + number.CountryCode + "' ,'" + number.CompanyCode + "' ,'" + number.Number + "' ," + salary + " ," + (int)gender + ", " + DateTime.Now + ");SELECT MAX(StaffId) FROM STAFF;";
+                query = "AddTeacher";
                 cmd = new SqlCommand(query, con);
+                cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                cmd.Parameters.Add(new SqlParameter("@name", System.Data.SqlDbType.VarChar)).Value = name;
+                cmd.Parameters.Add(new SqlParameter("@CNIC", System.Data.SqlDbType.NChar)).Value = cnic;
+                cmd.Parameters.Add(new SqlParameter("@address", System.Data.SqlDbType.VarChar)).Value = address;
+                cmd.Parameters.Add(new SqlParameter("@mCountryCode", System.Data.SqlDbType.NChar)).Value = number.CountryCode;
+                cmd.Parameters.Add(new SqlParameter("@mCompanyCode", System.Data.SqlDbType.NChar)).Value = number.CompanyCode;
+                cmd.Parameters.Add(new SqlParameter("@mNumber", System.Data.SqlDbType.NChar)).Value = number.Number;
+                cmd.Parameters.Add(new SqlParameter("@salary", System.Data.SqlDbType.Money)).Value = salary;
+                cmd.Parameters.Add(new SqlParameter("@gender", System.Data.SqlDbType.Bit)).Value = (int)gender;
+                cmd.Parameters.Add(new SqlParameter("@joiningDate", System.Data.SqlDbType.Date)).Value = DateTime.Now;
                 con.Open();
                 id = (int)cmd.ExecuteScalar();
-                query = "INSERT INTO [TEACHING_STAFF] ([StaffId]) VALUES (" + id + ")";
-                cmd = new SqlCommand(query, con);
-                cmd.ExecuteNonQuery();
                 con.Close();
             }
             catch (SqlException ex)

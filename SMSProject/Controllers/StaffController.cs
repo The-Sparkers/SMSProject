@@ -39,17 +39,16 @@ namespace SMSProject.Controllers
                     ModelState.AddModelError("JobType", "This field is required"); //adding model error which displayed on invalid entry
                     return View();
                 }
-                NonTeachingStaff nts = null;
-                Teacher t = null;
+                Staff s = null;
                 try
                 {
                     if (model.StaffType == StaffTypes.NonTeaching)
                     {
-                        nts = new NonTeachingStaff(model.Name, model.CNIC, model.Address, new Models.HelperModels.MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber), model.Salary, model.Gender, model.JobType, Cryptography.Decrypt(conString.Value));
+                        s = new NonTeachingStaff(model.Name, model.CNIC, model.Address, new MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber), model.Salary, model.Gender, model.JobType, Cryptography.Decrypt(conString.Value));
                     }
                     else if (model.StaffType == StaffTypes.Teacher)
                     {
-                        t = new Teacher(model.Name, model.CNIC, model.Address, new Models.HelperModels.MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber), model.Salary, model.Gender, Cryptography.Decrypt(conString.Value));
+                        s = new Teacher(model.Name, model.CNIC, model.Address, new MobileNumber(model.MCountryCode, model.MCompanyCode, model.MNumber), model.Salary, model.Gender, Cryptography.Decrypt(conString.Value));
                     }
                 }
                 catch (Exception ex)
@@ -57,62 +56,13 @@ namespace SMSProject.Controllers
                     ModelState.AddModelError(string.Empty, ex.Message);
                     return View();
                 }
-                if (model.StaffType == StaffTypes.Teacher && t != null)
+                if (model.StaffType == StaffTypes.Teacher)
                 {
-                    ViewTeacherDetailsViewModel vtdvm = new ViewTeacherDetailsViewModel
-                    {
-                        Address = t.Address,
-                        CNIC = t.CNIC,
-                        Gender = t.Gender + "",
-                        Id = t.StaffId,
-                        MNumber = t.PhoneNumber.GetLocalViewFormat(),
-                        Name = t.Name,
-                        Qualifications = new List<TeacherQualification>(),
-                        Salary = decimal.Round(t.Salary),
-                        Sections = new List<TeacherSection>(),
-                        JoiningDate = t.Joiningdate.ToLongDateString()
-                    };
-                    foreach (var item in t.Qualifications)
-                    {
-                        vtdvm.Qualifications.Add(new TeacherQualification
-                        {
-                            Degree = item.Degree,
-                            Id = item.Id,
-                            Year = item.Year.ToString(),
-                            TeacherId = t.StaffId
-                        });
-                    }
-                    foreach (var item in t.GetAssignedSections())
-                    {
-                        vtdvm.Sections.Add(new TeacherSection
-                        {
-                            Class = item.Section.Class.Name,
-                            Section = item.Section.Name,
-                            SectionId = item.Section.SectionId,
-                            Subject = item.Subject.Name,
-                            SubjectId = item.Subject.SubjectId,
-                            TeacherId = t.StaffId
-                        });
-                    }
-                    ViewBag.Success = true;
-                    return View("ViewTeacherDetails", vtdvm);
+                    return RedirectToAction("ViewTeacherDetails", new { id = s.StaffId });
                 }
-                else if (model.StaffType == StaffTypes.NonTeaching && nts != null)
+                else if (model.StaffType == StaffTypes.NonTeaching)
                 {
-                    ViewNonStaffDetailsViewModel vnvm = new ViewNonStaffDetailsViewModel
-                    {
-                        Address = nts.Address,
-                        CNIC = nts.CNIC,
-                        Gender = nts.Gender + "",
-                        Id = nts.StaffId,
-                        JobType = nts.JobType,
-                        MNumber = nts.PhoneNumber.GetLocalViewFormat(),
-                        Name = nts.Name,
-                        Salary = decimal.Round(nts.Salary),
-                        JoiningDate = nts.Joiningdate.ToLongDateString()
-                    };
-                    ViewBag.Success = true;
-                    return View("ViewNonStaffDetails", vnvm);
+                    return RedirectToAction("ViewNonStaffDetails", new { id = s.StaffId });
                 }
                 else
                 {
@@ -507,7 +457,7 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-        
+
         /// <summary>
         /// Action to view list teachers in the database
         /// </summary>
