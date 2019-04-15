@@ -183,7 +183,6 @@
     <Compile Include="Controllers\AttendanceController.cs" />
     <Compile Include="Controllers\ClassesController.cs" />
     <Compile Include="Controllers\FinanceController.cs" />
-    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ParentsController.cs" />
@@ -416,7 +415,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Inventory\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
