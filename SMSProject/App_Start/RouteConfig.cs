@@ -12,22 +12,11 @@ namespace SMSProject
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            
-
-            routes.MapRoute(
-                name: "ParameterWithParentId",
-                url: "{controller}/{action}/{pId}"
-            );
-
-            routes.MapRoute(
-                name: "PaginationRoute",
-                url: "{controller}/{action}/{page}",
-                defaults: new { controller = "Admin", action = "Dashboard",page=UrlParameter.Optional }
-            );
+          
 
             routes.MapRoute(
                 name: "AdminDefault",
-                url: "{controller}/{action}",
+                url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
             );
 

@@ -1,0 +1,121 @@
+﻿@model SMSProject.ViewModels.AdminViewModels.ViewItemDetailsViewModel
+
+@{
+    ViewBag.Title = Model.Name + " Details";
+}
+
+<h2>Item Details</h2>
+<br />
+<br />
+<div class="agile_info_shadow">
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Category)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Category)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+
+        <dd>
+            <div id="price">@Html.DisplayFor(model => model.Price)</div>
+            [<a href="#" class="alert-link" id="lnkSetPrice">Set Price</a>]
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Quantity)
+        </dt>
+
+        <dd>
+            <div id="quantity">@Html.DisplayFor(model => model.Quantity)</div>
+            [<a href="#" class="alert-link" id="lnkSetQuantity">Set Quantity</a>]
+        </dd>
+
+    </dl>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+@section Scripts {
+    @if (ViewBag.Success != null)
+    {
+        if ((bool)ViewBag.Success)
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record saved successfully."));
+            </script>
+        }
+        else
+        {
+            <script type="text/javascript">
+                $(document).ready(window.alert("Record not saved."));
+            </script>
+        }
+    }
+    <script type="text/javascript">
+                $('#lnkSetPrice').click(function () {
+                    var price = window.prompt("Please Enter new Pirce");
+                    if (price != null) {
+                        //AJAX Request to update new price
+                        $.ajax({
+                            url: '@Url.Action("UpdateItemPrice")',
+                            type: 'post',
+                            data: {
+                                id: @Model.Id,
+                                newPrice: price
+                            }
+                        }).done(function (response) {
+                            $("#price").html(response);
+                            if (response != "") {
+                                window.alert("Record Saved Successfully.");
+                            }
+                            else {
+                                window.alert("Something went wrong while processing.");
+                            }
+                        });
+                    }
+                    });
+    </script>
+    <script type="text/javascript">
+                $('#lnkSetQuantity').click(function () {
+                    var quantity = window.prompt("Please Enter new Quantity");
+                    if (quantity != null) {
+                        //AJAX Request to update new price
+                        $.ajax({
+                            url: '@Url.Action("UpdateItemQuantity")',
+                            type: 'post',
+                            data: {
+                                id: @Model.Id,
+                                newQuantity: quantity
+                            }
+                        }).done(function (response) {
+                            $("#quantity").html(response);
+                            if (response != "") {
+                                window.alert("Record Saved Successfully.");
+                            }
+                            else {
+                                window.alert("Something went wrong while processing.");
+                            }
+                        });
+                    }
+                });
+    </script>
+
+}

@@ -43,6 +43,7 @@ namespace SMSProject.Controllers
                 catch (Exception ex)
                 {
                     ModelState.AddModelError(string.Empty, ex.Message);
+                    return View();
                 }
                 ViewClassDetailsViewModel vcdvm = new ViewClassDetailsViewModel();
                 if (c != null)

@@ -967,4 +967,51 @@ namespace SMSProject.ViewModels.AdminViewModels
         public IEnumerable<int> Parents { get; set; }
         public IEnumerable<int> Teachers { get; set; }
     }
+    public class AddCategoryViewModel
+    {
+        [Required]
+        [Display(Name = "Category Name")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "The length shouldn't be greater than 50 and less than 3.")]
+        public string Name { get; set; }
+    }
+
+    public class AddItemViewModel
+    {
+        [Required]
+        [Display(Name = "Item Name")]
+        public string Name { get; set; }
+        [Required]
+        [Display(Name = "Quantity")]
+        public int Quantity { get; set; }
+        [Required]
+        [DataType(DataType.Currency, ErrorMessage = "Enter a valid Price")]
+        [Display(Name = "Price (Rs.)")]
+        public decimal Price { get; set; }
+        [Required]
+        [Display(Name = "Choose Category")]
+        public int Category { get; set; }
+    }
+    public class ViewItemDetailsViewModel
+    {
+        decimal price;
+        public int Id { get; set; }
+        [Display(Name ="Name")]
+        public string Name { get; set; }
+        [Display(Name="Category")]
+        public string Category { get; set; }
+        [Display(Name="Price")]
+        public decimal Price
+        {
+            get
+            {
+                return decimal.Round(price,2);
+            }
+            set
+            {
+                price = value;
+            }
+        }
+        [Display(Name ="Quantity")]
+        public int Quantity { get; set; }
+    }
 }
