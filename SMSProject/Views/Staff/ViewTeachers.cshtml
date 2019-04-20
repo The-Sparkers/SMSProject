@@ -74,7 +74,7 @@
             }
         }
         <div class="col-md-offset-4 col-md-4">
-            @Html.PagedListPager(Model, page => @Url.Action("ViewTeachers", new { page, searchName = ViewBag.SearchName }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded, })
+            @Html.PagedListPager(Model, page => @Url.Action("ViewTeachers", new { page, searchName = ViewBag.SearchName }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded })
         </div>
     </div>
 </div>
