@@ -416,6 +416,7 @@
     <Content Include="Views\Inventory\AddCategory.cshtml" />
     <Content Include="Views\Inventory\AddItem.cshtml" />
     <Content Include="Views\Inventory\ViewItemDetails.cshtml" />
+    <Content Include="Views\Inventory\ViewItems.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

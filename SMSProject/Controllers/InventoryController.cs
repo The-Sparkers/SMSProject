@@ -1,4 +1,5 @@
-﻿using SMSProject.Models;
+﻿using PagedList;
+using SMSProject.Models;
 using SMSProject.ServiceModules;
 using SMSProject.ViewModels.AdminViewModels;
 using System;
@@ -143,6 +144,31 @@ namespace SMSProject.Controllers
             catch (Exception)
             {
                 return Content("Error");
+            }
+        }
+        public ActionResult ViewItems(int? page)
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                List<ViewItemsViewModel> lstItems = new List<ViewItemsViewModel>();
+                foreach (var item in InventoryItem.GetAllItems(Cryptography.Decrypt(conString.Value)))
+                {
+                    lstItems.Add(new ViewItemsViewModel
+                    {
+                        Category = item.Category.CategoryName,
+                        Id = item.ItemId,
+                        Name = item.Name,
+                        Price = item.Price,
+                        Quantity = item.Quantity
+                    });
+                }
+                PagedList<ViewItemsViewModel> model = new PagedList<ViewItemsViewModel>(lstItems, page ?? 1, 20);
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
             }
         }
     }

@@ -1014,4 +1014,27 @@ namespace SMSProject.ViewModels.AdminViewModels
         [Display(Name ="Quantity")]
         public int Quantity { get; set; }
     }
+    public class ViewItemsViewModel
+    {
+        decimal price;
+        public int Id { get; set; }
+        [Display(Name ="Item Name")]
+        public string Name { get; set; }
+        [Display(Name ="Category")]
+        public string Category { get; set; }
+        [Display(Name ="Quantity")]
+        public int Quantity { get; set; }
+        [Display(Name="Price")]
+        public decimal Price
+        {
+            get
+            {
+                return decimal.Round(price, 2);
+            }
+            set
+            {
+                price = value;
+            }
+        }
+    }
 }
