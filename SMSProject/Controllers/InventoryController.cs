@@ -146,6 +146,11 @@ namespace SMSProject.Controllers
                 return Content("Error");
             }
         }
+        /// <summary>
+        /// Action to View all inventory items present in the database
+        /// </summary>
+        /// <param name="page">page number for pagging</param>
+        /// <returns></returns>
         public ActionResult ViewItems(int? page)
         {
             try
