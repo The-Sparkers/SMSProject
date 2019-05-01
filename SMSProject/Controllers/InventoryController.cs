@@ -1,9 +1,12 @@
-﻿using PagedList;
+﻿using Microsoft.Office.Interop.Excel;
+using PagedList;
 using SMSProject.Models;
 using SMSProject.ServiceModules;
 using SMSProject.ViewModels.AdminViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -70,7 +73,7 @@ namespace SMSProject.Controllers
                 {
                     item = new InventoryItem(model.Name, model.Quantity, model.Price, model.Category, Cryptography.Decrypt(conString.Value));
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     ViewBag.Success = false;
                     ModelState.AddModelError(String.Empty, ex.Message);
@@ -83,7 +86,7 @@ namespace SMSProject.Controllers
                 return Content(ex.Message);
             }
         }
-        public ActionResult ViewItemDetails(int id, bool s=false)
+        public ActionResult ViewItemDetails(int id, bool s = false)
         {
             try
             {
@@ -170,6 +173,132 @@ namespace SMSProject.Controllers
                 }
                 PagedList<ViewItemsViewModel> model = new PagedList<ViewItemsViewModel>(lstItems, page ?? 1, 20);
                 return View(model);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Action to return items belong to the category
+        /// </summary>
+        /// <param name="id">unique id of the category</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ActionResult _FilterCategory(int id)
+        {
+            try
+            {
+                if (id == 0)
+                {
+                    return RedirectToAction("ViewItems");
+                }
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                List<ViewItemsViewModel> lstItems = new List<ViewItemsViewModel>();
+                InventoryCategory category = new InventoryCategory(id, Cryptography.Decrypt(conString.Value));
+                foreach (var item in category.GetItems())
+                {
+                    lstItems.Add(new ViewItemsViewModel
+                    {
+                        Category = item.Category.CategoryName,
+                        Id = item.ItemId,
+                        Name = item.Name,
+                        Price = item.Price,
+                        Quantity = item.Quantity
+                    });
+                }
+                PagedList<ViewItemsViewModel> model = new PagedList<ViewItemsViewModel>(lstItems, 1, (lstItems.Count > 1) ? lstItems.Count : 1);
+                return View("ViewItems", model);
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        /// <summary>
+        /// Action to load interface for selling inventory items.
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult SellItem() => View();
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult SellItem(SellItemViewModel model)
+        {
+            try
+            {
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                foreach (var item in model.ListSellItems)
+                {
+                    try
+                    {
+                        InventoryItem i = new InventoryItem(item.Id, Cryptography.Decrypt(conString.Value));
+                        i.ItemSell(model.Id, item.Quantity);
+                    }
+                    catch (Exception ex)
+                    {
+                        return Content(ex.Message);
+                    }
+                }
+                return View();
+            }
+            catch (Exception ex)
+            {
+                return Content(ex.Message);
+            }
+        }
+        public ActionResult PrintItemList()
+        {
+            try
+            {
+                HttpCookie schoolName = Request.Cookies.Get("schlNm");
+                HttpCookie conString = Request.Cookies.Get("rwxgqlb");
+                System.Data.DataTable itemTable = new System.Data.DataTable();
+                itemTable.Columns.Add("Item_Code", typeof(int));
+                itemTable.Columns.Add("Item_Name", typeof(string));
+                itemTable.Columns.Add("Category", typeof(string));
+                itemTable.Columns.Add("Quantity", typeof(int));
+                itemTable.Columns.Add("Price", typeof(decimal));
+                foreach (var category in InventoryCategory.GetAllCategories(Cryptography.Decrypt(conString.Value)))
+                {
+                    foreach (var item in category.GetItems())
+                    {
+                        itemTable.Rows.Add(item.ItemId, item.Name, item.Category.CategoryName, item.Quantity, item.Price);
+                    }
+                }
+                //code to create excel file using interop.excel
+                Microsoft.Office.Interop.Excel.Application excelApp = new Microsoft.Office.Interop.Excel.Application();
+                Workbook excelWorkBook = excelApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
+
+                Worksheet excelWorkSheet = excelWorkBook.Sheets.Add();
+                excelWorkSheet.Name = Convert.ToString("Items List");
+                excelWorkSheet.Columns.AutoFit();
+                for (int i = 1; i < itemTable.Columns.Count + 1; i++)
+                {
+                    excelWorkSheet.Cells[1, i] = itemTable.Columns[i - 1].ColumnName;
+                }
+                for (int j = 0; j < itemTable.Rows.Count; j++)
+                {
+                    for (int k = 0; k < itemTable.Columns.Count; k++)
+                    {
+                        excelWorkSheet.Cells[j + 2, k + 1] = itemTable.Rows[j].ItemArray[k].ToString();
+                    }
+                }
+                string dirName = Server.MapPath("~/ExportableResources/");
+                if (!Directory.Exists(dirName))
+                    Directory.CreateDirectory(dirName);
+                string fileName = dirName + "export_items_" + schoolName.Value + ".xlsb";
+                if (System.IO.File.Exists(fileName))
+                {
+                    System.IO.File.Delete(fileName);
+                    excelWorkBook.SaveAs(fileName, XlFileFormat.xlExcel12, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                }
+                else
+                {
+                    excelWorkBook.SaveAs(fileName, XlFileFormat.xlExcel12, Type.Missing, Type.Missing, Type.Missing, Type.Missing, XlSaveAsAccessMode.xlExclusive, Type.Missing, Type.Missing, Type.Missing, Type.Missing, Type.Missing);
+                }
+                excelWorkBook.Close();
+                excelApp.Quit();
+                return File(fileName, "application / vnd.ms - excel", "items_list.xlsb");
             }
             catch (Exception ex)
             {

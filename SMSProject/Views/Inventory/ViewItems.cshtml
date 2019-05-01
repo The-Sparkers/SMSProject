@@ -1,4 +1,5 @@
-﻿@using PagedList
+﻿
+@using PagedList
 @using PagedList.Mvc
 @model IPagedList<SMSProject.ViewModels.AdminViewModels.ViewItemsViewModel>
 
@@ -6,14 +7,17 @@
     ViewBag.Title = "View Items";
     int i = Model.PageSize * (Model.PageNumber - 1);
 }
+@Html.Partial("_FilterCategory")
 
 <h2>Items</h2>
-<br />
 <div class="agile_map_info">
     <div class="table table-responsive">
         <table class="table">
             <tr>
                 <th>#</th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Id)
+                </th>
                 <th>
                     @Html.DisplayNameFor(model => model.First().Name)
                 </th>
@@ -34,6 +38,9 @@
                 <tr>
                     <td>@(++i)</td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
@@ -46,7 +53,7 @@
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
                     <td>
-                        @Html.ActionLink("View", "ViewItemDetails", new { id = item.Id },new{ @class="btn btn-danger", target = "_blank" })
+                        @Html.ActionLink("View", "ViewItemDetails", new { id = item.Id }, new { @class = "btn btn-danger", target = "_blank" })
                     </td>
                 </tr>
             }
@@ -56,6 +63,8 @@
             @Html.PagedListPager(Model, page => @Url.Action("ViewItems", new { page, searchName = ViewBag.SearchName }), new PagedListRenderOptions { Display = PagedListDisplayMode.IfNeeded, DisplayEllipsesWhenNotShowingAllPageNumbers = true, DisplayPageCountAndCurrentLocation = true, DisplayLinkToIndividualPages = false, DisplayLinkToFirstPage = PagedListDisplayMode.IfNeeded, DisplayLinkToLastPage = PagedListDisplayMode.IfNeeded })
         </div>
     </div>
+    <div class="col-md-offset-10 col-md-2 right">
+        @Html.ActionLink("Export", "PrintItemList", null, htmlAttributes: new { @class = "btn btn-success" })
+    </div>
 </div>
 <div class="clearfix"></div>
-

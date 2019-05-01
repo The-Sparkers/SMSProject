@@ -995,36 +995,11 @@ namespace SMSProject.ViewModels.AdminViewModels
     {
         decimal price;
         public int Id { get; set; }
-        [Display(Name ="Name")]
+        [Display(Name = "Name")]
         public string Name { get; set; }
-        [Display(Name="Category")]
+        [Display(Name = "Category")]
         public string Category { get; set; }
-        [Display(Name="Price")]
-        public decimal Price
-        {
-            get
-            {
-                return decimal.Round(price,2);
-            }
-            set
-            {
-                price = value;
-            }
-        }
-        [Display(Name ="Quantity")]
-        public int Quantity { get; set; }
-    }
-    public class ViewItemsViewModel
-    {
-        decimal price;
-        public int Id { get; set; }
-        [Display(Name ="Item Name")]
-        public string Name { get; set; }
-        [Display(Name ="Category")]
-        public string Category { get; set; }
-        [Display(Name ="Quantity")]
-        public int Quantity { get; set; }
-        [Display(Name="Price")]
+        [Display(Name = "Price")]
         public decimal Price
         {
             get
@@ -1036,5 +1011,41 @@ namespace SMSProject.ViewModels.AdminViewModels
                 price = value;
             }
         }
+        [Display(Name = "Quantity")]
+        public int Quantity { get; set; }
+    }
+    public class ViewItemsViewModel
+    {
+        decimal price;
+        [Display(Name = "Item Id")]
+        public int Id { get; set; }
+        [Display(Name = "Item Name")]
+        public string Name { get; set; }
+        [Display(Name = "Category")]
+        public string Category { get; set; }
+        [Display(Name = "Quantity")]
+        public int Quantity { get; set; }
+        [Display(Name = "Price")]
+        public decimal Price
+        {
+            get
+            {
+                return decimal.Round(price, 2);
+            }
+            set
+            {
+                price = value;
+            }
+        }
+    }
+    public class SellItemViewModel
+    {
+        public IEnumerable<SellItem> ListSellItems { get; set; }
+        public int Id { get; set; }
+    }
+    public struct SellItem
+    {
+        public int Id { get; set; }
+        public int Quantity { get; set; }
     }
 }
